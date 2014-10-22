@@ -6,8 +6,9 @@ group :development, :test do
 end
 
 group :test do
-  gem 'cucumber-rails', :require => false
+  gem 'cucumber-rails', require: false
   gem 'database_cleaner'
+  gem 'shoulda-matchers', require: false
 end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
