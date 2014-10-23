@@ -5,3 +5,33 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+Employee.delete_all
+Salary.delete_all
+
+micky_start_date = Date.parse('2014-1-12')
+donald_start_date = Date.parse('2014-2-16')
+
+micky = Employee.create!(first_name: 'Mickey',
+                        last_name: 'Mouse',
+                        start_date: micky_start_date,
+                        end_date: nil,
+                        billable: true)
+
+donald = Employee.create!(first_name: 'Donald',
+                         last_name: 'Duck',
+                         start_date: donald_start_date,
+                         end_date: nil,
+                         billable: false)
+
+Salary.create!(employee: micky,
+              start_date: micky_start_date,
+              end_date: nil,
+              annual_amount: '45000.00')
+
+Salary.create!(employee: donald,
+              start_date: donald_start_date,
+              end_date: nil,
+              annual_amount: '40000.00')
+
+puts 'Seed data created.'
