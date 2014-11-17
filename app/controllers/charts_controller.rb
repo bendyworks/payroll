@@ -1,6 +1,7 @@
 class ChartsController < ApplicationController
   def history
-    opts = { width: 800, height: 500, title: 'Salary History', legend: 'bottom' }
+    opts = { width: 800, height: 500, title: 'Salary History', legend: 'bottom',
+             vAxis: { title: 'Salary Rate ($ annually)' } }
     @chart = GoogleVisualr::Interactive::LineChart.new(history_chart_data, opts)
   end
 
