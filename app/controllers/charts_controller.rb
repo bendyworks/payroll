@@ -24,8 +24,10 @@ class ChartsController < ApplicationController
 
   def populate_salary_history_chart_data data_table
     Salary.ordered_dates.each_with_index do |date, date_row_num|
-      Employee.all.each do |employee, employee_column_num|
-        data_table.set_cell(date_row_num, employee_column_num, employee.salary_on(date))
+      data_table.set_cell(date_row_num, 0, date)
+
+      Employee.all.each_with_index do |employee, employee_column_num|
+        data_table.set_cell(date_row_num, employee_column_num + 1, employee.salary_on(date))
       end
     end
   end
