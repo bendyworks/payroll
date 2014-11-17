@@ -1,3 +1,4 @@
+- default employee sort order for Employee.all
 - change default home page
 - graph A
   - high charts
@@ -6,3 +7,5 @@
 - graph B
 - find annotating graph
 - rename as just "payroll" on local filesystem
+- play with line chart options:
+  https://developers.google.com/chart/interactive/docs/gallery/linechart?csw=1#Configuration_Options
