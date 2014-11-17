@@ -9,12 +9,26 @@
 Employee.delete_all
 Salary.delete_all
 
-micky_start_date = Date.parse('2013-1-12')
+minnie_start_date = Date.parse('2013-5-20')
+daisie_start_date = Date.parse('2013-3-10')
+mickey_start_date = Date.parse('2013-1-12')
 donald_start_date = Date.parse('2014-2-16')
 
-micky = Employee.create!(first_name: 'Mickey',
+daisie = Employee.create!(first_name: 'Daisie',
+                        last_name: 'Duck',
+                        start_date: daisie_start_date,
+                        end_date: nil,
+                        billable: true)
+
+minnie = Employee.create!(first_name: 'Minnie',
                         last_name: 'Mouse',
-                        start_date: micky_start_date,
+                        start_date: minnie_start_date,
+                        end_date: nil,
+                        billable: true)
+
+mickey = Employee.create!(first_name: 'Mickey',
+                        last_name: 'Mouse',
+                        start_date: mickey_start_date,
                         end_date: nil,
                         billable: true)
 
@@ -24,24 +38,36 @@ donald = Employee.create!(first_name: 'Donald',
                          end_date: nil,
                          billable: false)
 
-Salary.create!(employee: micky,
-              start_date: micky_start_date,
-              end_date: '2013-6-30',
+Salary.create!(employee: mickey,
+              start_date: mickey_start_date,
               annual_amount: '45000.00')
 
-Salary.create!(employee: micky,
+Salary.create!(employee: daisie,
+              start_date: daisie_start_date,
+              annual_amount: '57000.00')
+
+Salary.create!(employee: minnie,
+              start_date: minnie_start_date,
+              annual_amount: '46000.00')
+
+Salary.create!(employee: daisie,
               start_date: '2013-7-1',
-              end_date: '2013-12-31',
+              annual_amount: '59000.00')
+
+Salary.create!(employee: mickey,
+              start_date: '2013-7-1',
               annual_amount: '50000.00')
 
-Salary.create!(employee: micky,
+Salary.create!(employee: minnie,
               start_date: '2014-1-1',
-              end_date: nil,
+              annual_amount: '49000.00')
+
+Salary.create!(employee: mickey,
+              start_date: '2014-1-1',
               annual_amount: '55000.00')
 
 Salary.create!(employee: donald,
               start_date: donald_start_date,
-              end_date: nil,
               annual_amount: '40000.00')
 
 puts 'Seed data created.'
