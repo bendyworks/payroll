@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 group :development, :test do
   gem 'rspec-rails'
-  # gem 'debugger'
+  gem 'pry'
 end
 
 group :test do
