@@ -5,7 +5,16 @@ class ChartsController < ApplicationController
     @chart = GoogleVisualr::Interactive::LineChart.new(history_chart_data, opts)
   end
 
+  def experience
+    opts = { width: 800, height: 500, title: 'Experience vs Salary',
+             hAxis: { title: 'Time at Bendyworks', minValue: 0 },
+             vAxis: { title: 'Current Salary' }, legend: 'none' }
+    @chart = GoogleVisualr::Interactive::ScatterChart.new(experience_chart_data, opts)
+  end
+
   private
+
+  ##### History Chart methods ######
 
   def history_chart_data
     data_table = GoogleVisualr::DataTable.new
@@ -30,6 +39,26 @@ class ChartsController < ApplicationController
       Employee.all.each_with_index do |employee, employee_column_num|
         data_table.set_cell(date_row_num, employee_column_num + 1, employee.salary_on(date))
       end
+    end
+  end
+
+
+  ##### Experience Chart methods ######
+
+  def experience_chart_data
+    data_table = GoogleVisualr::DataTable.new
+    data_table.new_column('number', 'Years at Bendyworks')
+    data_table.new_column('number', 'Current Salary')
+    data_table.add_rows(Employee.count * 2)
+
+    populate_experience_chart_data data_table
+    data_table
+  end
+
+  def populate_experience_chart_data data_table
+    Employee.all.each_with_index do |employee, employee_row_num|
+      data_table.set_cell(employee_row_num, 0, employee.experience)
+      data_table.set_cell(employee_row_num, 1, employee.salary_on(Date.today))
     end
   end
 end
