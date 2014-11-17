@@ -12,4 +12,9 @@ class Employee < ActiveRecord::Base
     salary_match = salaries.where('start_date <= ?', date).order('start_date DESC').first
     salary_match.annual_amount
   end
+
+  def experience
+    end_experience = end_date || Date.today
+    (end_experience - start_date) / 365.0
+  end
 end

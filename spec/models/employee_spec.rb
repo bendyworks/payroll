@@ -43,4 +43,30 @@ RSpec.describe Employee, :type => :model do
       expect(daisie.salary_on(Date.parse('2013-10-10'))).to eq 45000
     end
   end
+
+  describe 'experience' do
+    let(:daisie_start_date) { Date.parse('2012-1-1') }
+
+    context 'employee has left (has an end date)' do
+      let(:daisie_end_date) { Date.parse('2014-7-1') }
+      let!(:daisie) { Employee.create!(first_name: 'Daisie',
+                          last_name: 'Duck',
+                          start_date: daisie_start_date,
+                          end_date: daisie_end_date) }
+
+      it "returns number of years (decimal) between start and end date" do
+        expect(daisie.experience).to be_within(0.05).of 2.5
+      end
+    end
+
+    context 'current employee (has no end date)' do
+      let!(:daisie) { Employee.create!(first_name: 'Daisie',
+                          last_name: 'Duck',
+                          start_date: daisie_start_date) }
+
+      it "returns number of years (decimal) since employee's start date" do
+        expect(daisie.experience).to eq (Date.today - daisie_start_date)/365.0
+      end
+    end
+  end
 end
