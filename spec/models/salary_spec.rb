@@ -34,7 +34,20 @@ RSpec.describe Salary, :type => :model do
                                                   annual_amount: '45000')}
 
     it 'returns all salary dates in order' do
-      expect(Salary.ordered_dates). to eq([donald_date, minnie_date, daisie_date])
+      expect(Salary.ordered_dates).to eq([donald_date, minnie_date, daisie_date])
+    end
+
+    it 'removes duplicate dates' do
+      mickey = Employee.create!(first_name: 'Mickey',
+                                last_name: 'Mouse',
+                                start_date: minnie_date, #duplicate of minnie
+                                billable: true)
+
+      Salary.create!(employee: mickey,
+                     start_date: minnie_date, #duplicate
+                     annual_amount: '45000')
+
+      expect(Salary.ordered_dates).to eq([donald_date, minnie_date, daisie_date])
     end
   end
 end
