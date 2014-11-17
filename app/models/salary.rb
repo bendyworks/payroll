@@ -4,6 +4,6 @@ class Salary < ActiveRecord::Base
   validates :annual_amount, presence: true
 
   def self.ordered_dates
-    select('distinct start_date').map(&:start_date)
+    select('distinct start_date').order('start_date').map(&:start_date)
   end
 end
