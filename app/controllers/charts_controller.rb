@@ -12,7 +12,7 @@ class ChartsController < ApplicationController
     data_table.new_column('date', 'Date')
 
     create_employee_columns data_table
-    data_table.add_rows(Salary.ordered_dates.count)
+    data_table.add_rows(Salary.ordered_dates_with_previous_dates.count)
     populate_salary_history_chart_data data_table
     data_table
   end
@@ -24,7 +24,7 @@ class ChartsController < ApplicationController
   end
 
   def populate_salary_history_chart_data data_table
-    Salary.ordered_dates.each_with_index do |date, date_row_num|
+    Salary.ordered_dates_with_previous_dates.each_with_index do |date, date_row_num|
       data_table.set_cell(date_row_num, 0, date)
 
       Employee.all.each_with_index do |employee, employee_column_num|

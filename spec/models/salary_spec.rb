@@ -53,5 +53,14 @@ RSpec.describe Salary, :type => :model do
 
       expect(Salary.ordered_dates).to eq([donald_date, minnie_date, donald_raise_date, daisie_date])
     end
+
+    describe 'with_previous_dates' do
+      it 'returns an array of dates, including each interesting date and the day before it' do
+        expect(Salary.ordered_dates_with_previous_dates).to eq([donald_date - 1, donald_date,
+                                                                minnie_date - 1, minnie_date,
+                                                                donald_raise_date - 1, donald_raise_date,
+                                                                daisie_date - 1, daisie_date])
+      end
+    end
   end
 end

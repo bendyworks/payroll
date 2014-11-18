@@ -6,4 +6,8 @@ class Salary < ActiveRecord::Base
   def self.ordered_dates
     select('distinct start_date').order('start_date').map(&:start_date)
   end
+
+  def self.ordered_dates_with_previous_dates
+    ordered_dates.map { |date| [date-1, date] }.flatten
+  end
 end
