@@ -18,11 +18,11 @@ class Employee < ActiveRecord::Base
     (experience_end - start_date).to_i
   end
 
-  def experience_num
+  def years_experience
     days_employed / 365.0
   end
 
-  def experience_string
+  def formatted_experience
     years = days_employed / 365
     months = days_employed%365 /30
 
