@@ -13,8 +13,19 @@ class Employee < ActiveRecord::Base
     salary_match.annual_amount
   end
 
-  def experience
-    end_experience = end_date || Date.today
-    (end_experience - start_date) / 365.0
+  def days_employed
+    experience_end = end_date || Date.today
+    (experience_end - start_date).to_i
+  end
+
+  def experience_num
+    days_employed / 365.0
+  end
+
+  def experience_string
+    years = days_employed / 365
+    months = days_employed%365 /30
+
+    "#{years} years, #{months} months"
   end
 end
