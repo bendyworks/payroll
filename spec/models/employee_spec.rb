@@ -12,47 +12,41 @@ RSpec.describe Employee, :type => :model do
   it { should have_db_column(:end_date).of_type(:date) }
 
   describe 'salary_on' do
-    let(:daisie) { Employee.create!(first_name: 'Daisie',
-                        last_name: 'Duck',
-                        start_date: Date.parse('2013-7-10'),
-                        end_date: Date.parse('2014-12-31'),
-                        billable: true) }
-    let!(:daisie_starting_salary) { Salary.create!(employee: daisie,
-                                                  start_date: Date.parse('2013-7-10'),
-                                                  annual_amount: '45000')}
-    let!(:daisie_raise_salary) { Salary.create!(employee: daisie,
-                                                  start_date: Date.parse('2013-12-10'),
-                                                  annual_amount: '55000')}
+    let(:start_date) { Date.parse('2013-7-10') }
+    let(:raise_date) { Date.parse('2013-12-10') }
+    let(:end_date) { Date.parse('2014-12-31') }
+
+    let(:daisie) { create(:employee, start_date: start_date, end_date: end_date) }
+
+    let!(:starting_salary) { create(:salary, employee: daisie, start_date: start_date) }
+    let!(:raise_salary) { create(:salary, employee: daisie, start_date: Date.parse('2013-12-10'), annual_amount: '900') }
 
     it 'returns nil, given date before employee has started' do
-      expect(daisie.salary_on(Date.parse('2013-1-1'))).to be_nil
+      expect(daisie.salary_on(start_date - 5)).to be_nil
     end
 
     it 'returns nil, given date after employee has left' do
-      expect(daisie.salary_on(Date.parse('2015-1-1'))).to be_nil
+      expect(daisie.salary_on(end_date + 5)).to be_nil
     end
 
     it "returns correct salary, given employee's salary start_date" do
-      expect(daisie.salary_on(Date.parse('2013-12-10'))).to eq 55000
+      expect(daisie.salary_on(raise_date)).to eq raise_salary.annual_amount
     end
 
     it "returns correct salary, given a date later than latest salary start_date" do
-      expect(daisie.salary_on(Date.parse('2014-1-1'))).to eq 55000
+      expect(daisie.salary_on(raise_date + 5)).to eq raise_salary.annual_amount
     end
     it "returns correct salary, given a date between two salary `start_date`s" do
-      expect(daisie.salary_on(Date.parse('2013-10-10'))).to eq 45000
+      expect(daisie.salary_on(raise_date - 5)).to eq starting_salary.annual_amount
     end
   end
 
   describe 'years_experience' do
+    let!(:daisie) { create :employee, start_date: daisie_start_date, end_date: daisie_end_date }
     let(:daisie_start_date) { Date.parse('2012-1-1') }
 
     context 'employee has left (has an end date)' do
       let(:daisie_end_date) { Date.parse('2014-7-1') }
-      let!(:daisie) { Employee.create!(first_name: 'Daisie',
-                          last_name: 'Duck',
-                          start_date: daisie_start_date,
-                          end_date: daisie_end_date) }
 
       it "returns number of years (decimal) between start and end date" do
         expect(daisie.years_experience).to be_within(0.05).of 2.5
@@ -60,9 +54,7 @@ RSpec.describe Employee, :type => :model do
     end
 
     context 'current employee (has no end date)' do
-      let!(:daisie) { Employee.create!(first_name: 'Daisie',
-                          last_name: 'Duck',
-                          start_date: daisie_start_date) }
+      let(:daisie_end_date) { nil }
 
       it "returns number of years (decimal) since employee's start date" do
         expect(daisie.years_experience).to eq (Date.today - daisie_start_date)/365.0

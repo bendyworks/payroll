@@ -6,60 +6,32 @@ RSpec.describe Salary, :type => :model do
   it { should validate_presence_of :annual_amount }
 
   describe 'ordered_dates' do
-    let(:daisie_date) { Date.parse('2013-7-10') }
-    let(:donald_date) { Date.parse('2013-4-10') }
-    let(:donald_raise_date) { Date.parse('2013-6-10') }
-    let(:minnie_date) { Date.parse('2013-5-10') }
+    let(:fourth_date) { Date.parse('2013-7-10') }
+    let(:first_date) { Date.parse('2013-4-10') }
+    let(:third_date) { Date.parse('2013-6-10') }
+    let(:second_date) { Date.parse('2013-5-10') }
 
-    let(:daisie) { Employee.create!(first_name: 'Daisie',
-                        last_name: 'Duck',
-                        start_date: daisie_date,
-                        billable: true) }
-    let(:donald) { Employee.create!(first_name: 'Donald',
-                        last_name: 'Duck',
-                        start_date: donald_date,
-                        billable: true) }
-    let(:minnie) { Employee.create!(first_name: 'Minnie',
-                        last_name: 'Mouse',
-                        start_date: minnie_date,
-                        billable: true) }
-
-    let!(:daisie_starting_salary) { Salary.create!(employee: daisie,
-                                                  start_date: daisie_date,
-                                                  annual_amount: '45000')}
-    let!(:donald_starting_salary) { Salary.create!(employee: donald,
-                                                  start_date: donald_date,
-                                                  annual_amount: '45000')}
-    let!(:donald_raise) { Salary.create!(employee: donald,
-                                                  start_date: donald_raise_date,
-                                                  annual_amount: '46000')}
-    let!(:minnie_starting_salary) { Salary.create!(employee: minnie,
-                                                  start_date: minnie_date,
-                                                  annual_amount: '45000')}
+    let!(:first_added_salary) { create :salary, start_date: fourth_date }
+    let!(:second_added_salary) { create :salary, start_date: first_date }
+    let!(:third_added_salary) { create :salary, start_date: third_date }
+    let!(:fourth_added_salary) { create :salary, start_date: second_date }
 
     it 'returns all salary dates in order' do
-      expect(Salary.ordered_dates).to eq([donald_date, minnie_date, donald_raise_date, daisie_date])
+      expect(Salary.ordered_dates).to eq([first_date, second_date, third_date, fourth_date])
     end
 
     it 'removes duplicate dates' do
-      mickey = Employee.create!(first_name: 'Mickey',
-                                last_name: 'Mouse',
-                                start_date: minnie_date, #duplicate of minnie
-                                billable: true)
+      create :salary, start_date: third_date
 
-      Salary.create!(employee: mickey,
-                     start_date: minnie_date, #duplicate
-                     annual_amount: '45000')
-
-      expect(Salary.ordered_dates).to eq([donald_date, minnie_date, donald_raise_date, daisie_date])
+      expect(Salary.ordered_dates).to eq([first_date, second_date, third_date, fourth_date])
     end
 
     describe 'with_previous_dates' do
       it 'returns an array of dates, including each interesting date and the day before it' do
-        expect(Salary.ordered_dates_with_previous_dates).to eq([donald_date - 1, donald_date,
-                                                                minnie_date - 1, minnie_date,
-                                                                donald_raise_date - 1, donald_raise_date,
-                                                                daisie_date - 1, daisie_date])
+        expect(Salary.ordered_dates_with_previous_dates).to eq([first_date - 1, first_date,
+                                                                second_date - 1, second_date,
+                                                                third_date - 1, third_date,
+                                                                fourth_date - 1, fourth_date])
       end
     end
   end
