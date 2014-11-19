@@ -7,7 +7,7 @@ class ChartsController < ApplicationController
 
   def experience
     opts = { width: 800, height: 500, title: 'Experience vs Salary',
-             hAxis: { title: 'Years at Bendyworks', minValue: 0 },
+             hAxis: { title: "Years of Experience\n(Time at Bendyworks plus weighted prior experience)", minValue: 0 },
              vAxis: { title: 'Current Salary' }, legend: 'none' }
     @chart = GoogleVisualr::Interactive::ScatterChart.new(experience_chart_data, opts)
   end
