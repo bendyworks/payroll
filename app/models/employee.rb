@@ -18,19 +18,25 @@ class Employee < ActiveRecord::Base
     salary_match.annual_amount
   end
 
-  def days_employed
-    experience_end = end_date || Date.today
-    (experience_end - start_date).to_i
-  end
-
-  def years_experience
-    days_employed / 365.0
+  def weighted_years_experience
+    (days_employed + prior_experience_day_equivalent) / 365.0
   end
 
   def formatted_experience
     years = days_employed / 365
     months = days_employed%365 /30
 
-    "#{years} years, #{months} months"
+    "Here: #{years} years, #{months} months\nPrior: #{direct_experience} months direct, #{indirect_experience} months indirect"
+  end
+
+  private
+
+  def days_employed
+    experience_end = end_date || Date.today
+    (experience_end - start_date).to_i
+  end
+
+  def prior_experience_day_equivalent
+    (direct_experience * 15) + (indirect_experience * 8)
   end
 end

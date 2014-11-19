@@ -41,23 +41,33 @@ RSpec.describe Employee, :type => :model do
     end
   end
 
-  describe 'years_experience' do
-    let!(:daisie) { create :employee, start_date: daisie_start_date, end_date: daisie_end_date }
-    let(:daisie_start_date) { Date.parse('2012-1-1') }
+  describe 'weighted_years_experience' do
+    context 'employee had no prior experience' do
+      let!(:daisie) { create :employee, start_date: daisie_start_date, end_date: daisie_end_date }
+      let(:daisie_start_date) { Date.parse('2012-1-1') }
 
-    context 'employee has left (has an end date)' do
-      let(:daisie_end_date) { Date.parse('2014-7-1') }
+      context 'employee has left (has an end date)' do
+        let(:daisie_end_date) { Date.parse('2014-7-1') }
+        it "returns number of years (decimal) between start and end date" do
+          expect(daisie.weighted_years_experience).to be_within(0.05).of 2.5
+        end
+      end
 
-      it "returns number of years (decimal) between start and end date" do
-        expect(daisie.years_experience).to be_within(0.05).of 2.5
+      context 'current employee (has no end date)' do
+        let(:daisie_end_date) { nil }
+        it "returns number of years (decimal) since employee's start date" do
+          expect(daisie.weighted_years_experience).to eq (Date.today - daisie_start_date)/365.0
+        end
       end
     end
 
-    context 'current employee (has no end date)' do
-      let(:daisie_end_date) { nil }
+    context 'employee has prior experience' do
+      let!(:daisie) { create :employee, start_date: Date.parse('2012-1-1'), end_date: Date.parse('2014-7-1'),
+                             direct_experience: 12, indirect_experience: 12 }
 
-      it "returns number of years (decimal) since employee's start date" do
-        expect(daisie.years_experience).to eq (Date.today - daisie_start_date)/365.0
+      it 'counts half of direct experience, quarter of indirect experience' do
+        # 2.5 years experience here, equivalent of .75 years experience prior
+        expect(daisie.weighted_years_experience).to be_within(0.05).of 3.25
       end
     end
   end
