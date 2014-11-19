@@ -7,4 +7,17 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
-    = yield
+    .navbar
+      Charts
+      %ul
+        %li= link_to 'Salary History', root_path
+        %li= link_to 'Experience', experience_path
+
+      Employees
+      %ul
+        - Employee.all.each do |e|
+          %li= link_to e.first_name, root_path
+    .body
+      %p.notice= notice
+      %p.alert= alert
+      = yield
