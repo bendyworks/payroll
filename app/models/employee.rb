@@ -5,9 +5,12 @@ class Employee < ActiveRecord::Base
   validates :last_name, presence: true
   validates :start_date, presence: true
 
+  def employed_on?(date)
+    date > start_date && (end_date.nil? || date < end_date)
+  end
+
   def salary_on(date)
-    return nil if date < start_date
-    return nil if end_date && date > end_date
+    return nil unless employed_on?(date)
 
     salary_match = salaries.where('start_date <= ?', date).order('start_date DESC').first
     salary_match.annual_amount
