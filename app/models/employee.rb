@@ -8,7 +8,7 @@ class Employee < ActiveRecord::Base
   scope :current, -> { where('start_date < ? AND (end_date IS NULL OR end_date > ?)', Date.today, Date.today) }
 
   def employed_on?(date)
-    date > start_date && (end_date.nil? || date < end_date)
+    date >= start_date && (end_date.nil? || date <= end_date)
   end
 
   def salary_on(date)

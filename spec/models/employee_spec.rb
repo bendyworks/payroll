@@ -75,8 +75,15 @@ RSpec.describe Employee, :type => :model do
       it "returns false after employee's end date" do
         expect(employee.employed_on?(end_date + 1)).to be false
       end
-      it "returns true betwen start and end date" do
+
+      it "returns true between start and end date" do
         expect(employee.employed_on?(end_date - 1)).to be true
+      end
+      it "returns true on start date" do
+        expect(employee.employed_on?(start_date)).to be true
+      end
+      it "returns true on end date" do
+        expect(employee.employed_on?(end_date)).to be true
       end
     end
 
