@@ -22,11 +22,15 @@ class Employee < ActiveRecord::Base
     (days_employed + prior_experience_day_equivalent) / 365.0
   end
 
-  def formatted_experience
+  def experience_here_formatted
     years = days_employed / 365
     months = days_employed%365 /30
 
-    "Here: #{years} years, #{months} months\nPrior: #{direct_experience} months direct, #{indirect_experience} months indirect"
+    "#{years} years, #{months} months"
+  end
+
+  def all_experience_formatted
+    "Here: #{experience_here_formatted}\nPrior: #{direct_experience} months direct, #{indirect_experience} months indirect"
   end
 
   private
