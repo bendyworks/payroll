@@ -1,14 +1,14 @@
 class ChartsController < ApplicationController
   def history
     opts = { width: 800, height: 500, title: 'Salary History', legend: 'bottom',
-             vAxis: { title: 'Salary Rate ($ annually)' } }
+             vAxis: { title: 'Salary Rate ($ annually)', minValue: 0 } }
     @chart = GoogleVisualr::Interactive::LineChart.new(history_chart_data, opts)
   end
 
   def experience
     opts = { width: 800, height: 500, title: 'Experience vs Salary',
              hAxis: { title: "Years of Experience\n(Time at Bendyworks plus weighted prior experience)", minValue: 0 },
-             vAxis: { title: 'Current Salary' }, legend: 'none' }
+             vAxis: { title: 'Current Salary', minValue: 0 }, legend: 'none' }
     @chart = GoogleVisualr::Interactive::ScatterChart.new(experience_chart_data, opts)
   end
 
