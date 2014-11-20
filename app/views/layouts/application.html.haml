@@ -1,0 +1,23 @@
+!!!
+%html
+  %head
+    %title Payroll
+    = javascript_include_tag 'http://www.google.com/jsapi'
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+  %body
+    .navbar
+      Charts
+      %ul
+        %li= link_to 'Salary History', root_path
+        %li= link_to 'Experience', experience_path
+
+      Employees
+      %ul
+        - Employee.all.each do |e|
+          %li= link_to e.first_name, root_path
+    .body
+      %p.notice= notice
+      %p.alert= alert
+      = yield

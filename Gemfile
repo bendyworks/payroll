@@ -13,6 +13,8 @@ group :test do
 end
 
 gem 'google_visualr'
+gem 'haml'
+gem 'haml-rails'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.6'
