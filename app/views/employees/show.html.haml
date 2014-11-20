@@ -1,0 +1,22 @@
+%h2= "#{@employee.first_name} #{@employee.last_name}"
+%h4= "#{@employee.employed_on?(Date.today) ? 'Current' : 'Inactive'} Employee"
+%p
+  Start Date:
+  = @employee.start_date
+- if @employee.end_date
+  %p
+    End Date:
+    = @employee.end_date
+%p
+  Time at Bendyworks:
+  = @employee.experience_here_formatted
+%p
+  Prior Experience:
+  %ul
+    %li= "#{@employee.direct_experience} months direct experience"
+    %li= "#{@employee.indirect_experience} months indirect experience"
+%p
+  Billable?:
+  = @employee.billable ? "Yes" : "No"
+
+
