@@ -7,7 +7,7 @@ class ChartsController < ApplicationController
 
   def experience
     opts = { width: 800, height: 500, title: 'Experience vs Salary',
-             hAxis: { title: 'Years at Bendyworks', minValue: 0 },
+             hAxis: { title: "Years of Experience\n(Time at Bendyworks plus weighted prior experience)", minValue: 0 },
              vAxis: { title: 'Current Salary' }, legend: 'none' }
     @chart = GoogleVisualr::Interactive::ScatterChart.new(experience_chart_data, opts)
   end
@@ -58,7 +58,7 @@ class ChartsController < ApplicationController
 
   def populate_experience_chart_data data_table
     Employee.current.each_with_index do |employee, employee_row_num|
-      data_table.set_cell(employee_row_num, 0, employee.years_experience)
+      data_table.set_cell(employee_row_num, 0, employee.weighted_years_experience)
       data_table.set_cell(employee_row_num, 1, employee.salary_on(Date.today))
       data_table.set_cell(employee_row_num, 2, "#{employee.first_name}:\n#{employee.formatted_experience}\n\$#{employee.salary_on(Date.today)} salary")
     end

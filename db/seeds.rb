@@ -22,21 +22,23 @@ Salary.create!(employee: darkwing, start_date: darkwing_start_date + 90, annual_
 ## Daisie
 daisie_start_date = Date.parse('2013-1-1')
 daisie = Employee.create!(first_name: 'Daisie', last_name: 'Duck',
-                        start_date: daisie_start_date)
+                          direct_experience: 6, indirect_experience: 4,
+                          start_date: daisie_start_date)
 Salary.create!(employee: daisie, start_date: daisie_start_date,      annual_amount: '57000.00') #1-1-2013
 Salary.create!(employee: daisie, start_date: daisie_start_date + 90, annual_amount: '59000.00') #4-1-2013
 
 ## Minnie
 minnie_start_date = daisie_start_date + 90
 minnie = Employee.create!(first_name: 'Minnie', last_name: 'Mouse',
-                        start_date: minnie_start_date)
+                          start_date: minnie_start_date)
 Salary.create!(employee: minnie, start_date: minnie_start_date,      annual_amount: '46000.00') #4-1-2013
 Salary.create!(employee: minnie, start_date: minnie_start_date + 90, annual_amount: '49000.00') #6-30-2013
 
 ## Mickey
 mickey_start_date = daisie_start_date + 180
 mickey = Employee.create!(first_name: 'Mickey', last_name: 'Mouse',
-                        start_date: mickey_start_date)
+                          indirect_experience: 18,
+                          start_date: mickey_start_date)
 Salary.create!(employee: mickey, start_date: mickey_start_date,      annual_amount: '45000.00') #6-30-2013
 Salary.create!(employee: mickey, start_date: mickey_start_date + 40, annual_amount: '50000.00') #8-9-2013
 Salary.create!(employee: mickey, start_date: mickey_start_date + 80, annual_amount: '55000.00') #9-18-2013
@@ -44,7 +46,8 @@ Salary.create!(employee: mickey, start_date: mickey_start_date + 80, annual_amou
 ## Donald
 donald_start_date = daisie_start_date + 270
 donald = Employee.create!(first_name: 'Donald', last_name: 'Duck',
-                         start_date: donald_start_date)
+                          direct_experience: 9,
+                          start_date: donald_start_date)
 Salary.create!(employee: donald, start_date: donald_start_date, annual_amount: '40000.00')      #9-28-2013
 
 #########################
