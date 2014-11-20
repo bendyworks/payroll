@@ -61,4 +61,48 @@ RSpec.describe Employee, :type => :model do
       end
     end
   end
+
+  describe 'employed_on?' do
+    let(:start_date) { Date.parse('2013-1-1') }
+    let(:employee) { create :employee, start_date: start_date, end_date: end_date }
+
+    context 'employee has end_date' do
+      let(:end_date) { Date.parse('2014-6-1') }
+
+      it "returns false before employee's start date" do
+        expect(employee.employed_on?(start_date - 1)).to be false
+      end
+      it "returns false after employee's end date" do
+        expect(employee.employed_on?(end_date + 1)).to be false
+      end
+
+      it "returns true between start and end date" do
+        expect(employee.employed_on?(end_date - 1)).to be true
+      end
+      it "returns true on start date" do
+        expect(employee.employed_on?(start_date)).to be true
+      end
+      it "returns true on end date" do
+        expect(employee.employed_on?(end_date)).to be true
+      end
+    end
+
+    context 'employee has no end_date' do
+      let(:end_date) { nil }
+      it "returns true after start date" do
+        expect(employee.employed_on?(Date.today)).to be true
+      end
+    end
+  end
+
+  describe 'current' do
+    let!(:normal_employee) { create :employee }
+    let!(:gave_notice) { create :employee, end_date: Date.today + 7 }
+    let!(:past_employee) { create :employee, end_date: Date.today - 7 }
+    let!(:not_started) { create :employee, start_date: Date.today + 14 }
+
+    it 'returns collection of employees employed today' do
+      expect(Employee.current.sort).to eq [gave_notice, normal_employee].sort
+    end
+  end
 end
