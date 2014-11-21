@@ -5,7 +5,7 @@ class Employee < ActiveRecord::Base
   validates :last_name, presence: true
   validates :start_date, presence: true
 
-  scope :current, -> { where('start_date < ? AND (end_date IS NULL OR end_date > ?)', Date.today, Date.today) }
+  scope :current, -> { where('start_date <= ? AND (end_date IS NULL OR end_date >= ?)', Date.today, Date.today) }
 
   def employed_on?(date)
     date >= start_date && (end_date.nil? || date <= end_date)

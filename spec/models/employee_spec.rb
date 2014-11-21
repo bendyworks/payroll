@@ -106,13 +106,15 @@ RSpec.describe Employee, :type => :model do
   end
 
   describe 'current' do
-    let!(:normal_employee) { create :employee }
+    let!(:started_today) { create :employee, start_date: Date.today }
+    let!(:leaving_today) { create :employee, end_date: Date.today }
     let!(:gave_notice) { create :employee, end_date: Date.today + 7 }
+
     let!(:past_employee) { create :employee, end_date: Date.today - 7 }
     let!(:not_started) { create :employee, start_date: Date.today + 14 }
 
     it 'returns collection of employees employed today' do
-      expect(Employee.current.sort).to eq [gave_notice, normal_employee].sort
+      expect(Employee.current.sort).to eq [gave_notice, started_today, leaving_today].sort
     end
   end
 end
