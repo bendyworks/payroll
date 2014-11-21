@@ -15,6 +15,7 @@ end
 gem 'google_visualr'
 gem 'haml'
 gem 'haml-rails'
+gem 'devise'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.6'
