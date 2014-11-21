@@ -89,7 +89,7 @@ class ChartsController < ApplicationController
       employees.each_with_index do |em, employee_index|
         if employee == em
           y_value = employee.salary_on(Date.today)
-          tooltip_text = "#{employee.first_name}:\n#{employee.formatted_experience}\n\$#{employee.salary_on(Date.today)} salary"
+          tooltip_text = "#{employee.first_name}:\n#{employee.all_experience_formatted}\n\$#{employee.salary_on(Date.today)} salary"
         else
           y_value = nil
           tooltip_text = nil
