@@ -7,10 +7,11 @@ class ChartsController < ApplicationController
   end
 
   def experience
+    show_inactive = (params[:show_inactive] == 'true')
     opts = { width: 800, height: 500, title: 'Experience vs Salary',
              hAxis: { title: "Years of Experience\n(Time at Bendyworks plus weighted prior experience)", minValue: 0 },
              vAxis: { title: 'Current Salary', minValue: 0 } }
-    @chart = GoogleVisualr::Interactive::ScatterChart.new(experience_chart_data, opts)
+    @chart = GoogleVisualr::Interactive::ScatterChart.new(experience_chart_data(show_inactive), opts)
   end
 
   private
@@ -65,25 +66,25 @@ class ChartsController < ApplicationController
 
   ##### Experience Chart methods ######
 
-  def experience_chart_data
+  def experience_chart_data show_inactive
     data_table = GoogleVisualr::DataTable.new
     data_table.new_column('number', 'Years of Experience')
 
-    create_employee_columns_with_tooltips!(data_table)
-    populate_experience_chart_data!(data_table)
+    employees = show_inactive ? Employee.all : Employee.current
+
+    create_employee_columns_with_tooltips!(data_table, employees)
+    populate_experience_chart_data!(data_table, employees)
     data_table
   end
 
-  def create_employee_columns_with_tooltips! data_table
-    Employee.current.each do |employee|
+  def create_employee_columns_with_tooltips! data_table, employees
+    employees.each do |employee|
       data_table.new_column('number', employee.first_name)
       data_table.new_column('string', 'tooltip text', nil, 'tooltip')
     end
   end
 
-  def populate_experience_chart_data! data_table
-    employees = Employee.current
-
+  def populate_experience_chart_data! data_table, employees
     employees.each do |employee|
       data_table.add_rows(1)
       row = data_table.rows.count - 1
