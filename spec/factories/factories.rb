@@ -10,4 +10,9 @@ FactoryGirl.define do
     annual_amount 700
     employee
   end
+
+  factory :user do
+    sequence(:email) { |n| "user#{n}@bendyworks.com" }
+    password 'password'
+  end
 end
