@@ -77,7 +77,7 @@ class ChartsController < ApplicationController
     Employee.current.each_with_index do |employee, employee_row_num|
       data_table.set_cell(employee_row_num, 0, employee.weighted_years_experience)
       data_table.set_cell(employee_row_num, 1, employee.salary_on(Date.today))
-      data_table.set_cell(employee_row_num, 2, "#{employee.first_name}:\n#{employee.formatted_experience}\n\$#{employee.salary_on(Date.today)} salary")
+      data_table.set_cell(employee_row_num, 2, "#{employee.first_name}:\n#{employee.all_experience_formatted}\n\$#{employee.salary_on(Date.today)} salary")
     end
   end
 end

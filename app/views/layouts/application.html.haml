@@ -16,7 +16,7 @@
       Employees
       %ul
         - Employee.all.each do |e|
-          %li= link_to e.first_name, root_path
+          %li= link_to e.first_name, employee_path(e)
     .body
       %p.notice= notice
       %p.alert= alert
