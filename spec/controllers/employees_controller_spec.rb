@@ -1,6 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe EmployeesController, :type => :controller do
+  include Devise::TestHelpers
+
+  let(:user) { create :user }
+  before do
+    sign_in user
+  end
 
   describe "GET show" do
     let!(:employee) { create :employee }

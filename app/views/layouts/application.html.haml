@@ -8,15 +8,17 @@
     = csrf_meta_tags
   %body
     .navbar
-      Charts
-      %ul
-        %li= link_to 'Salary History', root_path
-        %li= link_to 'Experience', experience_path
+      - if user_signed_in?
+        Charts
+        %ul
+          %li= link_to 'Salary History', root_path
+          %li= link_to 'Experience', experience_path
 
-      Employees
-      %ul
-        - Employee.all.each do |e|
-          %li= link_to e.first_name, employee_path(e)
+        Employees
+        %ul
+          - Employee.all.each do |e|
+            %li= link_to e.first_name, employee_path(e)
+        = link_to 'Sign Out', destroy_user_session_path, method: :delete
     .body
       %p.notice= notice
       %p.alert= alert
