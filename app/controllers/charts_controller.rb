@@ -1,7 +1,7 @@
 class ChartsController < ApplicationController
   def history
     show_inactive = (params[:show_inactive] == 'true')
-    opts = { width: 800, height: 500, title: 'Salary History', legend: 'bottom',
+    opts = { width: 800, height: 500, title: 'Salary History', legend: 'right',
              vAxis: { title: 'Salary Rate ($ annually)', minValue: 0 } }
     @chart = GoogleVisualr::Interactive::LineChart.new(history_chart_data(show_inactive), opts)
   end
