@@ -1,6 +1,7 @@
 class Salary < ActiveRecord::Base
   belongs_to :employee, dependent: :destroy
   validates :start_date, presence: true, uniqueness: { scope: :employee }
+  validates :employee_id, presence: true
   validates :annual_amount, presence: true
 
   def self.ordered_dates
