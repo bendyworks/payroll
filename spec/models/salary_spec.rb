@@ -37,4 +37,28 @@ RSpec.describe Salary, :type => :model do
       end
     end
   end
+
+  describe 'validation no_salaries_outside_employment_dates' do
+    let(:employee) { create :employee, end_date: Date.today + 5 }
+
+    it 'allows salary starting on employee start date' do
+      salary = employee.salaries.create(start_date: employee.start_date, annual_amount: 5)
+      expect(salary).to be_valid
+    end
+
+    it 'allows salary starting on employee end date' do
+      salary = employee.salaries.create(start_date: employee.end_date, annual_amount: 5)
+      expect(salary).to be_valid
+    end
+
+    it 'prevents salary before employee start date' do
+      salary = employee.salaries.create(start_date: employee.start_date - 1, annual_amount: 5)
+      expect(salary).to be_invalid
+    end
+
+    it 'prevents salary after employee end date' do
+      salary = employee.salaries.create(start_date: employee.end_date + 1, annual_amount: 5)
+      expect(salary).to be_invalid
+    end
+  end
 end
