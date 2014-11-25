@@ -22,43 +22,43 @@ class ChartsController < ApplicationController
     data_table = GoogleVisualr::DataTable.new
     data_table.new_column('date', 'Date')
 
-    employees = show_inactive ? Employee.all : Employee.current
+    @history_employees = show_inactive ? Employee.all : Employee.current
 
-    create_employee_columns!(data_table, employees)
-    populate_history_chart_data!(data_table, employees)
+    create_employee_columns! data_table
+    populate_history_chart_data! data_table
     data_table
   end
 
-  def create_employee_columns! data_table, employees
-    employees.each do |employee|
+  def create_employee_columns! data_table
+    @history_employees.each do |employee|
       data_table.new_column('number', employee.first_name)
     end
   end
 
-  def populate_history_chart_data! data_table, employees
-    populate_salary_changes!(data_table, employees)
-    add_salaries_today!(data_table, employees)
+  def populate_history_chart_data! data_table
+    populate_salary_changes! data_table
+    add_salaries_today! data_table
   end
 
-  def populate_salary_changes! data_table, employees
+  def populate_salary_changes! data_table
     dates = Salary.ordered_dates_with_previous_dates
     data_table.add_rows(dates.count)
 
     dates.each_with_index do |date, date_row_num|
       data_table.set_cell(date_row_num, 0, date)
 
-      employees.each_with_index do |employee, employee_column_num|
+      @history_employees.each_with_index do |employee, employee_column_num|
         data_table.set_cell(date_row_num, employee_column_num + 1, employee.salary_on(date))
       end
     end
   end
 
-  def add_salaries_today! data_table, employees
+  def add_salaries_today! data_table
     data_table.add_rows(1)
     row = data_table.rows.count - 1
     data_table.set_cell(row, 0, Date.today)
 
-    employees.each_with_index do |employee, employee_column_num|
+    @history_employees.each_with_index do |employee, employee_column_num|
       data_table.set_cell(row, employee_column_num + 1, employee.salary_on(Date.today))
     end
   end
@@ -70,27 +70,27 @@ class ChartsController < ApplicationController
     data_table = GoogleVisualr::DataTable.new
     data_table.new_column('number', 'Years of Experience')
 
-    employees = show_inactive ? Employee.all : Employee.current
+    @experience_employees = show_inactive ? Employee.all : Employee.current
 
-    create_employee_columns_with_tooltips!(data_table, employees)
-    populate_experience_chart_data!(data_table, employees)
+    create_employee_columns_with_tooltips! data_table
+    populate_experience_chart_data! data_table
     data_table
   end
 
-  def create_employee_columns_with_tooltips! data_table, employees
-    employees.each do |employee|
+  def create_employee_columns_with_tooltips! data_table
+    @experience_employees.each do |employee|
       data_table.new_column('number', employee.first_name)
       data_table.new_column('string', 'tooltip text', nil, 'tooltip')
     end
   end
 
-  def populate_experience_chart_data! data_table, employees
-    employees.each do |employee|
+  def populate_experience_chart_data! data_table
+    @experience_employees.each do |employee|
       data_table.add_rows(1)
       row = data_table.rows.count - 1
       data_table.set_cell(row, 0, employee.weighted_years_experience)
 
-      employees.each_with_index do |em, employee_index|
+      @experience_employees.each_with_index do |em, employee_index|
         if employee == em
           y_value = employee.salary_on(Date.today) || employee.ending_salary || employee.starting_salary
           tooltip_text = "#{employee.first_name}:\n#{employee.all_experience_formatted}\n\$#{y_value} salary"
