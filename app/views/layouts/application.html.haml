@@ -11,6 +11,11 @@
       .page-header
         .navbar.navbar-fixed-top.navbar-default
           .container
+            .navbar-header
+              %button.navbar-toggle{"data-target" => ".navbar-responsive-collapse", "data-toggle" => "collapse", :type => "button"}
+                %span.icon-bar
+                %span.icon-bar
+                %span.icon-bar
             .navbar-collapse.collapse.navbar-responsive-collapse
               - if user_signed_in?
                 %ul.nav.navbar-nav
