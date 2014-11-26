@@ -7,19 +7,35 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
-    .navbar
-      - if user_signed_in?
-        Charts
-        %ul
-          %li= link_to 'Salary History', root_path
-          %li= link_to 'Experience', experience_path
+    .container
+      .page-header
+        .navbar.navbar-fixed-top
+          .container
+            .navbar-collapse.collapse.navbar-responsive-collapse
+              - if user_signed_in?
+                %ul.nav.navbar-nav
+                  %li.dropdown
+                    %a.dropdown-toggle#charts{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#"}
+                      Charts
+                      %b.caret
+                    %ul.dropdown-menu{"aria-labelledby" => "charts"}
+                      %li= link_to 'Salary History', root_path
+                      %li= link_to 'Experience', experience_path
+                  %li.dropdown
+                    %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#"}
+                      Employees
+                      %b.caret
+                    %ul.dropdown-menu
+                      - Employee.current.each do |e|
+                        %li= link_to e.first_name, employee_path(e)
+                      -# %li.divider
+                      -# %li.dropdown-header Inactive Employees
+                      -# Employee.non_current.each do |e|
+                        %li= link_to e.first_name, employee_path(e)
+                %ul.nav.navbar-nav.navbar-right
+                  %li= link_to 'Sign Out', destroy_user_session_path, method: :delete
 
-        Employees
-        %ul
-          - Employee.all.each do |e|
-            %li= link_to e.first_name, employee_path(e)
-        = link_to 'Sign Out', destroy_user_session_path, method: :delete
-    .body
-      %p.notice= notice
-      %p.alert= alert
-      = yield
+      .body
+        %p.notice= notice
+        %p.alert= alert
+        = yield
