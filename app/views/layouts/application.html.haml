@@ -37,6 +37,8 @@
                   %li= link_to 'Sign Out', destroy_user_session_path, method: :delete
 
       .body
-        %p.notice= notice
-        %p.alert= alert
+        -if notice
+          %p.notice.alert.alert-info= notice
+        -if alert
+          %p.alert.alert-danger= alert
         = yield
