@@ -1,5 +1,6 @@
 class Employee < ActiveRecord::Base
   has_many :salaries
+  validates_associated :salaries
 
   validates :first_name, presence: true
   validates :last_name, presence: true
