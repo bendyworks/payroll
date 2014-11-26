@@ -1,3 +1,7 @@
 %h1 Salary History
+%p
+  = link_to 'Current employees only', root_path
+  |
+  = link_to 'Include past and future employees', root_path(show_inactive: true)
 #history_chart
 = render_chart @chart, 'history_chart'

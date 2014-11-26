@@ -41,6 +41,39 @@ RSpec.describe Employee, :type => :model do
     end
   end
 
+  describe 'ending_salary' do
+    let(:employee) { create :employee, end_date: end_date }
+    let!(:salary) { create :salary, employee: employee }
+    let!(:raise_salary) { create :salary, employee: employee, start_date: salary.start_date + 5 }
+
+    context 'no end date' do
+      let(:end_date) { nil }
+
+      it 'returns nil' do
+        expect(employee.ending_salary).to be_nil
+      end
+    end
+
+    context 'has end date' do
+      let(:end_date) { Date.today + 5 }
+
+      it 'returns latest salary' do
+        expect(employee.ending_salary).to eq raise_salary.annual_amount
+      end
+    end
+
+  end
+
+  describe 'starting_salary' do
+    let(:employee) { create :employee }
+    let!(:salary) { create :salary, employee: employee }
+    let!(:raise_salary) { create :salary, employee: employee, start_date: salary.start_date + 5 }
+
+    it 'returns first salary' do
+      expect(employee.starting_salary).to eq salary.annual_amount
+    end
+  end
+
   describe 'weighted_years_experience' do
     context 'employee had no prior experience' do
       let!(:daisie) { create :employee, start_date: daisie_start_date, end_date: daisie_end_date }
