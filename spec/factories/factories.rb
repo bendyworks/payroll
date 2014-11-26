@@ -2,11 +2,11 @@ FactoryGirl.define do
   factory :employee do
     sequence(:first_name) { |n| "##{n}"}
     last_name 'Bendyworker'
-    start_date 1.year.ago
+    start_date Date.parse('2013-1-1')
   end
 
   factory :salary do
-    start_date 1.year.ago
+    start_date Date.parse('2013-1-1')
     annual_amount 700
     employee
   end

@@ -18,6 +18,14 @@ darkwing = Employee.create!(first_name: 'Darkwing', last_name: 'Duck',
 Salary.create!(employee: darkwing, start_date: darkwing_start_date,      annual_amount: '100000')
 Salary.create!(employee: darkwing, start_date: darkwing_start_date + 90, annual_amount: '200000')
 
+###### FUTURE EMPLOYEES ######
+
+daffy_start_date = Date.today + 10
+daffy = Employee.create!(first_name: 'Daffy', last_name: 'Duck',
+                         direct_experience: 2, indirect_experience: 8,
+                         start_date: daffy_start_date)
+Salary.create!(employee: daffy, start_date: daffy_start_date,  annual_amount: '51000.00')
+
 ###### CURRENT EMPLOYEES #######
 ## Daisie
 daisie_start_date = Date.parse('2013-1-1')

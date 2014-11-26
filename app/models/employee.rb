@@ -1,5 +1,6 @@
 class Employee < ActiveRecord::Base
   has_many :salaries
+  validates_associated :salaries
 
   validates :first_name, presence: true
   validates :last_name, presence: true
@@ -17,6 +18,14 @@ class Employee < ActiveRecord::Base
 
     salary_match = salaries.where('start_date <= ?', date).order('start_date DESC').first
     salary_match.annual_amount
+  end
+
+  def ending_salary
+    end_date ? salary_on(end_date) : nil
+  end
+
+  def starting_salary
+    salary_on(start_date)
   end
 
   def weighted_years_experience
@@ -37,7 +46,9 @@ class Employee < ActiveRecord::Base
   private
 
   def days_employed
-    experience_end = end_date || Date.today
+    return 0 if Date.today < start_date
+
+    experience_end = end_date ? [end_date, Date.today].min : Date.today
     (experience_end - start_date).to_i
   end
 

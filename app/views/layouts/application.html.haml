@@ -39,7 +39,13 @@
                       - Employee.non_current.each do |e|
                         %li= link_to e.first_name, employee_path(e)
                 %ul.nav.navbar-nav.navbar-right
-                  %li= link_to 'Sign Out', destroy_user_session_path, method: :delete
+                  %li.dropdown
+                    %a.dropdown-toggle#charts{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#"}
+                      Account
+                      %b.caret
+                    %ul.dropdown-menu{"aria-labelledby" => "accounts"}
+                      %li= link_to 'Sign Out', destroy_user_session_path, method: :delete
+                      %li= link_to 'Change Password', edit_user_registration_path
 
       .body
         -if notice
