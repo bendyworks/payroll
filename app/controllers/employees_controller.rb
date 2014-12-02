@@ -8,6 +8,10 @@ class EmployeesController < ApplicationController
     @employee = Employee.new
   end
 
+  def edit
+    @employee = Employee.find(params[:id])
+  end
+
   def create
     @employee = Employee.new(employee_params)
     if @employee.save
@@ -16,6 +20,19 @@ class EmployeesController < ApplicationController
     @errors = @employee.errors.full_messages
     render :new
     end
+  end
+
+  def update
+    @employee = Employee.find(params[:id])
+    if @employee.update(employee_params)
+      starting_salary_params = salary_params.merge(start_date: @employee.start_date)
+      @salary = @employee.salaries.first
+      if @salary.update(starting_salary_params)
+        redirect_to employee_path(@employee), notice: 'Employee successfully updated.' and return
+      end
+    end
+    @errors = @employee.errors.any? ? @employee.errors.full_messages : @salary.errors.full_messages
+    render :edit
   end
 
   private

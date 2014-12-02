@@ -1,5 +1,6 @@
 %h2= "#{@employee.first_name} #{@employee.last_name}"
 %h4= "#{@employee.employed_on?(Date.today) ? 'Current' : 'Inactive'} Employee"
+%p= link_to 'Edit', edit_employee_path(@employee), class: 'btn btn-success'
 
 %ul.nav.nav-pills.nav-stacked
   %li.active
