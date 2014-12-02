@@ -35,7 +35,7 @@ feature 'manage employee' do
       expect(page).to have_content '11 months indirect'
     end
 
-    scenario 'edit employee salary info' do
+    scenario 'edit employee starting salary amount' do
       visit "/employees/#{employee.id}"
       click_on 'Edit'
       fill_in 'Starting salary', with: 41000
