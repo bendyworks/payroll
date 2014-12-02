@@ -19,7 +19,7 @@ RSpec.describe Employee, :type => :model do
     let(:daisie) { create(:employee, start_date: start_date, end_date: end_date) }
 
     let!(:starting_salary) { create(:salary, employee: daisie, start_date: start_date) }
-    let!(:raise_salary) { create(:salary, employee: daisie, start_date: Date.parse('2013-12-10'), annual_amount: '900') }
+    let!(:raise_salary) { create(:salary, employee: daisie, start_date: raise_date, annual_amount: '900') }
 
     it 'returns nil, given date before employee has started' do
       expect(daisie.salary_on(start_date - 5)).to be_nil
