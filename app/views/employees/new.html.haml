@@ -30,9 +30,9 @@
           .col-lg-10
             = f.number_field :indirect_experience, class: 'form-control'
         .form-group
-          = f.label :annual_amount, 'Starting salary annual amount', class: 'col-lg-2 control-label'
+          = f.label :starting_salary, 'Starting salary annual amount', class: 'col-lg-2 control-label'
           .col-lg-10
-            = f.number_field :annual_amount, class: 'form-control', value: '', required: true
+            = f.number_field :starting_salary, class: 'form-control', value: '', required: true
         .form-group
           .col-lg-10
             = f.check_box :billable

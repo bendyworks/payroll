@@ -5,6 +5,7 @@ class Employee < ActiveRecord::Base
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :start_date, presence: true
+  validates :starting_salary, presence: true
 
   scope :current, -> { where('start_date <= ? AND (end_date IS NULL OR end_date >= ?)', Date.today, Date.today) }
   scope :non_current, -> { where('start_date > ? OR end_date < ?', Date.today, Date.today) }
@@ -17,15 +18,11 @@ class Employee < ActiveRecord::Base
     return nil unless employed_on?(date)
 
     salary_match = salaries.where('start_date <= ?', date).order('start_date DESC').first
-    salary_match.annual_amount
+    salary_match ? salary_match.annual_amount : starting_salary
   end
 
   def ending_salary
     end_date ? salary_on(end_date) : nil
-  end
-
-  def starting_salary
-    salary_on(start_date)
   end
 
   def weighted_years_experience
