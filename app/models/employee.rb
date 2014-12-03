@@ -40,6 +40,10 @@ class Employee < ActiveRecord::Base
     "Here: #{experience_here_formatted}\nPrior: #{direct_experience} months direct, #{indirect_experience} months indirect"
   end
 
+  def self.ordered_start_dates
+    select('distinct start_date').order('start_date').map(&:start_date)
+  end
+
   private
 
   def days_employed
