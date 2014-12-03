@@ -41,10 +41,9 @@ class ChartsController < ApplicationController
   end
 
   def populate_salary_changes! data_table
-    dates = Salary.ordered_dates_with_previous_dates
-    data_table.add_rows(dates.count)
+    data_table.add_rows(salary_history_dates.count)
 
-    dates.each_with_index do |date, date_row_num|
+    salary_history_dates.each_with_index do |date, date_row_num|
       data_table.set_cell(date_row_num, 0, date)
 
       @history_employees.each_with_index do |employee, employee_column_num|
@@ -63,6 +62,9 @@ class ChartsController < ApplicationController
     end
   end
 
+  def salary_history_dates
+    @history_dates ||= (Salary.ordered_dates_with_previous_dates + Employee.ordered_start_dates).sort.uniq
+  end
 
   ##### Experience Chart methods ######
 
