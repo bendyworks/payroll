@@ -1,0 +1,43 @@
+- if errors
+  .alert.alert-danger
+    %p= "#{pluralize(errors.count, "error")} prohibited this employee from being saved:"
+    %ul
+      - errors.each do |msg|
+        %li= msg
+.col-lg-6
+  .well.bs-component
+    = form_for(employee, html: { class: 'form-horizontal' }) do |f|
+      %fieldset
+        .form-group
+          = f.label :first_name, class: 'col-lg-2 control-label'
+          .col-lg-10
+            = f.text_field :first_name, autofocus: true, class: 'form-control', required: true
+        .form-group
+          = f.label :last_name, class: 'col-lg-2 control-label'
+          .col-lg-10
+            = f.text_field :last_name, autofocus: true, class: 'form-control', required: true
+        .form-group
+          = f.label :start_date, class: 'col-lg-2 control-label'
+          .col-lg-10
+            = f.date_field :start_date, class: 'form-control', required: true
+        .form-group
+          = f.label :direct_experience, 'Direct experience (months)', class: 'col-lg-2 control-label'
+          .col-lg-10
+            = f.number_field :direct_experience, class: 'form-control'
+        .form-group
+          = f.label :indirect_experience, 'Indirect experience (months)', class: 'col-lg-2 control-label'
+          .col-lg-10
+            = f.number_field :indirect_experience, class: 'form-control'
+        .form-group
+          = f.label :annual_amount, 'Starting salary annual amount', class: 'col-lg-2 control-label'
+          .col-lg-10
+            .input-group
+              %span.input-group-addon $
+              = f.number_field :annual_amount, class: 'form-control', required: true, value: employee.persisted? ? employee.starting_salary : ''
+        .form-group
+          .col-lg-10
+            = f.check_box :billable
+            = f.label :billable, class: 'col-lg-2 control-label'
+        .form-group
+          .col-lg-10.col-lg-offset-2
+            = f.submit 'Save', class: 'btn btn-primary'
