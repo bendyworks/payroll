@@ -31,7 +31,9 @@
         .form-group
           = f.label :starting_salary, 'Starting salary annual amount', class: 'col-lg-2 control-label'
           .col-lg-10
-            = f.number_field :starting_salary, class: 'form-control', required: true
+            .input-group
+              %span.input-group-addon $
+              = f.number_field :starting_salary, class: 'form-control', required: true
         .form-group
           .col-lg-10
             = f.check_box :billable
