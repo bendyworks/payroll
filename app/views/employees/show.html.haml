@@ -31,6 +31,9 @@
           %td Date
           %td Salary
       %tbody
+        %tr
+          %td= @employee.start_date.strftime('%b %e, %Y')
+          %td= number_to_currency(@employee.starting_salary, precision: 0)
         - @employee.salaries.each do |salary|
           %tr
             %td= salary.start_date.strftime('%b %e, %Y')
