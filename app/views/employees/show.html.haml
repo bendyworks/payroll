@@ -39,3 +39,4 @@
           %tr
             %td= salary.start_date.strftime('%b %e, %Y')
             %td= number_to_currency(salary.annual_amount, precision: 0)
+  = link_to 'Record a Raise', new_employee_salary_path(@employee), class: 'btn btn-success'
