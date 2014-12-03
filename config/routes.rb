@@ -8,6 +8,6 @@ Rails.application.routes.draw do
   root 'charts#history'
   get 'experience', to: 'charts#experience'
   resources :employees, except: [:destroy] do
-    resources :salaries, only: [:new, :create]
+    resources :salaries, only: [:new, :create, :destroy]
   end
 end

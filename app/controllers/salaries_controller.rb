@@ -15,6 +15,12 @@ class SalariesController < ApplicationController
     end
   end
 
+  def destroy
+    @salary = Salary.find(params[:id])
+    msg = @salary.destroy ? 'Salary deleted.' : 'Failed to delete salary. Please try again.'
+    redirect_to employee_path(params[:employee_id]), notice: msg
+  end
+
   private
 
   def salary_params
