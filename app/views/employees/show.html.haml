@@ -39,3 +39,7 @@
           %tr
             %td= salary.start_date.strftime('%b %e, %Y')
             %td= number_to_currency(salary.annual_amount, precision: 0)
+  %li.active
+    = link_to 'Salary History Chart', '#'
+    #history_chart
+    = render_chart @chart, 'history_chart'
