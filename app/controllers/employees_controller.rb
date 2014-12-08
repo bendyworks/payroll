@@ -43,8 +43,6 @@ class EmployeesController < ApplicationController
                                      :direct_experience, :indirect_experience, :billable)
   end
 
-  private
-
   def employee_salary_history_data
     data_table = GoogleVisualr::DataTable.new
     data_table.new_column('date', 'Date')
