@@ -2,8 +2,7 @@ class EmployeesController < ApplicationController
 
   def show
     @employee = Employee.find(params[:id])
-    opts = { width: 800, height: 500, legend: 'right',
-             title: "Salary History for #{@employee.first_name} #{@employee.last_name}",
+    opts = { width: 640, height: 400, legend: 'none',
              vAxis: { title: 'Salary Rate ($ annually)', minValue: 0 } }
     @chart = GoogleVisualr::Interactive::LineChart.new(employee_salary_history_data, opts)
   end
