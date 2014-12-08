@@ -6,6 +6,7 @@ RSpec.describe Employee, :type => :model do
   it { should validate_presence_of :first_name }
   it { should validate_presence_of :last_name }
   it { should validate_presence_of :start_date }
+  it { should validate_presence_of :starting_salary }
 
   it { should have_db_column(:billable).of_type(:boolean) }
   it { should have_db_column(:start_date).of_type(:date) }
@@ -62,16 +63,6 @@ RSpec.describe Employee, :type => :model do
       end
     end
 
-  end
-
-  describe 'starting_salary' do
-    let(:employee) { create :employee }
-    let!(:salary) { create :salary, employee: employee }
-    let!(:raise_salary) { create :salary, employee: employee, start_date: salary.start_date + 5 }
-
-    it 'returns first salary' do
-      expect(employee.starting_salary).to eq salary.annual_amount
-    end
   end
 
   describe 'weighted_years_experience' do
