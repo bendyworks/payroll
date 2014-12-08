@@ -1,6 +1,5 @@
 class Employee < ActiveRecord::Base
   has_many :salaries
-  validates_associated :salaries
 
   validates :first_name, presence: true
   validates :last_name, presence: true
@@ -17,7 +16,7 @@ class Employee < ActiveRecord::Base
   def salary_on(date)
     return nil unless employed_on?(date)
 
-    salary_match = salaries.where('start_date <= ?', date).order('start_date DESC').first
+    salary_match = salaries.where('start_date <= ?', date).last
     salary_match ? salary_match.annual_amount : starting_salary
   end
 

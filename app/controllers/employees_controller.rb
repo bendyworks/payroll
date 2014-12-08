@@ -8,13 +8,27 @@ class EmployeesController < ApplicationController
     @employee = Employee.new
   end
 
+  def edit
+    @employee = Employee.find(params[:id])
+  end
+
   def create
     @employee = Employee.new(employee_params)
     if @employee.save
       redirect_to employee_path(@employee), notice: 'Employee successfully created.'
     else
-    @errors = @employee.errors.full_messages
-    render :new
+      @errors = @employee.errors.full_messages
+      render :new
+    end
+  end
+
+  def update
+    @employee = Employee.find(params[:id])
+    if @employee.update(employee_params)
+      redirect_to employee_path(@employee), notice: 'Employee successfully updated.'
+    else
+      @errors = @employee.errors.full_messages
+      render :edit
     end
   end
 
