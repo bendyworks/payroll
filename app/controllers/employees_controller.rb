@@ -25,7 +25,7 @@ class EmployeesController < ApplicationController
   def update
     @employee = Employee.find(params[:id])
     if @employee.update(employee_params)
-      redirect_to employee_path(@employee), notice: 'Employee successfully updated.' and return
+      redirect_to employee_path(@employee), notice: 'Employee successfully updated.'
     else
       @errors = @employee.errors.full_messages
       render :edit
