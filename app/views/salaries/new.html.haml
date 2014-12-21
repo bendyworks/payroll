@@ -1,0 +1,25 @@
+%h2= "Record a Raise for #{@salary.employee.first_name} #{@salary.employee.last_name}"
+- if @salary.errors.any?
+  .alert.alert-danger
+    %p= "#{pluralize(@salary.errors.count, "error")} prohibited this raise from being saved:"
+    %ul
+      - @salary.errors.full_messages.each do |msg|
+        %li= msg
+.col-lg-6
+  .well.bs-component
+    = form_for(@salary, url: employee_salaries_path(@salary.employee), html: { class: 'form-horizontal' }) do |f|
+      %fieldset
+        .form-group
+          = f.label :start_date, class: 'col-lg-2 control-label'
+          .col-lg-10
+            = f.date_field :start_date, class: 'form-control', required: true
+        .form-group
+          = f.label :annual_amount, class: 'col-lg-2 control-label'
+          .col-lg-10
+            .input-group
+              %span.input-group-addon $
+              = f.number_field :annual_amount, class: 'form-control', required: true, value: @salary.employee.salary_on(Date.today)
+        .form-group
+          .col-lg-10.col-lg-offset-2
+            = f.submit 'Save', class: 'btn btn-primary'
+            = link_to 'Cancel', employee_path(@salary.employee), class: 'btn btn-default'

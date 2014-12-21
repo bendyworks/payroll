@@ -1,5 +1,5 @@
 class Employee < ActiveRecord::Base
-  has_many :salaries
+  has_many :salaries, dependent: :destroy
 
   validates :first_name, presence: true
   validates :last_name, presence: true

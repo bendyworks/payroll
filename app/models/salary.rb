@@ -1,5 +1,5 @@
 class Salary < ActiveRecord::Base
-  belongs_to :employee, dependent: :destroy
+  belongs_to :employee
   validates :start_date, presence: true, uniqueness: { scope: :employee }
   validates :employee_id, presence: true
   validates :annual_amount, presence: true
