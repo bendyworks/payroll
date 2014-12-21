@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141203211746) do
+ActiveRecord::Schema.define(version: 20141216213857) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20141203211746) do
   create_table "employees", force: true do |t|
     t.string   "first_name"
     t.string   "last_name"
-    t.date     "start_date"
+    t.date     "start_date",                        null: false
     t.date     "end_date"
     t.boolean  "billable"
     t.datetime "created_at"
@@ -30,9 +30,9 @@ ActiveRecord::Schema.define(version: 20141203211746) do
   end
 
   create_table "salaries", force: true do |t|
-    t.date     "start_date"
-    t.integer  "employee_id"
-    t.decimal  "annual_amount"
+    t.date     "start_date",    null: false
+    t.integer  "employee_id",   null: false
+    t.decimal  "annual_amount", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -54,5 +54,7 @@ ActiveRecord::Schema.define(version: 20141203211746) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+
+  add_foreign_key "salaries", "employees", name: "salaries_employee_id_fk"
 
 end
