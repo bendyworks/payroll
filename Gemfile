@@ -17,8 +17,6 @@ gem 'haml'
 gem 'haml-rails'
 gem 'devise'
 gem 'bootstrap-sass'
-gem 'foreigner'
-gem 'immigrant'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.6'

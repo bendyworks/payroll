@@ -3,13 +3,9 @@ require 'rails_helper'
 RSpec.describe Salary, :type => :model do
   it { should belong_to :employee }
   it { should validate_presence_of :start_date }
+  it { should validate_uniqueness_of(:start_date).scoped_to(:employee_id) }
   it { should validate_presence_of :annual_amount }
   it { should validate_presence_of :employee_id }
-
-  it 'validates employee salary start dates unique' do
-    create :salary
-    should validate_uniqueness_of(:start_date).scoped_to(:employee_id)
-  end
 
   describe 'ordered_dates' do
     let(:fourth_date) { Date.parse('2013-7-10') }
