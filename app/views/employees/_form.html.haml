@@ -21,6 +21,10 @@
           .col-lg-10
             = f.date_field :start_date, class: 'form-control', required: true
         .form-group
+          = f.label :end_date, class: 'col-lg-2 control-label'
+          .col-lg-10
+            = f.date_field :end_date, class: 'form-control'
+        .form-group
           = f.label :direct_experience, 'Direct experience (months)', class: 'col-lg-2 control-label'
           .col-lg-10
             = f.number_field :direct_experience, class: 'form-control'
