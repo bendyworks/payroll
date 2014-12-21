@@ -38,8 +38,9 @@ class EmployeesController < ApplicationController
   private
 
   def employee_params
-    params.require(:employee).permit(:first_name, :last_name, :start_date, :starting_salary,
-                                     :direct_experience, :indirect_experience, :billable)
+    params.require(:employee).permit(:first_name, :last_name,
+      :start_date, :end_date, :starting_salary, :direct_experience,
+      :indirect_experience, :billable)
   end
 
   def employee_salary_history_data
