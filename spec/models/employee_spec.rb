@@ -8,7 +8,7 @@ RSpec.describe Employee, :type => :model do
   it { should validate_presence_of :start_date }
   it { should validate_presence_of :starting_salary }
 
-  it { should have_db_column(:billable).of_type(:boolean) }
+  it { should have_db_column(:billable).of_type(:boolean).with_options(default: true) }
   it { should have_db_column(:start_date).of_type(:date) }
   it { should have_db_column(:end_date).of_type(:date) }
 
