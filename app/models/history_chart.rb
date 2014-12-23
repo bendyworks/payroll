@@ -1,4 +1,7 @@
+require 'filter_employees'
+
 class HistoryChart
+  include FilterEmployees
 
   attr_reader :chart
 
@@ -10,11 +13,11 @@ class HistoryChart
 
   private
 
-  def history_chart_data show_inactive
+  def history_chart_data collection_opts
     data_table = GoogleVisualr::DataTable.new
     data_table.new_column('date', 'Date')
 
-    @history_employees = show_inactive ? Employee.all : Employee.current
+    @history_employees = filtered_collection(collection_opts)
 
     create_employee_columns! data_table
     populate_history_chart_data! data_table

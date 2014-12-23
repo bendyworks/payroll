@@ -1,4 +1,8 @@
+require 'filter_employees'
+
 class ExperienceChart
+  include FilterEmployees
+
   attr_reader :chart
 
   def initialize collection_opts
@@ -10,11 +14,11 @@ class ExperienceChart
 
   private
 
-  def experience_chart_data show_inactive
+  def experience_chart_data collection_opts
     data_table = GoogleVisualr::DataTable.new
     data_table.new_column('number', 'Years of Experience')
 
-    @experience_employees = show_inactive ? Employee.all : Employee.current
+    @experience_employees = filtered_collection(collection_opts)
 
     create_employee_columns_with_tooltips! data_table
     populate_experience_chart_data! data_table
