@@ -1,0 +1,11 @@
+%h2 Users Index
+%p= link_to 'Invite new user', new_user_path, class: 'btn btn-success'
+
+%ul.nav.nav-pills.nav-stacked
+  %li.active
+    = link_to 'All Users', "#"
+    %table.table.table-striped.table-hover
+      %tbody
+        - @users.each do |user|
+          %tr
+            %td= user.email
