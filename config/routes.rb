@@ -10,4 +10,6 @@ Rails.application.routes.draw do
   resources :employees, except: [:destroy] do
     resources :salaries, only: [:new, :create, :destroy]
   end
+
+  resources :users, only: [:index]
 end

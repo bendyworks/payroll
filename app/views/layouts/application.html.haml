@@ -41,6 +41,7 @@
                       - Employee.non_current.each do |e|
                         %li= link_to e.first_name, employee_path(e)
                 %ul.nav.navbar-nav.navbar-right
+                  %li= link_to 'Users', users_path
                   %li.dropdown
                     %a.dropdown-toggle#charts{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#"}
                       Account
