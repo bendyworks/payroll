@@ -1,0 +1,8 @@
+%h2 Users Index
+%p= link_to 'Invite new user', new_user_invitation_path, class: 'btn btn-success'
+.container.user-list
+  %table.table.table-striped.table-hover
+    %tbody
+      - @users.each do |user|
+        %tr
+          %td= user.email
