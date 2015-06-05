@@ -15,24 +15,24 @@
             = label_tag do
               = check_box_tag 'employment[future]', 1, params[:employment].try(:[], :future)
               Future
-        .form-group
-          .col-lg-2.control-label Billable Status:
-          .col-lg-10
-            = label_tag do
-              = check_box_tag 'billable[true]', 1, params[:billable].try(:[], :true)
-              Billable
-            = label_tag do
-              = check_box_tag 'billable[false]', 1, params[:billable].try(:[], :false)
-              Support
-        .form-group
-          .col-lg-2.control-label Owner:
-          .col-lg-10
-            = label_tag do
-              = check_box_tag 'owner[false]', 1, params[:owner].try(:[], :false)
-              Non-Owner
-            = label_tag do
-              = check_box_tag 'owner[true]', 1, params[:owner].try(:[], :true)
-              Owner
+        -# .form-group
+          -# .col-lg-2.control-label Billable Status:
+          -# .col-lg-10
+            -# = label_tag do
+              -# = check_box_tag 'billable[true]', 1, params[:billable].try(:[], :true)
+              -# Billable
+            -# = label_tag do
+              -# = check_box_tag 'billable[false]', 1, params[:billable].try(:[], :false)
+              -# Support
+        -# .form-group
+          -# .col-lg-2.control-label Owner:
+          -# .col-lg-10
+            -# = label_tag do
+              -# = check_box_tag 'owner[false]', 1, params[:owner].try(:[], :false)
+              -# Non-Owner
+            -# = label_tag do
+              -# = check_box_tag 'owner[true]', 1, params[:owner].try(:[], :true)
+              -# Owner
         .form-group
           .col-lg-10.col-lg-offset-2
-            = submit_tag 'Save', class: 'btn btn-primary'
+            = submit_tag 'Filter', class: 'btn btn-primary'
