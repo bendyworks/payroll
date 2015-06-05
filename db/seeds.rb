@@ -8,7 +8,7 @@ User.create!(email: 'admin@bendyworks.com', password: 'password')
 
 darkwing_start_date = Date.parse('2012-11-11')
 darkwing_end_date = Date.parse('2014-1-1')
-darkwing = Employee.create!(first_name: 'Darkwing', last_name: 'Duck',
+darkwing = Employee.create!(first_name: 'Darkwing (gone)', last_name: 'Duck',
                             starting_salary: '100000',
                             start_date: darkwing_start_date, end_date: darkwing_end_date)
 Salary.create!(employee: darkwing, start_date: darkwing_start_date + 90, annual_amount: '200000')
@@ -16,7 +16,7 @@ Salary.create!(employee: darkwing, start_date: darkwing_start_date + 90, annual_
 ###### FUTURE EMPLOYEES ######
 
 daffy_start_date = Date.today + 10
-daffy = Employee.create!(first_name: 'Daffy', last_name: 'Duck',
+daffy = Employee.create!(first_name: 'Daffy (future)', last_name: 'Duck',
                          starting_salary: '51000.00',
                          direct_experience: 2, indirect_experience: 8,
                          start_date: daffy_start_date)
@@ -48,9 +48,10 @@ Salary.create!(employee: mickey, start_date: mickey_start_date + 80, annual_amou
 
 ## Donald
 donald_start_date = daisie_start_date + 270
-donald = Employee.create!(first_name: 'Donald', last_name: 'Duck',
+donald = Employee.create!(first_name: 'Donald (support)', last_name: 'Duck',
                           starting_salary: '40000.00',
                           direct_experience: 9,
+                          billable: false,
                           start_date: donald_start_date)
 
 #########################
