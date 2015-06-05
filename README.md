@@ -1,4 +1,5 @@
-This is a tool to easily visualize salary data.
+Simple internal application to visualize payroll and inform salary decisions at Bendyworks.  Please feel encouraged to fork this and use for your company's needs as well. Pull requests encouraged!
+
 We're using 'google_visualr' gem for graphing.
 
 To get this up and running:
