@@ -2,7 +2,7 @@ Salary.delete_all
 Employee.delete_all
 
 User.delete_all
-User.create!(email: 'admin@bendyworks.com', password: 'password')
+User.create!(email: 'admin@bendyworks.com', password: 'password', invitation_accepted_at: Time.now)
 
 ###### FORMER EMPLOYEES ######
 
