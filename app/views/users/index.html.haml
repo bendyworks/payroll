@@ -3,6 +3,10 @@
 .container.user-list
   %table.table.table-striped.table-hover
     %tbody
+      %tr
+        %th Email
+        %th Invitation Status
       - @users.each do |user|
         %tr
           %td= user.email
+          %td= user.invitation_accepted_at.nil? ? 'Pending' : 'Joined'
