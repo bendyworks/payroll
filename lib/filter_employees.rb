@@ -16,6 +16,14 @@ module FilterEmployees
       # if all three are selected, don't filter.
     end
 
+    if params[:billable]
+      if params[:billable].count == 1
+        scope = scope.billed if params[:billable][:true]
+        scope = scope.support if params[:billable][:false]
+      end
+      # if both are selected, don't filter.
+    end
+
     scope
   end
 

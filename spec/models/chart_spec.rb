@@ -1,8 +1,9 @@
 require 'filter_employees'
 
 describe FilterEmployees do
+  let(:chart) { HistoryChart.new(params) }
+
   context 'Filtering on employment status' do
-    let(:chart) { HistoryChart.new(params) }
 
     let!(:current) { create :employee, start_date: Date.today - 1, end_date: Date.today + 1 }
     let!(:past) { create :employee, start_date: Date.today - 10, end_date: Date.today - 1 }
@@ -72,6 +73,47 @@ describe FilterEmployees do
       end
       context 'none checked' do
         let(:params) { {employment: nil} }
+        it 'includes all employees' do
+          expect(chart.filtered_collection(params)).to eq Employee.all
+        end
+      end
+    end
+  end
+
+
+  context 'filtering on billable status' do
+    let!(:billed) { create :employee, billable: true }
+    let!(:unbilled) { create :employee, billable: false }
+
+    context 'include only billable' do
+      let(:params) { {billable: {true: 1}} }
+      it 'includes billable employees' do
+        expect(chart.filtered_collection(params)).to include billed
+      end
+      it 'excludes unbillable employees' do
+        expect(chart.filtered_collection(params)).not_to include unbilled
+      end
+    end
+
+    context 'include only support' do
+      let(:params) { {billable: {false: 1}} }
+      it 'includes unbillable employees' do
+        expect(chart.filtered_collection(params)).to include unbilled
+      end
+      it 'excludes billable employees' do
+        expect(chart.filtered_collection(params)).not_to include billed
+      end
+    end
+
+    context 'include all' do
+      context 'all checked' do
+        let(:params) { {billable: {true: 1, false: 1}} }
+        it 'includes all employees' do
+          expect(chart.filtered_collection(params)).to eq Employee.all
+        end
+      end
+      context 'none checked' do
+        let(:params) { {billable: nil} }
         it 'includes all employees' do
           expect(chart.filtered_collection(params)).to eq Employee.all
         end

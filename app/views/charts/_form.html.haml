@@ -17,14 +17,14 @@
             = label_tag do
               = check_box_tag 'employment[future]', 1, params[:employment].try(:[], :future)
               Future
-        -# .form-group
-          -# .control-label Billable Status:
-          -# = label_tag do
-            -# = check_box_tag 'billable[true]', 1, params[:billable].try(:[], :true)
-            -# Billable
-          -# = label_tag do
-            -# = check_box_tag 'billable[false]', 1, params[:billable].try(:[], :false)
-            -# Support
+        .form-group
+          .control-label Billable Status:
+          = label_tag do
+            = check_box_tag 'billable[true]', 1, params[:billable].try(:[], :true)
+            Billable
+          = label_tag do
+            = check_box_tag 'billable[false]', 1, params[:billable].try(:[], :false)
+            Support
         -# .form-group
           -# .control-label Owner:
           -# = label_tag do

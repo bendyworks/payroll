@@ -11,6 +11,9 @@ class Employee < ActiveRecord::Base
   scope :past, -> { where('end_date < ?', Date.today).order('first_name') }
   scope :non_current, -> { where('start_date > ? OR end_date < ?', Date.today, Date.today).order('first_name') }
 
+  scope :billed, -> { where(billable: true) }
+  scope :support, -> { where(billable: false) }
+
   def employed_on?(date)
     date >= start_date && (end_date.nil? || date <= end_date)
   end
