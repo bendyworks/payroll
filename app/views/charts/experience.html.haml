@@ -1,8 +1,4 @@
 %h1 Industry Experience vs Current Salary
-%p
-  = link_to 'Current employees only', experience_path
-  |
-  = link_to 'Include past and future employees', experience_path(show_inactive: true)
 #experience_chart
 = render_chart @chart, 'experience_chart'
 = render 'form'
