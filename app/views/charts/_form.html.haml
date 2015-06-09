@@ -1,38 +1,37 @@
 %h3 Filter Graph Results
-.col-lg-6
+.col-lg-9
   .well.bs-component
     = form_tag({}, {method: :get}) do
       %fieldset
         .form-group
-          .col-lg-2.control-label Employment Status:
-          .col-lg-10
+          .control-label Employment Status:
+          %span.checkbox-inline
             = label_tag do
               = check_box_tag 'employment[current]', 1, params[:employment].try(:[], :current)
               Current
+          %span.checkbox-inline
             = label_tag do
               = check_box_tag 'employment[past]', 1, params[:employment].try(:[], :past)
               Past
+          %span.checkbox-inline
             = label_tag do
               = check_box_tag 'employment[future]', 1, params[:employment].try(:[], :future)
               Future
         -# .form-group
-          -# .col-lg-2.control-label Billable Status:
-          -# .col-lg-10
-            -# = label_tag do
-              -# = check_box_tag 'billable[true]', 1, params[:billable].try(:[], :true)
-              -# Billable
-            -# = label_tag do
-              -# = check_box_tag 'billable[false]', 1, params[:billable].try(:[], :false)
-              -# Support
+          -# .control-label Billable Status:
+          -# = label_tag do
+            -# = check_box_tag 'billable[true]', 1, params[:billable].try(:[], :true)
+            -# Billable
+          -# = label_tag do
+            -# = check_box_tag 'billable[false]', 1, params[:billable].try(:[], :false)
+            -# Support
         -# .form-group
-          -# .col-lg-2.control-label Owner:
-          -# .col-lg-10
-            -# = label_tag do
-              -# = check_box_tag 'owner[false]', 1, params[:owner].try(:[], :false)
-              -# Non-Owner
-            -# = label_tag do
-              -# = check_box_tag 'owner[true]', 1, params[:owner].try(:[], :true)
-              -# Owner
+          -# .control-label Owner:
+          -# = label_tag do
+            -# = check_box_tag 'owner[false]', 1, params[:owner].try(:[], :false)
+            -# Non-Owner
+          -# = label_tag do
+            -# = check_box_tag 'owner[true]', 1, params[:owner].try(:[], :true)
+            -# Owner
         .form-group
-          .col-lg-10.col-lg-offset-2
-            = submit_tag 'Filter', class: 'btn btn-primary'
+          = submit_tag 'Filter', class: 'btn btn-primary'

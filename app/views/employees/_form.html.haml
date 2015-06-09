@@ -4,45 +4,36 @@
     %ul
       - errors.each do |msg|
         %li= msg
-.col-lg-6
+.col-lg-9
   .well.bs-component
     = form_for(employee, html: { class: 'form-horizontal' }) do |f|
       %fieldset
-        .form-group
-          = f.label :first_name, class: 'col-lg-2 control-label'
-          .col-lg-10
-            = f.text_field :first_name, autofocus: true, class: 'form-control', required: true
-        .form-group
-          = f.label :last_name, class: 'col-lg-2 control-label'
-          .col-lg-10
-            = f.text_field :last_name, class: 'form-control', required: true
-        .form-group
-          = f.label :start_date, class: 'col-lg-2 control-label'
-          .col-lg-10
-            = f.date_field :start_date, class: 'form-control', required: true
-        .form-group
-          = f.label :end_date, class: 'col-lg-2 control-label'
-          .col-lg-10
-            = f.date_field :end_date, class: 'form-control'
-        .form-group
-          = f.label :direct_experience, 'Direct experience (months)', class: 'col-lg-2 control-label'
-          .col-lg-10
-            = f.number_field :direct_experience, class: 'form-control'
-        .form-group
-          = f.label :indirect_experience, 'Indirect experience (months)', class: 'col-lg-2 control-label'
-          .col-lg-10
-            = f.number_field :indirect_experience, class: 'form-control'
-        .form-group
-          = f.label :starting_salary, 'Starting salary annual amount', class: 'col-lg-2 control-label'
-          .col-lg-10
-            .input-group
-              %span.input-group-addon $
-              = f.number_field :starting_salary, class: 'form-control', required: true
-        .form-group
-          .col-lg-10
-            = f.check_box :billable
-            = f.label :billable, class: 'col-lg-2 control-label'
-        .form-group
-          .col-lg-10.col-lg-offset-2
-            = f.submit 'Save', class: 'btn btn-primary'
-            = link_to 'Cancel', :back, class: 'btn btn-default'
+        .form-group.col-lg-12
+          = f.label :first_name, class: 'control-label'
+          = f.text_field :first_name, autofocus: true, class: 'form-control', required: true
+        .form-group.col-lg-12
+          = f.label :last_name, class: 'control-label'
+          = f.text_field :last_name, class: 'form-control', required: true
+        .form-group.col-lg-12
+          = f.label :start_date, class: 'control-label'
+          = f.date_field :start_date, class: 'form-control', required: true
+        .form-group.col-lg-12
+          = f.label :end_date, class: 'control-label'
+          = f.date_field :end_date, class: 'form-control'
+        .form-group.col-lg-12
+          = f.label :direct_experience, 'Direct experience (months)', class: 'control-label'
+          = f.number_field :direct_experience, class: 'form-control'
+        .form-group.col-lg-12
+          = f.label :indirect_experience, 'Indirect experience (months)', class: 'control-label'
+          = f.number_field :indirect_experience, class: 'form-control'
+        .form-group.col-lg-12
+          = f.label :starting_salary, 'Starting salary annual amount', class: 'control-label'
+          .input-group
+            %span.input-group-addon $
+            = f.number_field :starting_salary, class: 'form-control', required: true
+        .form-group.col-lg-12
+          = f.check_box :billable
+          = f.label :billable, class: 'control-label'
+        .form-group.col-lg-12
+          = f.submit 'Save', class: 'btn btn-primary'
+          = link_to 'Cancel', :back, class: 'btn btn-default'

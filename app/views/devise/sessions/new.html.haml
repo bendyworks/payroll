@@ -1,21 +1,18 @@
 %h2 Log in
-.col-lg-6
+.col-lg-9
   .well.bs-component
     = form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: 'form-horizontal'}) do |f|
       %fieldset
-        .form-group
-          = f.label :email, class: 'col-lg-2 control-label'
-          .col-lg-10
-            = f.email_field :email, autofocus: true, class: 'form-control'
-        .form-group
-          = f.label :password, class: 'col-lg-2 control-label'
-          .col-lg-10
-            = f.password_field :password, autocomplete: "off", class: 'form-control'
-            .checkbox
-              %label
-                = f.check_box :remember_me
-                = f.label :remember_me
-        .form-group
-          .col-lg-10.col-lg-offset-2
-            = f.submit "Log in", class: 'btn btn-primary'
-= render "devise/shared/links"
+        .form-group.col-lg-12
+          = f.label :email, class: 'control-label'
+          = f.email_field :email, autofocus: true, class: 'form-control'
+        .form-group.col-lg-12
+          = f.label :password, class: 'control-label'
+          = f.password_field :password, autocomplete: "off", class: 'form-control'
+          .checkbox
+            %label
+              = f.check_box :remember_me
+              = f.label :remember_me
+        .form-group.col-lg-12
+          = f.submit "Log in", class: 'btn btn-primary'
+  = render "devise/shared/links"
