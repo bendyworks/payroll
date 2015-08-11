@@ -12,6 +12,7 @@ group :test do
   gem 'factory_girl_rails'
 end
 
+gem 'airbrake'
 gem 'google_visualr'
 gem 'haml'
 gem 'haml-rails'
