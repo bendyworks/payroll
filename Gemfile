@@ -26,6 +26,7 @@ gem 'devise_invitable'
 gem 'bootstrap-sass'
 gem 'foreigner'
 gem 'immigrant'
+gem 'puma'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.6'

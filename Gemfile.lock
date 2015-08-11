@@ -104,6 +104,7 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    puma (2.12.3)
     rack (1.5.2)
     rack-test (0.6.2)
       rack (>= 1.0)
@@ -206,6 +207,7 @@ DEPENDENCIES
   jquery-rails
   pg
   pry
+  puma
   rails (= 4.1.6)
   rails_12factor
   rspec-rails
