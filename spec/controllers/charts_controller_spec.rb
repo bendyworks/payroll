@@ -9,9 +9,9 @@ describe ChartsController do
   end
 
   describe "GET history" do
-    let!(:current_employee) { create :employee }
+    let!(:current_employee) { create :employee, :current }
     let!(:salary_1) { create :salary, employee: current_employee }
-    let!(:former_employee) { create :employee, end_date: Date.today - 2 }
+    let!(:former_employee) { create :employee, :past }
     let!(:salary_2) { create :salary, employee: former_employee }
 
     it "returns http success" do

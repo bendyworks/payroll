@@ -5,9 +5,9 @@ describe FilterEmployees do
 
   context 'Filtering on employment status' do
 
-    let!(:current) { create :employee, start_date: Date.today - 1, end_date: Date.today + 1 }
-    let!(:past) { create :employee, start_date: Date.today - 10, end_date: Date.today - 1 }
-    let!(:future) { create :employee, start_date: Date.today + 10 }
+    let!(:current) { create :employee, :current }
+    let!(:past) { create :employee, :past }
+    let!(:future) { create :employee, :future }
 
     context 'include only past employees' do
       let(:params) { {employment: {past: 1}} }
@@ -82,8 +82,8 @@ describe FilterEmployees do
 
 
   context 'filtering on billable status' do
-    let!(:billed) { create :employee, billable: true }
-    let!(:unbilled) { create :employee, billable: false }
+    let!(:billed) { create :employee, :billable }
+    let!(:support) { create :employee, :support }
 
     context 'include only billable' do
       let(:params) { {billable: {true: 1}} }
@@ -91,14 +91,14 @@ describe FilterEmployees do
         expect(chart.filtered_collection(params)).to include billed
       end
       it 'excludes unbillable employees' do
-        expect(chart.filtered_collection(params)).not_to include unbilled
+        expect(chart.filtered_collection(params)).not_to include support
       end
     end
 
     context 'include only support' do
       let(:params) { {billable: {false: 1}} }
       it 'includes unbillable employees' do
-        expect(chart.filtered_collection(params)).to include unbilled
+        expect(chart.filtered_collection(params)).to include support
       end
       it 'excludes billable employees' do
         expect(chart.filtered_collection(params)).not_to include billed
