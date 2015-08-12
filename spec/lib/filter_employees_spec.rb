@@ -1,3 +1,4 @@
+require 'rails_helper'
 require 'filter_employees'
 
 describe FilterEmployees do
