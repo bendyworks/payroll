@@ -7,14 +7,17 @@ FactoryGirl.define do
 
     trait :current do
       end_date Date.today + 1
+      first_name 'Current'
     end
 
     trait :past do
       end_date Date.today - 1
+      first_name 'Past'
     end
 
     trait :future do
       start_date Date.today + 10
+      first_name 'Future'
     end
 
     trait :billable do
