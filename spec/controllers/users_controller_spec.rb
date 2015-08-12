@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe UsersController, :type => :controller do
+describe UsersController do
   include Devise::TestHelpers
 
   let(:user) { create :user }

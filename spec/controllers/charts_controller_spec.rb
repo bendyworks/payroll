@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ChartsController, :type => :controller do
+describe ChartsController do
   include Devise::TestHelpers
 
   let(:user) { create :user }

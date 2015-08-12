@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe SalariesController, :type => :controller do
+describe SalariesController do
   include Devise::TestHelpers
 
   let(:user) { create :user }
