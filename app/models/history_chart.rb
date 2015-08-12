@@ -8,16 +8,16 @@ class HistoryChart
   def initialize collection_opts
     opts = { width: 800, height: 500, title: 'Salary History', legend: 'right',
              vAxis: { title: 'Salary Rate ($ annually)', minValue: 0 } }
-    @chart = GoogleVisualr::Interactive::LineChart.new(history_chart_data(collection_opts), opts)
+    @chart = GoogleVisualr::Interactive::LineChart.new(chart_data(collection_opts), opts)
   end
 
   private
 
-  def history_chart_data collection_opts
+  def chart_data collection_opts
     data_table = GoogleVisualr::DataTable.new
     data_table.new_column('date', 'Date')
 
-    @history_employees = filtered_collection(collection_opts)
+    @employees = filtered_collection(collection_opts)
 
     create_employee_columns! data_table
     populate_history_chart_data! data_table
@@ -25,7 +25,7 @@ class HistoryChart
   end
 
   def create_employee_columns! data_table
-    @history_employees.each do |employee|
+    @employees.each do |employee|
       data_table.new_column('number', employee.first_name)
     end
   end
@@ -41,7 +41,7 @@ class HistoryChart
     salary_history_dates.each_with_index do |date, date_row_num|
       data_table.set_cell(date_row_num, 0, date)
 
-      @history_employees.each_with_index do |employee, employee_column_num|
+      @employees.each_with_index do |employee, employee_column_num|
         data_table.set_cell(date_row_num, employee_column_num + 1, employee.salary_on(date))
       end
     end
@@ -52,7 +52,7 @@ class HistoryChart
     row = data_table.rows.count - 1
     data_table.set_cell(row, 0, Date.today)
 
-    @history_employees.each_with_index do |employee, employee_column_num|
+    @employees.each_with_index do |employee, employee_column_num|
       data_table.set_cell(row, employee_column_num + 1, employee.salary_on(Date.today))
     end
   end
