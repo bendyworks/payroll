@@ -1,3 +1,6 @@
+payroll
+=======
+
 [![Build](http://img.shields.io/travis-ci/bendyworks/payroll.svg?style=flat-square)](https://travis-ci.org/bendyworks/payroll) [![Code Climate](https://codeclimate.com/github/bendyworks/payroll/badges/gpa.svg)](https://codeclimate.com/github/bendyworks/payroll) [![Dependency Status](https://gemnasium.com/bendyworks/payroll.svg)](https://gemnasium.com/bendyworks/payroll)
 
 Simple internal application to visualize payroll and inform salary decisions at Bendyworks.  Please feel encouraged to fork this and use for your company's needs as well. Pull requests encouraged!
