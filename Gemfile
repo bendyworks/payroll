@@ -11,6 +11,7 @@ group :test do
   gem 'database_cleaner'
   gem 'shoulda-matchers', require: false
   gem 'factory_girl_rails'
+  gem 'rake'
 end
 
 group :production do

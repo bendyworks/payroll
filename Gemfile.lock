@@ -243,6 +243,7 @@ DEPENDENCIES
   puma
   rails (= 4.2.3)
   rails_12factor
+  rake
   rspec-rails
   sass-rails
   sdoc
