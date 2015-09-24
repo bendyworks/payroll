@@ -2,26 +2,36 @@ module FilterEmployees
 
   def filtered_collection params
     scope = Employee.all
+    scope = filter_by_employee_choices params[:employment], scope
+    scope = filter_by_billable_choice params[:billable], scope
+    scope
+  end
 
-    if params[:employment]
-      if params[:employment].count == 1
-        scope = scope.past if params[:employment][:past]
-        scope = scope.current if params[:employment][:current]
-        scope = scope.future if params[:employment][:future]
-      elsif params[:employment].count == 2
-        scope = scope.where('start_date < ?', Date.today) if params[:employment][:past] && params[:employment][:current]
-        scope = scope.where('end_date < ? OR start_date > ?', Date.today, Date.today) if params[:employment][:past] && params[:employment][:future]
-        scope = scope.where('end_date IS NULL OR end_date > ?', Date.today) if params[:employment][:current] && params[:employment][:future]
+  def filter_by_employee_choices employee_choices, scope
+    case employee_choices.try(:count)
+    when 1
+      selected = employee_choices.keys.first
+      scope = scope.send(selected)
+    when 2
+      if employee_choices[:past]
+        if employee_choices[:current]
+          scope = scope.where('start_date < ?', Date.today)
+        else # :future
+          scope = scope.where('end_date < ? OR start_date > ?', Date.today, Date.today)
+        end
+      else
+        scope = scope.where('end_date IS NULL OR end_date > ?', Date.today)
       end
-      # if all three are selected, don't filter.
-    end
-
-    if params[:billable] && params[:billable].count == 1
-      scope = scope.billed if params[:billable][:true]
-      scope = scope.support if params[:billable][:false]
     end
 
     scope
   end
 
+  def filter_by_billable_choice billable_choice, scope
+    if billable_choice.try(:count) == 1
+      scope = scope.billed if billable_choice[:true]
+      scope = scope.support if billable_choice[:false]
+    end
+    scope
+  end
 end
