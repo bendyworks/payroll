@@ -4,7 +4,7 @@ module FilterEmployees
     scope = Employee.all
     scope = filter_by_employee_choices params[:employment], scope
     scope = filter_by_billable_choice params[:billable], scope
-    scope
+    scope.order(:first_name)
   end
 
   def filter_by_employee_choices employee_choices, scope

@@ -69,13 +69,13 @@ describe FilterEmployees do
       context 'all checked' do
         let(:params) { {employment: {past: 1, current: 1, future: 1}} }
         it 'includes all employees' do
-          expect(chart.filtered_collection(params)).to eq Employee.all
+          expect(chart.filtered_collection(params)).to eq Employee.all.order(:first_name)
         end
       end
       context 'none checked' do
         let(:params) { {employment: nil} }
         it 'includes all employees' do
-          expect(chart.filtered_collection(params)).to eq Employee.all
+          expect(chart.filtered_collection(params)).to eq Employee.all.order(:first_name)
         end
       end
     end
@@ -110,13 +110,13 @@ describe FilterEmployees do
       context 'all checked' do
         let(:params) { {billable: {true: 1, false: 1}} }
         it 'includes all employees' do
-          expect(chart.filtered_collection(params)).to eq Employee.all
+          expect(chart.filtered_collection(params)).to eq Employee.all.order(:first_name)
         end
       end
       context 'none checked' do
         let(:params) { {billable: nil} }
         it 'includes all employees' do
-          expect(chart.filtered_collection(params)).to eq Employee.all
+          expect(chart.filtered_collection(params)).to eq Employee.all.order(:first_name)
         end
       end
     end
