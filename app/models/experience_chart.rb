@@ -34,9 +34,9 @@ class ExperienceChart
 
   def populate_experience_chart_data! data_table
     @employees.each do |employee|
+      row_num = data_table.rows.count
       data_table.add_rows(1)
-      row = data_table.rows.count - 1
-      data_table.set_cell(row, 0, employee.weighted_years_experience)
+      data_table.set_cell(row_num, 0, employee.weighted_years_experience)
 
       @employees.each_with_index do |em, employee_index|
         if employee == em
@@ -48,8 +48,8 @@ class ExperienceChart
         end
 
         employee_column = employee_index * 2 + 1
-        data_table.set_cell(row, employee_column, y_value)
-        data_table.set_cell(row, employee_column + 1, tooltip_text)
+        data_table.set_cell(row_num, employee_column, y_value)
+        data_table.set_cell(row_num, employee_column + 1, tooltip_text)
       end
     end
   end
