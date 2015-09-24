@@ -5,8 +5,14 @@
     %tbody
       %tr
         %th Email
-        %th Invitation Status
+        %th Status
+        %th Actions
       - @users.each do |user|
         %tr
           %td= user.email
-          %td= user.invitation_accepted_at.nil? ? 'Pending' : 'Joined'
+          - if user.pending?
+            %td= 'Pending'
+            %td= link_to 'Resend', resend_invitation_path(user.id), class: 'btn btn-success', method: 'post'
+          - else
+            %td= 'Joined'
+            %td

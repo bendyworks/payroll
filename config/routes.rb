@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     get 'users/edit' => 'devise/registrations#edit', as: 'edit_user_registration'
     patch 'users/:id' => 'devise/registrations#update', as: 'user_registration'
   end
+  post 'resend_invitation/:user_id' => 'users#resend_invitation', as: 'resend_invitation'
 
   root 'charts#history'
   get 'experience', to: 'charts#experience'
