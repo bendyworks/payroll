@@ -53,7 +53,7 @@ class Employee < ActiveRecord::Base
   def days_employed
     return 0 if Date.today < start_date
 
-    experience_end = end_date ? [end_date, Date.today].min : Date.today
+    experience_end = [end_date, Date.today].compact.min
     (experience_end - start_date).to_i
   end
 
