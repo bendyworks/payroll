@@ -4,6 +4,7 @@ ruby '2.2.2'
 group :development, :test do
   gem 'rspec-rails'
   gem 'pry'
+  gem 'pry-byebug'
 end
 
 group :test do
