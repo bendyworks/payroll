@@ -55,8 +55,16 @@ class Employee < ActiveRecord::Base
     "Here: #{experience_here_formatted}\nPrior: #{direct_experience} months direct, #{indirect_experience} months indirect"
   end
 
+  def current_or_last_pay
+    salary_on(Date.today) || ending_salary || starting_salary
+  end
+
   def self.ordered_start_dates
     select('distinct start_date').order('start_date').map(&:start_date)
+  end
+
+  def experience_tooltip
+    "#{first_name}:\n#{all_experience_formatted}\n\$#{current_or_last_pay} salary"
   end
 
   private

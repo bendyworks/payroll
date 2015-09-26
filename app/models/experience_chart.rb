@@ -45,8 +45,8 @@ class ExperienceChart
 
     @employees.each_with_index do |em, employee_index|
       if employee == em
-        y_value = employee.salary_on(Date.today) || employee.ending_salary || employee.starting_salary
-        tooltip_text = "#{employee.first_name}:\n#{employee.all_experience_formatted}\n\$#{y_value} salary"
+        y_value = employee.current_or_last_pay
+        tooltip_text = employee.experience_tooltip
       else
         y_value = nil
         tooltip_text = nil
