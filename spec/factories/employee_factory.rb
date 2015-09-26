@@ -28,23 +28,4 @@ FactoryGirl.define do
       billable false
     end
   end
-
-  factory :salary do
-    start_date Date.parse('2013-2-1')
-    annual_amount 700
-    employee
-  end
-
-  factory :user do
-    sequence(:email) { |n| "user#{n}@bendyworks.com" }
-    password 'password'
-
-    trait :accepted_invitation do
-      invitation_accepted_at Time.now - 1.day
-    end
-
-    trait :has_logged_in do
-      last_sign_in_at Time.now - 1.hour
-    end
-  end
 end
