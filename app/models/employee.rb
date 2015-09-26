@@ -26,12 +26,12 @@ class Employee < ActiveRecord::Base
   end
 
   def salary_data
-    data = [[start_date, starting_salary]]
-    salaries.each{|salary| data << [salary.start_date, salary.annual_amount]}
+    data = [{c: [start_date, starting_salary]}]
+    salaries.each{|salary| data << {c: [salary.start_date, salary.annual_amount]}}
     if end_date
-      data << [end_date, ending_salary]
+      data << {c: [end_date, ending_salary]}
     elsif employed_on?(Date.today)
-      data << [Date.today, salary_on(Date.today)]
+      data << {c: [Date.today, salary_on(Date.today)]}
     end
     data
   end

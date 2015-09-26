@@ -139,7 +139,7 @@ describe Employee do
     end
     let!(:raise) { create :salary, employee: employee, start_date: raise_date, annual_amount: 200 }
     let(:last_pay_date) { end_date || Date.today }
-    let(:expected_salary_data) { [[start_date, 100], [raise_date, 200], [last_pay_date, 200]] }
+    let(:expected_salary_data) { [{c: [start_date, 100]}, {c: [raise_date, 200]}, {c: [last_pay_date, 200]}] }
 
     context 'current employee' do
       let(:end_date) { nil }

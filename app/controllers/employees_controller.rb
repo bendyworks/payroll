@@ -44,10 +44,8 @@ class EmployeesController < ApplicationController
   end
 
   def employee_salary_history_data
-    data_table = GoogleVisualr::DataTable.new
-    data_table.new_column 'date', 'Date'
-    data_table.new_column 'number', @employee.first_name
-    data_table.add_rows @employee.salary_data
-    data_table
+    GoogleVisualr::DataTable.new cols: [{type: 'date', label: 'Date'},
+                                        {type: 'number', label: @employee.first_name}],
+                                 rows: @employee.salary_data
   end
 end
