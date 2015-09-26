@@ -12,7 +12,7 @@ describe Employee do
   it { should have_db_column(:start_date).of_type(:date) }
   it { should have_db_column(:end_date).of_type(:date) }
 
-  describe 'salary_on' do
+  describe '#salary_on' do
     let(:start_date) { Date.parse('2013-7-10') }
     let(:raise_date) { Date.parse('2013-12-10') }
     let(:end_date) { Date.parse('2014-12-31') }
@@ -42,7 +42,7 @@ describe Employee do
     end
   end
 
-  describe 'ending_salary' do
+  describe '#ending_salary' do
     let(:employee) { create :employee, end_date: end_date }
     let!(:salary) { create :salary, employee: employee }
     let!(:raise_salary) { create :salary, employee: employee, start_date: salary.start_date + 5 }
@@ -65,7 +65,7 @@ describe Employee do
 
   end
 
-  describe 'weighted_years_experience' do
+  describe '#weighted_years_experience' do
     context 'employee had no prior experience' do
       let!(:daisie) { create :employee, start_date: daisie_start_date, end_date: daisie_end_date }
       let(:daisie_start_date) { Date.parse('2012-1-1') }
@@ -96,7 +96,7 @@ describe Employee do
     end
   end
 
-  describe 'employed_on?' do
+  describe '#employed_on?' do
     let(:start_date) { Date.parse('2013-1-1') }
     let(:employee) { create :employee, start_date: start_date, end_date: end_date }
 
@@ -125,6 +125,33 @@ describe Employee do
       let(:end_date) { nil }
       it "returns true after start date" do
         expect(employee.employed_on?(Date.today)).to be true
+      end
+    end
+  end
+
+  describe '#salary_data' do
+    let(:start_date) { Date.parse '2001-10-10' }
+    let(:raise_date) { Date.parse '2002-10-10' }
+
+    let(:employee) do
+      create :employee, first_name: 'Joan', starting_salary: 100,
+        start_date: start_date, end_date: end_date
+    end
+    let!(:raise) { create :salary, employee: employee, start_date: raise_date, annual_amount: 200 }
+    let(:last_pay_date) { end_date || Date.today }
+    let(:expected_salary_data) { [[start_date, 100], [raise_date, 200], [last_pay_date, 200]] }
+
+    context 'current employee' do
+      let(:end_date) { nil }
+      it 'returns ordered set of dates and salary on those dates' do
+        expect(employee.salary_data).to eql(expected_salary_data)
+      end
+    end
+
+    context 'past employee' do
+      let(:end_date) { Date.parse '2003-10-10' }
+      it 'returns ordered set of dates and salary on those dates' do
+        expect(employee.salary_data).to eql(expected_salary_data)
       end
     end
   end

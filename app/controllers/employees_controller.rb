@@ -45,22 +45,9 @@ class EmployeesController < ApplicationController
 
   def employee_salary_history_data
     data_table = GoogleVisualr::DataTable.new
-    data_table.new_column('date', 'Date')
-    data_table.new_column('number', @employee.first_name)
-
-    data_table.add_rows( [ [@employee.start_date, @employee.starting_salary] ] )
-
-    @employee.salaries.each_with_index do |salary, index|
-      data_table.add_rows( [ [salary.start_date - 1, @employee.salary_on(salary.start_date - 1)],
-                             [salary.start_date, salary.annual_amount] ] )
-    end
-
-    if @employee.end_date
-      data_table.add_rows( [ [@employee.end_date, @employee.ending_salary] ] )
-    elsif @employee.employed_on?(Date.today)
-      data_table.add_rows( [ [Date.today, @employee.salary_on(Date.today)] ] )
-    end
-
+    data_table.new_column 'date', 'Date'
+    data_table.new_column 'number', @employee.first_name
+    data_table.add_rows @employee.salary_data
     data_table
   end
 end
