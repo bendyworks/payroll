@@ -12,7 +12,6 @@ class ChartsController < ApplicationController
   def chart_params
     employment = params[:employment].try(:permit, :past, :current, :future)
     billable = params[:billable].try(:permit, :true, :false)
-    owner = params[:owner].try(:permit, :true, :false)
-    {employment: employment, billable: billable, owner: owner}
+    {employment: employment, billable: billable}
   end
 end
