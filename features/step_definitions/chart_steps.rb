@@ -11,3 +11,10 @@ Then(/^the salary history chart is present$/) do
     expect(page).to have_content('Salary Rate ($ annually)')
   end
 end
+
+Then(/^their salary history chart is present$/) do
+  expect(page).to have_content("Salary History Chart")
+  within '#history_chart' do
+    expect(page).to have_content('Salary Rate ($ annually)')
+  end
+end

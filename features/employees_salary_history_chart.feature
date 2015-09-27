@@ -1,4 +1,4 @@
-Feature: Salary History Chart
+Feature: Employees Salary History Chart
 
 @javascript
 Scenario: user sees employees salary history chart

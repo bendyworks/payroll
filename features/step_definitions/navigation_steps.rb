@@ -13,3 +13,7 @@ end
 When(/^I'm on the salary history chart page$/) do
   visit root_path
 end
+
+When(/^I'm on that employee page$/) do
+  visit employee_path(@employee)
+end
