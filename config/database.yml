@@ -83,3 +83,6 @@ production:
   database: payroll_production
   username: payroll
   password: <%= ENV['PAYROLL_DATABASE_PASSWORD'] %>
+
+cucumber:
+  <<: *test

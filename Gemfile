@@ -13,6 +13,8 @@ group :test do
   gem 'shoulda-matchers', require: false
   gem 'factory_girl_rails'
   gem 'rake'
+  gem 'cucumber-rails'
+  gem 'database_cleaner'
 end
 
 group :production do
