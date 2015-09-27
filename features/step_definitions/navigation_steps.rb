@@ -9,3 +9,7 @@ end
 Given(/^I'm on the experience chart page$/) do
   visit experience_path
 end
+
+When(/^I'm on the salary history chart page$/) do
+  visit root_path
+end
