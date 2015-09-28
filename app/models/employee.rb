@@ -6,10 +6,15 @@ class Employee < ActiveRecord::Base
   validates :start_date, presence: true
   validates :starting_salary, presence: true
 
-  scope :current, -> { where('start_date <= ? AND (end_date IS NULL OR end_date >= ?)', Date.today, Date.today).order('first_name') }
+  scope :current, -> do
+    where('start_date <= ? AND (end_date IS NULL OR end_date >= ?)',
+          Date.today, Date.today).order('first_name')
+  end
   scope :future, -> { where('start_date > ?', Date.today).order('first_name') }
   scope :past, -> { where('end_date < ?', Date.today).order('first_name') }
-  scope :non_current, -> { where('start_date > ? OR end_date < ?', Date.today, Date.today).order('first_name') }
+  scope :non_current, -> do
+    where('start_date > ? OR end_date < ?', Date.today, Date.today).order('first_name')
+  end
 
   scope :billed, -> { where(billable: true) }
   scope :support, -> { where(billable: false) }
@@ -52,7 +57,8 @@ class Employee < ActiveRecord::Base
   end
 
   def all_experience_formatted
-    "Here: #{experience_here_formatted}\nPrior: #{direct_experience} months direct, #{indirect_experience} months indirect"
+    "Here: #{experience_here_formatted}\nPrior: #{direct_experience} months direct," +
+      " #{indirect_experience} months indirect"
   end
 
   def current_or_last_pay
