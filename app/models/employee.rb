@@ -35,7 +35,7 @@ class Employee < ActiveRecord::Base
     salaries.each{|salary| data << {c: [salary.start_date, salary.annual_amount]}}
     if end_date
       data << {c: [end_date, ending_salary]}
-    elsif employed_on?(Date.today)
+    elsif employed_on?(Date.today) && !has_future_raise?
       data << {c: [Date.today, salary_on(Date.today)]}
     end
     data
@@ -84,5 +84,9 @@ class Employee < ActiveRecord::Base
 
   def prior_experience_day_equivalent
     (direct_experience * 15) + (indirect_experience * 8)
+  end
+
+  def has_future_raise?
+    salaries.last && (salaries.last.start_date > Date.today)
   end
 end

@@ -154,6 +154,15 @@ describe Employee do
         expect(employee.salary_data).to eql(expected_salary_data)
       end
     end
+
+    context 'with future raise' do
+      let(:end_date) { nil }
+      let(:raise_date) { Date.today + 1.week }
+      let(:expected_salary_data) { [{c: [start_date, 100]}, {c: [raise_date, 200]}]}
+      it 'future raise date comes last' do
+        expect(employee.salary_data).to eql(expected_salary_data)
+      end
+    end
   end
 
   describe 'current' do
