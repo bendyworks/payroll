@@ -32,7 +32,11 @@ class Employee < ActiveRecord::Base
 
   def salary_data
     data = [{c: [start_date, starting_salary]}]
-    salaries.each{|salary| data << {c: [salary.start_date, salary.annual_amount]}}
+
+    salaries.ordered_dates_with_previous_dates.each do |date|
+      data << {c: [date, salary_on(date)]}
+    end
+
     if end_date
       data << {c: [end_date, ending_salary]}
     elsif employed_on?(Date.today) && !has_future_raise?
