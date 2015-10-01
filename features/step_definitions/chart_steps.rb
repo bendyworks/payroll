@@ -18,3 +18,8 @@ Then(/^their salary history chart is present$/) do
     expect(page).to have_content('Salary Rate ($ annually)')
   end
 end
+
+Then(/^current employment status is checked$/) do
+  current_checkbox = find('#employment_current')
+  expect(current_checkbox).to be_checked
+end

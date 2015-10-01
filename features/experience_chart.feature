@@ -6,3 +6,4 @@ Scenario: user sees experience chart
     And I'm logged in
   When I'm on the experience chart page
   Then the experience chart is present
+    And current employment status is checked

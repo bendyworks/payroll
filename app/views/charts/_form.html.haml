@@ -7,7 +7,7 @@
           .control-label Employment Status:
           %span.checkbox-inline
             = label_tag do
-              = check_box_tag 'employment[current]', 1, params[:employment].try(:[], :current)
+              = check_box_tag 'employment[current]', 1, current_employment_checked
               Current
           %span.checkbox-inline
             = label_tag do
