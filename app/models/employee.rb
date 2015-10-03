@@ -6,14 +6,16 @@ class Employee < ActiveRecord::Base
   validates :start_date, presence: true
   validates :starting_salary, presence: true
 
+  default_scope { order :first_name }
+
   scope :current, -> do
-    where('start_date <= ? AND (end_date IS NULL OR end_date >= ?)',
-          Date.today, Date.today).order('first_name')
+    where('start_date <= ? AND (end_date IS NULL OR end_date >= ?)', Date.today, Date.today)
   end
-  scope :future, -> { where('start_date > ?', Date.today).order('first_name') }
-  scope :past, -> { where('end_date < ?', Date.today).order('first_name') }
+
+  scope :future, -> { where('start_date > ?', Date.today) }
+  scope :past, -> { where('end_date < ?', Date.today) }
   scope :non_current, -> do
-    where('start_date > ? OR end_date < ?', Date.today, Date.today).order('first_name')
+    where('start_date > ? OR end_date < ?', Date.today, Date.today)
   end
 
   scope :billed, -> { where(billable: true) }
@@ -70,7 +72,7 @@ class Employee < ActiveRecord::Base
   end
 
   def self.ordered_start_dates
-    select('distinct start_date').order('start_date').map(&:start_date)
+    select('distinct start_date').unscoped.order('start_date').map(&:start_date)
   end
 
   def experience_tooltip
