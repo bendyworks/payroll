@@ -8,18 +8,19 @@ class Employee < ActiveRecord::Base
 
   default_scope { order :first_name }
 
-  scope :current, -> do
-    where('start_date <= ? AND (end_date IS NULL OR end_date >= ?)', Date.today, Date.today)
-  end
-
   scope :future, -> { where('start_date > ?', Date.today) }
   scope :past, -> { where('end_date < ?', Date.today) }
-  scope :non_current, -> do
-    where('start_date > ? OR end_date < ?', Date.today, Date.today)
-  end
 
   scope :billed, -> { where(billable: true) }
   scope :support, -> { where(billable: false) }
+
+  def self.current
+    where('start_date <= ? AND (end_date IS NULL OR end_date >= ?)', Date.today, Date.today)
+  end
+
+  def self.non_current
+    where('start_date > ? OR end_date < ?', Date.today, Date.today)
+  end
 
   def employed_on?(date)
     date >= start_date && (end_date.nil? || date <= end_date)
