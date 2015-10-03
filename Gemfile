@@ -8,7 +8,7 @@ group :development, :test do
 end
 
 group :test do
-  gem 'shoulda-matchers', require: false
+  gem 'shoulda-matchers'
   gem 'factory_girl_rails'
   gem 'rake'
   gem 'cucumber-rails', require: false

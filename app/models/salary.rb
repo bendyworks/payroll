@@ -1,6 +1,6 @@
 class Salary < ActiveRecord::Base
   belongs_to :employee
-  validates :start_date, presence: true, uniqueness: { scope: :employee }
+  validates :start_date, presence: true, uniqueness: { scope: :employee_id }
   validates :employee_id, presence: true
   validates :annual_amount, presence: true
   validate :no_salaries_outside_employment_dates, if: :employee
