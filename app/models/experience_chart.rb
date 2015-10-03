@@ -6,7 +6,7 @@ class ExperienceChart
   attr_reader :chart
 
   def initialize collection_opts
-    opts = { width: 800, height: 500,
+    opts = { width: 800, height: 500, material: true,
              hAxis: { title: "Years at Bendyworks plus partial prior experience)", minValue: 0 },
              vAxis: { minValue: 0 } }
 

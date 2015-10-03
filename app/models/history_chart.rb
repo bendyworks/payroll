@@ -6,7 +6,7 @@ class HistoryChart
   attr_reader :chart
 
   def initialize collection_opts
-    opts = { width: 800, height: 500, legend: 'right',
+    opts = { width: 800, height: 500, legend: 'right', material: true,
              vAxis: { minValue: 0, gridlines: {count: 10}}}
 
     @employees = filtered_collection(collection_opts)
