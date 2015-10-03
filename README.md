@@ -5,7 +5,7 @@ payroll
 
 Simple internal application to visualize payroll and inform salary decisions at Bendyworks.  Please feel encouraged to fork this and use for your company's needs as well. Pull requests encouraged!
 
-We're using 'google_visualr' gem for graphing.
+We're using [google_visualr gem](https://github.com/winston/google_visualr) for graphing. [Documentation](http://googlevisualr.herokuapp.com/)
 
 To get this up and running:
   1. clone it
