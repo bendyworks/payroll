@@ -6,8 +6,8 @@ class HistoryChart
   attr_reader :chart
 
   def initialize collection_opts
-    opts = { width: 800, height: 500, title: 'Salary History', legend: 'right',
-             vAxis: { title: 'Salary Rate ($ annually)', minValue: 0, gridlines: {count: 10}}}
+    opts = { width: 800, height: 500, legend: 'right',
+             vAxis: { minValue: 0, gridlines: {count: 10}}}
 
     @employees = filtered_collection(collection_opts)
     @chart = GoogleVisualr::Interactive::LineChart.new(chart_data(collection_opts), opts)

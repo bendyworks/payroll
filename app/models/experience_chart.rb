@@ -6,9 +6,9 @@ class ExperienceChart
   attr_reader :chart
 
   def initialize collection_opts
-    opts = { width: 800, height: 500, title: 'Experience vs Salary',
-             hAxis: { title: "Years of Experience\n(Time at Bendyworks plus weighted prior experience)", minValue: 0 },
-             vAxis: { title: 'Current Salary', minValue: 0 } }
+    opts = { width: 800, height: 500,
+             hAxis: { title: "Years at Bendyworks plus partial prior experience)", minValue: 0 },
+             vAxis: { minValue: 0 } }
 
     @employees = filtered_collection(collection_opts)
     @chart = GoogleVisualr::Interactive::ScatterChart.new(chart_data(collection_opts), opts)
