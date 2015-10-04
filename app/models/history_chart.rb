@@ -8,6 +8,8 @@ class HistoryChart
   def initialize collection_opts
     opts = { width: 800, height: 500, title: 'Salary History', legend: 'right',
              vAxis: { title: 'Salary Rate ($ annually)', minValue: 0 } }
+
+    @employees = filtered_collection(collection_opts)
     @chart = GoogleVisualr::Interactive::LineChart.new(chart_data(collection_opts), opts)
   end
 
@@ -16,8 +18,6 @@ class HistoryChart
   def chart_data collection_opts
     data_table = GoogleVisualr::DataTable.new
     data_table.new_column('date', 'Date')
-
-    @employees = filtered_collection(collection_opts)
 
     create_employee_columns! data_table
     populate_history_chart_data! data_table

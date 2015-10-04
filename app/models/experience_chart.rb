@@ -9,6 +9,8 @@ class ExperienceChart
     opts = { width: 800, height: 500, title: 'Experience vs Salary',
              hAxis: { title: "Years of Experience\n(Time at Bendyworks plus weighted prior experience)", minValue: 0 },
              vAxis: { title: 'Current Salary', minValue: 0 } }
+
+    @employees = filtered_collection(collection_opts)
     @chart = GoogleVisualr::Interactive::ScatterChart.new(chart_data(collection_opts), opts)
   end
 
@@ -17,8 +19,6 @@ class ExperienceChart
   def chart_data collection_opts
     data_table = GoogleVisualr::DataTable.new
     data_table.new_column('number', 'Years of Experience')
-
-    @employees = filtered_collection(collection_opts)
 
     create_employee_columns_with_tooltips! data_table
     populate_experience_chart_data! data_table
