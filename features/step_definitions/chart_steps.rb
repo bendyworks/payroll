@@ -1,5 +1,5 @@
 Then(/^the experience chart is present$/) do
-  expect(page).to have_content('Industry Experience vs Current Salary')
+  expect(page).to have_content('Experience')
   within '#experience_chart' do
     expect(page).to have_content('Years at Bendyworks plus partial prior experience')
   end
