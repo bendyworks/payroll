@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :accounts
   devise_for :users, skip: [:registrations]
   as :user do
     get 'users/edit' => 'devise/registrations#edit', as: 'edit_user_registration'
@@ -13,5 +12,6 @@ Rails.application.routes.draw do
     resources :salaries, only: [:new, :create, :destroy]
   end
 
-  resources :users, only: [:index]
+  resources :users, only: :index
+  resources :accounts, except: :index
 end

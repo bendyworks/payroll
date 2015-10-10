@@ -1,10 +1,6 @@
 class AccountsController < ApplicationController
   before_action :set_account, only: [:show, :edit, :update, :destroy]
 
-  def index
-    @accounts = Account.all
-  end
-
   def show
   end
 
@@ -44,7 +40,7 @@ class AccountsController < ApplicationController
   def destroy
     @account.destroy
     respond_to do |format|
-      format.html { redirect_to accounts_url, notice: 'Account was successfully destroyed.' }
+      format.html { redirect_to root_path, notice: 'Account was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -54,7 +50,6 @@ class AccountsController < ApplicationController
       @account = Account.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def account_params
       params.require(:account).permit(:name, :account_type_id)
     end

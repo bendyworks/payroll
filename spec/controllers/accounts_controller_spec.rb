@@ -9,14 +9,6 @@ RSpec.describe AccountsController, type: :controller do
   let(:valid_attributes) { { name: 'Account Name' } }
   let(:invalid_attributes) { { name: nil } }
 
-  describe "GET #index" do
-    it "assigns all accounts as @accounts" do
-      account = Account.create! valid_attributes
-      get :index
-      expect(assigns(:accounts)).to eq([account])
-    end
-  end
-
   describe "GET #show" do
     it "assigns the requested account as @account" do
       account = Account.create! valid_attributes
@@ -120,10 +112,10 @@ RSpec.describe AccountsController, type: :controller do
       }.to change(Account, :count).by(-1)
     end
 
-    it "redirects to the accounts list" do
+    it "redirects to the home page" do
       account = Account.create! valid_attributes
       delete :destroy, {:id => account.to_param}
-      expect(response).to redirect_to(accounts_url)
+      expect(response).to redirect_to(root_url)
     end
   end
 end
