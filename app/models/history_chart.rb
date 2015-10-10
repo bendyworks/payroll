@@ -1,5 +1,3 @@
-require 'filter_employees'
-
 class HistoryChart
   include FilterEmployees
 
