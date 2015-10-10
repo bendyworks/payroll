@@ -20,13 +20,9 @@
             .navbar-collapse.collapse.navbar-responsive-collapse
               - if user_signed_in?
                 %ul.nav.navbar-nav
-                  %li.dropdown
-                    %a.dropdown-toggle#charts{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#"}
-                      Charts
-                      %b.caret
-                    %ul.dropdown-menu{"aria-labelledby" => "charts"}
-                      %li= link_to 'Salary History', root_path
-                      %li= link_to 'Experience', experience_path
+                  %li= link_to 'Salaries', salaries_path
+                  %li= link_to 'Experience', experience_path
+                %ul.nav.navbar-nav.navbar-right
                   %li.dropdown
                     %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#"}
                       Employees
@@ -41,7 +37,6 @@
                       %li.dropdown-header Inactive Employees
                       - Employee.non_current.each do |e|
                         %li= link_to e.first_name, employee_path(e)
-                %ul.nav.navbar-nav.navbar-right
                   %li.dropdown
                     %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#"}
                       Accounts

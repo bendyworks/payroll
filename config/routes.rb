@@ -6,8 +6,10 @@ Rails.application.routes.draw do
   end
   post 'resend_invitation/:user_id' => 'users#resend_invitation', as: 'resend_invitation'
 
-  root 'charts#history'
+  root 'charts#salaries'
+  get 'salaries', to: 'charts#salaries'
   get 'experience', to: 'charts#experience'
+
   resources :employees, except: [:destroy] do
     resources :salaries, only: [:new, :create, :destroy]
   end

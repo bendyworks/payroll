@@ -5,16 +5,16 @@ Then(/^the experience chart is present$/) do
   end
 end
 
-Then(/^the salary history chart is present$/) do
-  expect(page).to have_content('Salary History')
-  within '#history_chart' do
+Then(/^the salaries chart is present$/) do
+  expect(page).to have_content('Salaries')
+  within '#salaries_chart' do
     expect(page).to have_content('2015')
   end
 end
 
 Then(/^their salary history chart is present$/) do
-  expect(page).to have_content("Salary History Chart")
-  within '#history_chart' do
+  expect(page).to have_content("Salary History")
+  within '#salary_chart' do
     expect(page).to have_content('2015')
   end
 end

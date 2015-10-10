@@ -1,4 +1,4 @@
-Feature: Single Employee Salary History Chart
+Feature: Single Employee Salary Chart
 
 @javascript
 Scenario: user sees single employee salary history chart

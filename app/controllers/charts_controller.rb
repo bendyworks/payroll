@@ -1,6 +1,6 @@
 class ChartsController < ApplicationController
-  def history
-    @chart = HistoryChart.new(chart_params).chart
+  def salaries
+    @chart = SalaryChart.new(chart_params).chart
   end
 
   def experience

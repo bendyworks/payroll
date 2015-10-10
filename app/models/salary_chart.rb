@@ -1,4 +1,4 @@
-class HistoryChart
+class SalaryChart
   include FilterEmployees
 
   attr_reader :chart
