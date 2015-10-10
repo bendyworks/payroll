@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @account.name
+%p
+  %b Account type:
+  = @account.account_type.try(:name)
+
+= link_to 'Edit', edit_account_path(@account)
+\|
+= link_to 'List', accounts_path

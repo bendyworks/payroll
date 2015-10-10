@@ -1,3 +1,6 @@
+
+AccountType.seed
+
 Salary.delete_all
 Employee.delete_all
 

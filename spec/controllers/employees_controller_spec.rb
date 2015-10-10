@@ -4,9 +4,7 @@ describe EmployeesController do
   include Devise::TestHelpers
 
   let(:user) { create :user }
-  before do
-    sign_in user
-  end
+  before { sign_in user }
 
   describe "GET show" do
     let!(:employee) { create :employee }
