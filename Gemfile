@@ -28,7 +28,6 @@ gem 'haml-rails'
 gem 'devise'
 gem 'devise_invitable'
 gem 'bootstrap-sass'
-gem 'foreigner'
 gem 'immigrant'
 gem 'puma'
 
