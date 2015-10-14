@@ -1,6 +1,16 @@
 class AccountsController < ApplicationController
   before_action :set_account, only: [:show, :edit, :update, :destroy]
 
+  def upload_balances_form
+    puts 'In form action'
+  end
+
+  def upload_balances
+    BalanceCsvParser.record params[:balances_file]
+    flash.now[:notice] = 'Balances successfully uploaded'
+    render :upload_balances_form
+  end
+
   def show
   end
 

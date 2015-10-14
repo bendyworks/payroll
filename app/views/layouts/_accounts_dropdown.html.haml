@@ -1,0 +1,9 @@
+%a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#"}
+  Accounts
+  %b.caret
+%ul.dropdown-menu
+  - Account.all.each do |account|
+    %li= link_to account.name, account_path(account)
+  %li.divider
+  %li= link_to 'Add account', new_account_path
+  %li= link_to 'Upload balances CSV', upload_balances_form_accounts_path

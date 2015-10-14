@@ -1,0 +1,7 @@
+%h1 Upload balances CSV
+
+= form_tag({action: :upload_balances}, multipart: true) do
+  = file_field_tag :balances_file
+
+  .actions
+    = submit_tag 'Upload'

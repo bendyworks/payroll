@@ -21,6 +21,7 @@ group :production do
   gem 'rails_12factor'
 end
 
+gem 'smarter_csv'
 gem 'airbrake'
 gem 'google_visualr'
 gem 'haml'

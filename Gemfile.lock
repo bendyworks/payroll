@@ -225,6 +225,7 @@ GEM
     shoulda-matchers (3.0.0)
       activesupport (>= 4.0.0)
     slop (3.6.0)
+    smarter_csv (1.1.0)
     spring (1.4.0)
     sprockets (3.3.4)
       rack (~> 1.0)
@@ -279,6 +280,7 @@ DEPENDENCIES
   sdoc
   selenium-webdriver
   shoulda-matchers
+  smarter_csv
   spring
   turbolinks
   uglifier

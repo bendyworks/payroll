@@ -15,5 +15,10 @@ Rails.application.routes.draw do
   end
 
   resources :users, only: :index
-  resources :accounts, except: :index
+  resources :accounts, except: :index do
+    collection do
+      get :upload_balances_form
+      post :upload_balances
+    end
+  end
 end
