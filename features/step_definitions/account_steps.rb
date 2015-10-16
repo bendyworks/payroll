@@ -6,7 +6,7 @@ EXAMPLE_ACCOUNTS = { 'City Bank Checking' => 'Checking',
                      'SBA Loan' => 'Loan',
                      'City Bank LOC' => 'Line of Credit',
                      'WIP' => 'WIP',
-                     'Prepaid' => 'Prepaid'}
+                     'Prepaid' => 'Prepaid' }
 
 Given(/^account types$/) do
   AccountType.seed
@@ -15,6 +15,14 @@ end
 Given(/^accounts$/) do
   EXAMPLE_ACCOUNTS.each do |name, type|
     Account.create name: name, account_type: AccountType.find_by_name(type)
+  end
+end
+
+Given(/^balances$/) do
+  Account.all.each do |acct|
+    10.times do |n|
+      acct.balances.create! date: n.weeks.ago, amount: 300 + n
+    end
   end
 end
 

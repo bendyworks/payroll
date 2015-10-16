@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   post 'resend_invitation/:user_id' => 'users#resend_invitation', as: 'resend_invitation'
 
   root 'charts#salaries'
+  get 'balances', to: 'charts#balances'
   get 'salaries', to: 'charts#salaries'
   get 'experience', to: 'charts#experience'
 

@@ -17,3 +17,7 @@ end
 When(/^I'm on that employee page$/) do
   visit employee_path(@employee)
 end
+
+Then(/^I'm on the balances chart page$/) do
+  visit balances_path
+end
