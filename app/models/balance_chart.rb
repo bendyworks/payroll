@@ -21,17 +21,17 @@ class BalanceChart
     data_table
   end
 
-  def create_account_columns! data_table
+  def create_account_columns!(data_table)
     @accounts.each do |account|
       data_table.new_column('number', account.name)
     end
   end
 
-  def populate_history_chart_data! data_table
+  def populate_history_chart_data!(data_table)
     populate_balances! data_table
   end
 
-  def populate_balances! data_table
+  def populate_balances!(data_table)
     data_table.add_rows(balance_dates.count)
 
     balance_dates.each_with_index do |date, date_row_num|

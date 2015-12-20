@@ -1,13 +1,13 @@
 module FilterEmployees
 
-  def filtered_collection params
+  def filtered_collection(params)
     scope = Employee.all
     scope = filter_by_employee_choices params[:employment], scope
     scope = filter_by_billable_choice params[:billable], scope
     scope.order(:first_name)
   end
 
-  def filter_by_employee_choices employee_choices, scope
+  def filter_by_employee_choices(employee_choices, scope)
     case employee_choices.try(:count)
     when 1
       selected = employee_choices.keys.first
@@ -27,7 +27,7 @@ module FilterEmployees
     scope
   end
 
-  def filter_by_billable_choice billable_choice, scope
+  def filter_by_billable_choice(billable_choice, scope)
     if billable_choice.try(:count) == 1
       scope = scope.billed if billable_choice[:true]
       scope = scope.support if billable_choice[:false]

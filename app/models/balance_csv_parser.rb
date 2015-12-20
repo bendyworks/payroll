@@ -1,18 +1,18 @@
 class BalanceCsvParser
-  def self.record uploaded_io
+  def self.record(uploaded_io)
     csv = uploaded_io.read
     csv.sub! /^Date,/, 'Account,'
     account_hashes = SmarterCSV.process(StringIO.new(csv))
     record_accounts account_hashes
   end
 
-  def self.record_accounts account_hashes
+  def self.record_accounts(account_hashes)
     account_hashes.each do |account_hash|
       record_account account_hash
     end
   end
 
-  def self.record_account account_hash
+  def self.record_account(account_hash)
     name = account_hash.delete(:account) || raise('Missing account name')
     account = Account.find_by_name(name) || raise("No account for '#{name}'")
 

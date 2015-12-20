@@ -3,7 +3,7 @@ class ExperienceChart
 
   attr_reader :chart
 
-  def initialize collection_opts
+  def initialize(collection_opts)
     opts = { width: 800, height: 500,
              hAxis: { title: 'Years at Bendyworks plus partial prior experience', minValue: 0 },
              vAxis: { minValue: 0 } }
@@ -14,7 +14,7 @@ class ExperienceChart
 
   private
 
-  def chart_data collection_opts
+  def chart_data(collection_opts)
     data_table = GoogleVisualr::DataTable.new
     data_table.new_column('number', 'Years of Experience')
 
@@ -23,20 +23,20 @@ class ExperienceChart
     data_table
   end
 
-  def create_employee_columns_with_tooltips! data_table
+  def create_employee_columns_with_tooltips!(data_table)
     @employees.each do |employee|
       data_table.new_column('number', employee.first_name)
       data_table.new_column('string', 'tooltip text', nil, 'tooltip')
     end
   end
 
-  def populate_experience_chart_data! data_table
+  def populate_experience_chart_data!(data_table)
     @employees.each do |employee|
       add_employee_row data_table, employee
     end
   end
 
-  def add_employee_row data_table, employee
+  def add_employee_row(data_table, employee)
     row_num = data_table.rows.count
     data_table.add_rows(1)
     data_table.set_cell(row_num, 0, employee.weighted_years_experience)

@@ -3,7 +3,7 @@ class SalaryChart
 
   attr_reader :chart
 
-  def initialize collection_opts
+  def initialize(collection_opts)
     opts = { width: 800, height: 500, legend: 'right',
              vAxis: { minValue: 0, gridlines: { count: 10 } } }
 
@@ -13,7 +13,7 @@ class SalaryChart
 
   private
 
-  def chart_data collection_opts
+  def chart_data(collection_opts)
     data_table = GoogleVisualr::DataTable.new
     data_table.new_column('date', 'Date')
 
@@ -22,18 +22,18 @@ class SalaryChart
     data_table
   end
 
-  def create_employee_columns! data_table
+  def create_employee_columns!(data_table)
     @employees.each do |employee|
       data_table.new_column('number', employee.first_name)
     end
   end
 
-  def populate_history_chart_data! data_table
+  def populate_history_chart_data!(data_table)
     populate_salary_changes! data_table
     add_salaries_today! data_table
   end
 
-  def populate_salary_changes! data_table
+  def populate_salary_changes!(data_table)
     data_table.add_rows(salary_history_dates.count)
 
     salary_history_dates.each_with_index do |date, date_row_num|
@@ -45,7 +45,7 @@ class SalaryChart
     end
   end
 
-  def add_salaries_today! data_table
+  def add_salaries_today!(data_table)
     data_table.add_rows(1)
     row = data_table.rows.count - 1
     data_table.set_cell(row, 0, Date.today)
