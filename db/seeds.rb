@@ -33,7 +33,7 @@ daisie = Employee.create!(first_name: 'Daisie', last_name: 'Duck',
                           start_date: daisie_start_date)
 
 Salary.create!(employee: daisie,
-               start_date: daisie_start_date + 90, #4-1-2013
+               start_date: daisie_start_date + 90, # 4-1-2013
                annual_amount: '59000.00')
 
 ## Minnie
@@ -42,7 +42,7 @@ minnie = Employee.create!(first_name: 'Minnie', last_name: 'Mouse',
                           starting_salary: '46000.00',
                           start_date: minnie_start_date)
 Salary.create!(employee: minnie,
-               start_date: minnie_start_date + 90, #6-30-2013
+               start_date: minnie_start_date + 90, # 6-30-2013
                annual_amount: '49000.00')
 
 ## Mickey
@@ -53,11 +53,11 @@ mickey = Employee.create!(first_name: 'Mickey', last_name: 'Mouse',
                           start_date: mickey_start_date)
 
 Salary.create!(employee: mickey,
-               start_date: mickey_start_date + 40, #8-9-2013
+               start_date: mickey_start_date + 40, # 8-9-2013
                annual_amount: '50000.00')
 
 Salary.create!(employee: mickey,
-               start_date: mickey_start_date + 80, #9-18-2013
+               start_date: mickey_start_date + 80, # 9-18-2013
                annual_amount: '55000.00')
 
 ## Donald
