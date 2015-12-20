@@ -1,5 +1,4 @@
 class SalariesController < ApplicationController
-
   def new
     employee = Employee.find(params[:employee_id])
     @salary = employee.salaries.new
