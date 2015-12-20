@@ -28,6 +28,6 @@ class DeviseInvitableAddToUsers < ActiveRecord::Migration
                :invitation_token,
                :invitation_created_at
     end
-    change_column_null    :users, :encrypted_password, false
+    change_column_null :users, :encrypted_password, false
   end
 end
