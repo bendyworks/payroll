@@ -8,12 +8,12 @@ class SalaryChart
              vAxis: { minValue: 0, gridlines: { count: 10 } } }
 
     @employees = filtered_collection(collection_opts)
-    @chart = GoogleVisualr::Interactive::LineChart.new(chart_data(collection_opts), opts)
+    @chart = GoogleVisualr::Interactive::LineChart.new(chart_data, opts)
   end
 
   private
 
-  def chart_data(collection_opts)
+  def chart_data
     data_table = GoogleVisualr::DataTable.new
     data_table.new_column('date', 'Date')
 

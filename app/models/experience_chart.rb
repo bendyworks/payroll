@@ -9,12 +9,12 @@ class ExperienceChart
              vAxis: { minValue: 0 } }
 
     @employees = filtered_collection(collection_opts)
-    @chart = GoogleVisualr::Interactive::ScatterChart.new(chart_data(collection_opts), opts)
+    @chart = GoogleVisualr::Interactive::ScatterChart.new(chart_data, opts)
   end
 
   private
 
-  def chart_data(collection_opts)
+  def chart_data
     data_table = GoogleVisualr::DataTable.new
     data_table.new_column('number', 'Years of Experience')
 
