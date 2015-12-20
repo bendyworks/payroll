@@ -36,9 +36,9 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
-    airbrake (4.3.1)
-      builder
-      multi_json
+    airbrake (5.0.0)
+      airbrake-ruby (~> 1.0)
+    airbrake-ruby (1.0.0)
     arel (6.0.3)
     autoprefixer-rails (5.2.1.1)
       execjs
@@ -286,4 +286,4 @@ DEPENDENCIES
   uglifier
 
 BUNDLED WITH
-   1.10.6
+   1.11.2
