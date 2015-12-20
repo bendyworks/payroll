@@ -56,6 +56,8 @@ class SalaryChart
   end
 
   def salary_history_dates
-    @history_dates ||= (Salary.ordered_dates_with_previous_dates + Employee.ordered_start_dates).sort.uniq
+    @history_dates ||= (
+      Salary.ordered_dates_with_previous_dates + Employee.ordered_start_dates
+    ).sort.uniq
   end
 end

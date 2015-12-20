@@ -19,8 +19,10 @@ AllCops:
     - '**/Cheffile'
     - '**/Vagabondfile'
   Exclude:
-    - 'vendor/**/*'
     - 'config/rubocop/*.yml'
+    - 'db/schema.rb'
+    - 'lib/tasks/cucumber.rake'
+    - 'vendor/**/*'
   # By default, the rails cops are not run. Override in project or home
   # directory .rubocop.yml files, or by giving the -R/--rails option.
   RunRailsCops: false
@@ -457,7 +459,7 @@ Style/HashSyntax:
   UseHashRocketsWithSymbolValues: false
 
 Style/IfUnlessModifier:
-  MaxLineLength: 100
+  MaxLineLength: 80
 
 Style/IndentationConsistency:
   # The difference between `rails` and `normal` is that the `rails` style
@@ -809,7 +811,7 @@ Metrics/CyclomaticComplexity:
   Max: 6
 
 Metrics/LineLength:
-  Max: 80
+  Max: 100
   # To make it possible to copy or click on URIs in the code, we allow lines
   # contaning a URI to be longer than Max.
   AllowURI: true

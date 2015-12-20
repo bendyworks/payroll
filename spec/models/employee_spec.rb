@@ -20,7 +20,9 @@ describe Employee do
     let(:daisie) { create(:employee, start_date: start_date, end_date: end_date) }
 
     let!(:starting_salary) { create(:salary, employee: daisie, start_date: start_date) }
-    let!(:raise_salary) { create(:salary, employee: daisie, start_date: raise_date, annual_amount: '900') }
+    let!(:raise_salary) {
+      create(:salary, employee: daisie, start_date: raise_date, annual_amount: '900')
+    }
 
     it 'returns nil, given date before employee has started' do
       expect(daisie.salary_on(start_date - 5)).to be_nil
@@ -86,8 +88,13 @@ describe Employee do
     end
 
     context 'employee has prior experience' do
-      let!(:daisie) { create :employee, start_date: Date.parse('2012-1-1'), end_date: Date.parse('2014-7-1'),
-                             direct_experience: 12, indirect_experience: 12 }
+      let!(:daisie) {
+        create :employee,
+               start_date: Date.parse('2012-1-1'),
+               end_date: Date.parse('2014-7-1'),
+               direct_experience: 12,
+               indirect_experience: 12
+      }
 
       it 'counts half of direct experience, quarter of indirect experience' do
         # 2.5 years experience here, equivalent of .75 years experience prior
