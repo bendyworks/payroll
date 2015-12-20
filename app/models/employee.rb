@@ -11,18 +11,23 @@ class Employee < ActiveRecord::Base
   def self.current
     where 'start_date <= ? AND (end_date IS NULL OR end_date >= ?)', Date.today, Date.today
   end
+
   def self.non_current
     where 'start_date > ? OR end_date < ?', Date.today, Date.today
   end
+
   def self.future
     where 'start_date > ?', Date.today
   end
+
   def self.past
     where 'end_date < ?', Date.today
   end
+
   def self.billed
     where billable: true
   end
+
   def self.support
     where billable: false
   end
