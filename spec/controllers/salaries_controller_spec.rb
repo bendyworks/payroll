@@ -69,5 +69,4 @@ describe SalariesController do
       expect{salary.reload}.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
-
 end

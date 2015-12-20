@@ -64,7 +64,6 @@ describe Employee do
         expect(employee.ending_salary).to eq raise_salary.annual_amount
       end
     end
-
   end
 
   describe '#weighted_years_experience' do

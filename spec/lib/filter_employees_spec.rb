@@ -5,7 +5,6 @@ describe FilterEmployees do
   let(:chart) { (Class.new{ include FilterEmployees }).new }
 
   context 'Filtering on employment status' do
-
     let!(:current) { create :employee, :current }
     let!(:past) { create :employee, :past }
     let!(:future) { create :employee, :future }
