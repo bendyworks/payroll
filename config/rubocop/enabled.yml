@@ -152,6 +152,9 @@ Style/CommentAnnotation:
 Style/CommentIndentation:
   Description: 'Indentation of comments.'
   Enabled: true
+  Exclude:
+    - 'config/environments/production.rb'
+    - 'db/migrate/20141121201227_devise_create_users.rb'
 
 Style/ConstantName:
   Description: 'Constants should use SCREAMING_SNAKE_CASE.'
