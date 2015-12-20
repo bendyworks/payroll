@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :employee do
-    sequence(:first_name) { |n| "##{n}"}
+    sequence(:first_name) { |n| "##{n}" }
     last_name 'Bendyworker'
     start_date Date.parse('2013-1-1')
     starting_salary 500

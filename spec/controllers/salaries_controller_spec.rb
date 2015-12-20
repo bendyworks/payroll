@@ -66,7 +66,7 @@ describe SalariesController do
       expect do
         delete :destroy, employee_id: salary.employee.to_param, id: salary.to_param
       end.to change(Salary, :count).by(-1)
-      expect{salary.reload}.to raise_error(ActiveRecord::RecordNotFound)
+      expect{ salary.reload }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 end
