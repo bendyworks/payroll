@@ -12,7 +12,7 @@ class Salary < ActiveRecord::Base
   end
 
   def self.ordered_dates_with_previous_dates
-    ordered_dates.map { |date| [date-1, date] }.flatten
+    ordered_dates.map { |date| [date - 1, date] }.flatten
   end
 
   private

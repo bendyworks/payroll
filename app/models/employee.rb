@@ -68,7 +68,7 @@ class Employee < ActiveRecord::Base
 
   def experience_here_formatted
     years = days_employed / 365
-    months = days_employed%365 /30
+    months = days_employed % 365 / 30
 
     "#{years} years, #{months} months"
   end
