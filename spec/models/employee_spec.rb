@@ -146,10 +146,10 @@ describe Employee do
     end
     let!(:raise) { create :salary, employee: employee, start_date: raise_date, annual_amount: 200 }
     let(:last_pay_date) { end_date || Date.today }
-    let(:expected_salary_data) { [{c: [start_date, 100]},
-                                  {c: [raise_date - 1, 100]},
-                                  {c: [raise_date, 200]},
-                                  {c: [last_pay_date, 200]}] }
+    let(:expected_salary_data) { [{ c: [start_date, 100] },
+                                  { c: [raise_date - 1, 100] },
+                                  { c: [raise_date, 200] },
+                                  { c: [last_pay_date, 200] }] }
 
     context 'current employee' do
       let(:end_date) { nil }
@@ -168,9 +168,9 @@ describe Employee do
     context 'with future raise' do
       let(:end_date) { nil }
       let(:raise_date) { Date.today + 1.week }
-      let(:expected_salary_data) { [{c: [start_date, 100]},
-                                    {c: [raise_date - 1, 100]},
-                                    {c: [raise_date, 200]}]}
+      let(:expected_salary_data) { [{ c: [start_date, 100] },
+                                    { c: [raise_date - 1, 100] },
+                                    { c: [raise_date, 200] }]}
       it 'future raise date comes last' do
         expect(employee.salary_data).to eql(expected_salary_data)
       end

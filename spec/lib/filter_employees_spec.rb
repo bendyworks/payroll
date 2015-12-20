@@ -11,7 +11,7 @@ describe FilterEmployees do
     let!(:future) { create :employee, :future }
 
     context 'include only past employees' do
-      let(:params) { {employment: {past: 1}} }
+      let(:params) { { employment: { past: 1 } } }
       it 'excludes current and future employees' do
         expect(chart.filtered_collection(params)).not_to include current
         expect(chart.filtered_collection(params)).not_to include future
@@ -22,7 +22,7 @@ describe FilterEmployees do
     end
 
     context 'include only current employees' do
-      let(:params) { {employment: {current: 1}} }
+      let(:params) { { employment: { current: 1 } } }
       it 'excludes past and future employees' do
         expect(chart.filtered_collection(params)).not_to include past
         expect(chart.filtered_collection(params)).not_to include future
@@ -33,7 +33,7 @@ describe FilterEmployees do
     end
 
     context 'include only future employees' do
-      let(:params) { {employment: {future: 1}} }
+      let(:params) { { employment: { future: 1 } } }
       it 'excludes past and current employees' do
         expect(chart.filtered_collection(params)).not_to include past
         expect(chart.filtered_collection(params)).not_to include current
@@ -44,7 +44,7 @@ describe FilterEmployees do
     end
 
     context 'include both current and future' do
-      let(:params) { {employment: {current: 1, future: 1}} }
+      let(:params) { { employment: { current: 1, future: 1 } } }
       it 'excludes past employees' do
         expect(chart.filtered_collection(params)).not_to include past
       end
@@ -55,7 +55,7 @@ describe FilterEmployees do
     end
 
     context 'include both past and current' do
-      let(:params) { {employment: {past: 1, current: 1}} }
+      let(:params) { { employment: { past: 1, current: 1 } } }
       it 'excludes future employees' do
         expect(chart.filtered_collection(params)).not_to include future
       end
@@ -67,13 +67,13 @@ describe FilterEmployees do
 
     context 'include all' do
       context 'all checked' do
-        let(:params) { {employment: {past: 1, current: 1, future: 1}} }
+        let(:params) { { employment: { past: 1, current: 1, future: 1 } } }
         it 'includes all employees' do
           expect(chart.filtered_collection(params)).to eq Employee.all.order(:first_name)
         end
       end
       context 'none checked' do
-        let(:params) { {employment: nil} }
+        let(:params) { { employment: nil } }
         it 'includes all employees' do
           expect(chart.filtered_collection(params)).to eq Employee.all.order(:first_name)
         end
@@ -87,7 +87,7 @@ describe FilterEmployees do
     let!(:support) { create :employee, :support }
 
     context 'include only billable' do
-      let(:params) { {billable: {true: 1}} }
+      let(:params) { { billable: { true: 1 } } }
       it 'includes billable employees' do
         expect(chart.filtered_collection(params)).to include billed
       end
@@ -97,7 +97,7 @@ describe FilterEmployees do
     end
 
     context 'include only support' do
-      let(:params) { {billable: {false: 1}} }
+      let(:params) { { billable: { false: 1 } } }
       it 'includes unbillable employees' do
         expect(chart.filtered_collection(params)).to include support
       end
@@ -108,13 +108,13 @@ describe FilterEmployees do
 
     context 'include all' do
       context 'all checked' do
-        let(:params) { {billable: {true: 1, false: 1}} }
+        let(:params) { { billable: { true: 1, false: 1 } } }
         it 'includes all employees' do
           expect(chart.filtered_collection(params)).to eq Employee.all.order(:first_name)
         end
       end
       context 'none checked' do
-        let(:params) { {billable: nil} }
+        let(:params) { { billable: nil } }
         it 'includes all employees' do
           expect(chart.filtered_collection(params)).to eq Employee.all.order(:first_name)
         end

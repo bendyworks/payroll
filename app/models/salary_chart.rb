@@ -5,7 +5,7 @@ class SalaryChart
 
   def initialize collection_opts
     opts = { width: 800, height: 500, legend: 'right',
-             vAxis: { minValue: 0, gridlines: {count: 10}}}
+             vAxis: { minValue: 0, gridlines: { count: 10 } } }
 
     @employees = filtered_collection(collection_opts)
     @chart = GoogleVisualr::Interactive::LineChart.new(chart_data(collection_opts), opts)

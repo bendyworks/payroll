@@ -3,7 +3,7 @@ class BalanceChart
 
   def initialize
     opts = { width: 800, height: 500, legend: 'right',
-             vAxis: { minValue: 0, gridlines: {count: 10}}}
+             vAxis: { minValue: 0, gridlines: { count: 10 } } }
 
     @accounts = Account.all
 
