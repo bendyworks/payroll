@@ -6,10 +6,10 @@ describe EmployeesController do
   let(:user) { create :user }
   before { sign_in user }
 
-  describe "GET show" do
+  describe 'GET show' do
     let!(:employee) { create :employee }
 
-    it "returns http success" do
+    it 'returns http success' do
       get :show, id: employee.id
       expect(response).to have_http_status(:success)
     end
@@ -23,7 +23,7 @@ describe EmployeesController do
   describe 'GET edit' do
     let!(:employee) { create :employee }
 
-    it "returns http success" do
+    it 'returns http success' do
       get :edit, id: employee.id
       expect(response).to have_http_status(:success)
     end
@@ -35,7 +35,7 @@ describe EmployeesController do
   end
 
   describe 'GET new' do
-    it "returns http success" do
+    it 'returns http success' do
       get :new
       expect(response).to have_http_status(:success)
     end

@@ -36,10 +36,10 @@ describe Employee do
       expect(daisie.salary_on(raise_date)).to eq raise_salary.annual_amount
     end
 
-    it "returns correct salary, given a date later than latest salary start_date" do
+    it 'returns correct salary, given a date later than latest salary start_date' do
       expect(daisie.salary_on(raise_date + 5)).to eq raise_salary.annual_amount
     end
-    it "returns correct salary, given a date between two salary `start_date`s" do
+    it 'returns correct salary, given a date between two salary `start_date`s' do
       expect(daisie.salary_on(raise_date - 5)).to eq starting_salary.annual_amount
     end
   end
@@ -74,7 +74,7 @@ describe Employee do
 
       context 'employee has left (has an end date)' do
         let(:daisie_end_date) { Date.parse('2014-7-1') }
-        it "returns number of years (decimal) between start and end date" do
+        it 'returns number of years (decimal) between start and end date' do
           expect(daisie.weighted_years_experience).to be_within(0.05).of 2.5
         end
       end
@@ -117,20 +117,20 @@ describe Employee do
         expect(employee.employed_on?(end_date + 1)).to be false
       end
 
-      it "returns true between start and end date" do
+      it 'returns true between start and end date' do
         expect(employee.employed_on?(end_date - 1)).to be true
       end
-      it "returns true on start date" do
+      it 'returns true on start date' do
         expect(employee.employed_on?(start_date)).to be true
       end
-      it "returns true on end date" do
+      it 'returns true on end date' do
         expect(employee.employed_on?(end_date)).to be true
       end
     end
 
     context 'employee has no end_date' do
       let(:end_date) { nil }
-      it "returns true after start date" do
+      it 'returns true after start date' do
         expect(employee.employed_on?(Date.today)).to be true
       end
     end

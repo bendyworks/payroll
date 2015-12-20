@@ -5,7 +5,7 @@ class ExperienceChart
 
   def initialize collection_opts
     opts = { width: 800, height: 500,
-             hAxis: { title: "Years at Bendyworks plus partial prior experience", minValue: 0 },
+             hAxis: { title: 'Years at Bendyworks plus partial prior experience', minValue: 0 },
              vAxis: { minValue: 0 } }
 
     @employees = filtered_collection(collection_opts)

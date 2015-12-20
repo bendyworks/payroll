@@ -18,7 +18,7 @@ end
 
 Then(/^their salary history chart is present$/) do
   within '.body' do
-    expect(page).to have_content("Salary History")
+    expect(page).to have_content('Salary History')
   end
   within '#salary_chart' do
     expect(page).to have_content('2015')

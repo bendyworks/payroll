@@ -14,7 +14,7 @@ class Balance < ActiveRecord::Base
 
   def date_not_older_than_bendyworks
     if date
-      errors.add(:date, "cannot be older than company") if date < COMPANY_START_DATE
+      errors.add(:date, 'cannot be older than company') if date < COMPANY_START_DATE
     end
   end
 end

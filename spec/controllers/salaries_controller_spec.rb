@@ -9,7 +9,7 @@ describe SalariesController do
   describe 'GET new' do
     let(:employee) { create :employee }
 
-    it "returns http success" do
+    it 'returns http success' do
       get :new, employee_id: employee.to_param
       expect(response).to have_http_status(:success)
     end
