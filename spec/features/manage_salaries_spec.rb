@@ -13,7 +13,7 @@ feature 'manage salaries' do
     visit "/employees/#{employee.id}"
     click_on 'Record a Raise'
     fill_in 'Start date', with: Date.today
-    fill_in 'Annual amount', with: 44000
+    fill_in 'Annual amount', with: 44_000
     click_button 'Save'
 
     expect(page).to have_content '$44,000'

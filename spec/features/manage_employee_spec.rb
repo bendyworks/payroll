@@ -13,7 +13,7 @@ feature 'manage employee' do
     fill_in 'Last name', with: 'Bendyworker'
     fill_in 'Start date', with: Date.today
     fill_in 'Direct experience', with: 5
-    fill_in 'Starting salary', with: 40000
+    fill_in 'Starting salary', with: 40_000
     click_button 'Save'
 
     expect(page).to have_content 'Newest Bendyworker'
@@ -38,7 +38,7 @@ feature 'manage employee' do
     scenario 'edit employee starting salary amount' do
       visit "/employees/#{employee.id}"
       click_on 'Edit'
-      fill_in 'Starting salary', with: 41000
+      fill_in 'Starting salary', with: 41_000
       click_button 'Save'
 
       expect(page).to have_content '$41,000'
