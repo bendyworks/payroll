@@ -35,9 +35,9 @@ RSpec.describe AccountsController, type: :controller do
   describe 'POST #create' do
     context 'with valid params' do
       it 'creates a new Account' do
-        expect {
+        expect do
           post :create, account: valid_attributes
-        }.to change(Account, :count).by(1)
+        end.to change(Account, :count).by(1)
       end
 
       it 'assigns a newly created account as @account' do
@@ -107,9 +107,9 @@ RSpec.describe AccountsController, type: :controller do
   describe 'DELETE #destroy' do
     it 'destroys the requested account' do
       account = Account.create! valid_attributes
-      expect {
+      expect do
         delete :destroy, id: account.to_param
-      }.to change(Account, :count).by(-1)
+      end.to change(Account, :count).by(-1)
     end
 
     it 'redirects to the home page' do

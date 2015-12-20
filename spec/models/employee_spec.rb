@@ -20,9 +20,9 @@ describe Employee do
     let(:daisie) { create(:employee, start_date: start_date, end_date: end_date) }
 
     let!(:starting_salary) { create(:salary, employee: daisie, start_date: start_date) }
-    let!(:raise_salary) {
+    let!(:raise_salary) do
       create(:salary, employee: daisie, start_date: raise_date, annual_amount: '900')
-    }
+    end
 
     it 'returns nil, given date before employee has started' do
       expect(daisie.salary_on(start_date - 5)).to be_nil
@@ -88,13 +88,13 @@ describe Employee do
     end
 
     context 'employee has prior experience' do
-      let!(:daisie) {
+      let!(:daisie) do
         create :employee,
                start_date: Date.parse('2012-1-1'),
                end_date: Date.parse('2014-7-1'),
                direct_experience: 12,
                indirect_experience: 12
-      }
+      end
 
       it 'counts half of direct experience, quarter of indirect experience' do
         # 2.5 years experience here, equivalent of .75 years experience prior
@@ -146,10 +146,15 @@ describe Employee do
     end
     let!(:raise) { create :salary, employee: employee, start_date: raise_date, annual_amount: 200 }
     let(:last_pay_date) { end_date || Date.today }
-    let(:expected_salary_data) { [{ c: [start_date, 100] },
-                                  { c: [raise_date - 1, 100] },
-                                  { c: [raise_date, 200] },
-                                  { c: [last_pay_date, 200] }] }
+
+    let(:expected_salary_data) do
+      [
+        { c: [start_date, 100] },
+        { c: [raise_date - 1, 100] },
+        { c: [raise_date, 200] },
+        { c: [last_pay_date, 200] }
+      ]
+    end
 
     context 'current employee' do
       let(:end_date) { nil }
@@ -168,9 +173,15 @@ describe Employee do
     context 'with future raise' do
       let(:end_date) { nil }
       let(:raise_date) { Date.today + 1.week }
-      let(:expected_salary_data) { [{ c: [start_date, 100] },
-                                    { c: [raise_date - 1, 100] },
-                                    { c: [raise_date, 200] }]}
+
+      let(:expected_salary_data) do
+        [
+          { c: [start_date, 100] },
+          { c: [raise_date - 1, 100] },
+          { c: [raise_date, 200] }
+        ]
+      end
+
       it 'future raise date comes last' do
         expect(employee.salary_data).to eql(expected_salary_data)
       end
