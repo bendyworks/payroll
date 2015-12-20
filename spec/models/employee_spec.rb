@@ -140,9 +140,12 @@ describe Employee do
     let(:raise_date) { Date.parse '2002-10-10' }
 
     let(:employee) do
-      create :employee, first_name: 'Joan', starting_salary: 100,
-        start_date: start_date, end_date: end_date
+      create :employee, first_name: 'Joan',
+                        starting_salary: 100,
+                        start_date: start_date,
+                        end_date: end_date
     end
+
     let!(:raise) { create :salary, employee: employee, start_date: raise_date, annual_amount: 200 }
     let(:last_pay_date) { end_date || Date.today }
 

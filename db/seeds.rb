@@ -19,17 +19,21 @@ Salary.create!(employee: darkwing, start_date: darkwing_start_date + 90, annual_
 ###### FUTURE EMPLOYEES ######
 
 daffy_start_date = Date.today + 10
-_daffy = Employee.create!(first_name: 'Daffy (future)', last_name: 'Duck',
-                         starting_salary: '51000.00',
-                         direct_experience: 2, indirect_experience: 8,
-                         start_date: daffy_start_date)
+_daffy = Employee.create!(first_name: 'Daffy (future)',
+                          last_name: 'Duck',
+                          starting_salary: '51000.00',
+                          direct_experience: 2,
+                          indirect_experience: 8,
+                          start_date: daffy_start_date)
 
 ###### CURRENT EMPLOYEES #######
 ## Daisie
 daisie_start_date = Date.parse('2013-1-1')
-daisie = Employee.create!(first_name: 'Daisie', last_name: 'Duck',
+daisie = Employee.create!(first_name: 'Daisie',
+                          last_name: 'Duck',
                           starting_salary: '57000.00',
-                          direct_experience: 6, indirect_experience: 4,
+                          direct_experience: 6,
+                          indirect_experience: 4,
                           start_date: daisie_start_date)
 
 Salary.create!(employee: daisie,
@@ -62,11 +66,12 @@ Salary.create!(employee: mickey,
 
 ## Donald
 donald_start_date = daisie_start_date + 270
-_donald = Employee.create!(first_name: 'Donald (support)', last_name: 'Duck',
-                          starting_salary: '40000.00',
-                          direct_experience: 9,
-                          billable: false,
-                          start_date: donald_start_date)
+_donald = Employee.create!(first_name: 'Donald (support)',
+                           last_name: 'Duck',
+                           starting_salary: '40000.00',
+                           direct_experience: 9,
+                           billable: false,
+                           start_date: donald_start_date)
 
 #########################
 puts 'Seed data created.'
