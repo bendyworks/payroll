@@ -19,7 +19,7 @@ class BalanceCsvParser
     account_hash.each do |date_sym, balance_string|
       begin
         date = Date.strptime(date_sym.to_s, '%m/%d/%Y')
-      rescue ArgumentError => e
+      rescue ArgumentError
         raise ArgumentError.new("Invalid Date: #{date_sym}")
       end
       if balance_string.is_a?(String)

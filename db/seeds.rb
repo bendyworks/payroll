@@ -19,7 +19,7 @@ Salary.create!(employee: darkwing, start_date: darkwing_start_date + 90, annual_
 ###### FUTURE EMPLOYEES ######
 
 daffy_start_date = Date.today + 10
-daffy = Employee.create!(first_name: 'Daffy (future)', last_name: 'Duck',
+_daffy = Employee.create!(first_name: 'Daffy (future)', last_name: 'Duck',
                          starting_salary: '51000.00',
                          direct_experience: 2, indirect_experience: 8,
                          start_date: daffy_start_date)
@@ -62,7 +62,7 @@ Salary.create!(employee: mickey,
 
 ## Donald
 donald_start_date = daisie_start_date + 270
-donald = Employee.create!(first_name: 'Donald (support)', last_name: 'Duck',
+_donald = Employee.create!(first_name: 'Donald (support)', last_name: 'Duck',
                           starting_salary: '40000.00',
                           direct_experience: 9,
                           billable: false,
