@@ -13,8 +13,8 @@ class BalanceCsvParser
   end
 
   def self.record_account(account_hash)
-    name = account_hash.delete(:account) || raise('Missing account name')
-    account = Account.find_by_name(name) || raise("No account for '#{name}'")
+    name = account_hash.delete(:account) || fail('Missing account name')
+    account = Account.find_by_name(name) || fail("No account for '#{name}'")
 
     account_hash.each do |date_sym, balance_string|
       begin
@@ -23,7 +23,7 @@ class BalanceCsvParser
         raise ArgumentError.new("Invalid Date: #{date_sym}")
       end
       if balance_string.is_a?(String)
-        amount = balance_string.gsub(/[,$]/, '').to_d || raise('Missing amount')
+        amount = balance_string.gsub(/[,$]/, '').to_d || fail('Missing amount')
       else
         amount = balance_string
       end
