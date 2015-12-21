@@ -80,7 +80,6 @@ describe FilterEmployees do
     end
   end
 
-
   context 'filtering on billable status' do
     let!(:billed) { create :employee, :billable }
     let!(:support) { create :employee, :support }
