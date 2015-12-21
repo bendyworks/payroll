@@ -1,7 +1,7 @@
 class BalanceCsvParser
   def self.record(uploaded_io)
     csv = uploaded_io.read
-    csv.sub! /^Date,/, 'Account,'
+    csv.sub!(/^Date,/, 'Account,')
     account_hashes = SmarterCSV.process(StringIO.new(csv))
     record_accounts account_hashes
   end
@@ -20,7 +20,7 @@ class BalanceCsvParser
       begin
         date = Date.strptime(date_sym.to_s, '%m/%d/%Y')
       rescue ArgumentError
-        raise ArgumentError.new("Invalid Date: #{date_sym}")
+        raise ArgumentError, "Invalid Date: #{date_sym}"
       end
       if balance_string.is_a?(String)
         amount = balance_string.gsub(/[,$]/, '').to_d || fail('Missing amount')
