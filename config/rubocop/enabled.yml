@@ -73,6 +73,8 @@ Style/BlockComments:
   Description: 'Do not use block comments.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-block-comments'
   Enabled: true
+  Exclude:
+    - 'spec/spec_helper.rb'
 
 Style/BlockEndNewline:
   Description: 'Put end statement of multiline block on its own line.'
@@ -279,11 +281,6 @@ Style/GlobalVars:
   Description: 'Do not introduce global variables.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#instance-vars'
   Reference: 'http://www.zenspider.com/Languages/Ruby/QuickRef.html'
-  Enabled: true
-
-Style/GuardClause:
-  Description: 'Check for conditionals that can be replaced with guard clauses'
-  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-nested-conditionals'
   Enabled: true
 
 Style/HashSyntax:
