@@ -2,7 +2,7 @@ require 'rails_helper'
 require 'filter_employees'
 
 describe FilterEmployees do
-  let(:chart) { (Class.new{ include FilterEmployees }).new }
+  let(:chart) { (Class.new { include FilterEmployees }).new }
 
   context 'Filtering on employment status' do
     let!(:current) { create :employee, :current }

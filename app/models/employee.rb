@@ -74,7 +74,7 @@ class Employee < ActiveRecord::Base
   end
 
   def all_experience_formatted
-    "Here: #{experience_here_formatted}\nPrior: #{direct_experience} months direct," +
+    "Here: #{experience_here_formatted}\nPrior: #{direct_experience} months direct," \
       " #{indirect_experience} months indirect"
   end
 

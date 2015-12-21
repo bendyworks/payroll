@@ -1,5 +1,4 @@
 module FilterEmployees
-
   def filtered_collection(params)
     scope = Employee.all
     scope = filter_by_employee_choices params[:employment], scope

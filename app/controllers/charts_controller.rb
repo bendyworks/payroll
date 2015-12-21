@@ -16,7 +16,7 @@ class ChartsController < ApplicationController
   def employee_chart_params
     employment = params[:employment].try(:permit, :past, :current, :future)
     billable = params[:billable].try(:permit, :true, :false)
-    employment = { 'current' => '1' } if (employment.nil? && billable.nil?)
+    employment = { 'current' => '1' } if employment.nil? && billable.nil?
     { employment: employment, billable: billable }
   end
 end

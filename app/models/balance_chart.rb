@@ -7,7 +7,7 @@ class BalanceChart
 
     @accounts = Account.all
 
-    @chart = GoogleVisualr::Interactive::LineChart.new(chart_data(), opts)
+    @chart = GoogleVisualr::Interactive::LineChart.new(chart_data, opts)
   end
 
   private

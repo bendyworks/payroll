@@ -4,6 +4,6 @@ class Account < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true
 
   def balance_on(date)
-    self.balances.find_by(date: date).try(:amount)
+    balances.find_by(date: date).try(:amount)
   end
 end
