@@ -12,7 +12,7 @@ feature 'manage salaries' do
   scenario 'add new employee salary' do
     visit "/employees/#{employee.id}"
     click_on 'Record a Raise'
-    fill_in 'Start date', with: Date.today
+    fill_in 'Start date', with: Time.zone.today
     fill_in 'Annual amount', with: 44_000
     click_button 'Save'
 

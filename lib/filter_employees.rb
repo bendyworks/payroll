@@ -14,12 +14,12 @@ module FilterEmployees
     when 2
       if employee_choices[:past]
         if employee_choices[:current]
-          scope = scope.where('start_date < ?', Date.today)
+          scope = scope.where('start_date < ?', Time.zone.today)
         else # :future
-          scope = scope.where('end_date < ? OR start_date > ?', Date.today, Date.today)
+          scope = scope.where('end_date < ? OR start_date > ?', Time.zone.today, Time.zone.today)
         end
       else
-        scope = scope.where('end_date IS NULL OR end_date > ?', Date.today)
+        scope = scope.where('end_date IS NULL OR end_date > ?', Time.zone.today)
       end
     end
 

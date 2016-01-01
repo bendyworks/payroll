@@ -11,7 +11,7 @@ feature 'manage employee' do
     visit '/employees/new'
     fill_in 'First name', with: 'Newest'
     fill_in 'Last name', with: 'Bendyworker'
-    fill_in 'Start date', with: Date.today
+    fill_in 'Start date', with: Time.zone.today
     fill_in 'Direct experience', with: 5
     fill_in 'Starting salary', with: 40_000
     click_button 'Save'

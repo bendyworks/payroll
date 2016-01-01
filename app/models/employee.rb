@@ -9,19 +9,19 @@ class Employee < ActiveRecord::Base
   default_scope { order :first_name }
 
   def self.current
-    where 'start_date <= ? AND (end_date IS NULL OR end_date >= ?)', Date.today, Date.today
+    where 'start_date <= ? AND (end_date IS NULL OR end_date >= ?)', Time.zone.today, Time.zone.today
   end
 
   def self.non_current
-    where 'start_date > ? OR end_date < ?', Date.today, Date.today
+    where 'start_date > ? OR end_date < ?', Time.zone.today, Time.zone.today
   end
 
   def self.future
-    where 'start_date > ?', Date.today
+    where 'start_date > ?', Time.zone.today
   end
 
   def self.past
-    where 'end_date < ?', Date.today
+    where 'end_date < ?', Time.zone.today
   end
 
   def self.billed
@@ -52,8 +52,8 @@ class Employee < ActiveRecord::Base
 
     if end_date
       data << { c: [end_date, ending_salary] }
-    elsif employed_on?(Date.today) && !future_raise?
-      data << { c: [Date.today, salary_on(Date.today)] }
+    elsif employed_on?(Time.zone.today) && !future_raise?
+      data << { c: [Time.zone.today, salary_on(Time.zone.today)] }
     end
     data
   end
@@ -79,7 +79,7 @@ class Employee < ActiveRecord::Base
   end
 
   def current_or_last_pay
-    salary_on(Date.today) || ending_salary || starting_salary
+    salary_on(Time.zone.today) || ending_salary || starting_salary
   end
 
   def self.ordered_start_dates
@@ -93,9 +93,9 @@ class Employee < ActiveRecord::Base
   private
 
   def days_employed
-    return 0 if Date.today < start_date
+    return 0 if Time.zone.today < start_date
 
-    experience_end = [end_date, Date.today].compact.min
+    experience_end = [end_date, Time.zone.today].compact.min
     (experience_end - start_date).to_i
   end
 
@@ -104,6 +104,6 @@ class Employee < ActiveRecord::Base
   end
 
   def future_raise?
-    salaries.last && (salaries.last.start_date > Date.today)
+    salaries.last && (salaries.last.start_date > Time.zone.today)
   end
 end

@@ -16,7 +16,7 @@
           = f.label :annual_amount, class: 'control-label'
           .input-group
             %span.input-group-addon $
-            = f.number_field :annual_amount, class: 'form-control', required: true, value: @salary.employee.salary_on(Date.today)
+            = f.number_field :annual_amount, class: 'form-control', required: true, value: @salary.employee.salary_on(Time.zone.today)
         .form-group.col-lg-12
           = f.submit 'Save', class: 'btn btn-primary'
           = link_to 'Cancel', employee_path(@salary.employee), class: 'btn btn-default'

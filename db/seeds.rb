@@ -18,7 +18,7 @@ Salary.create!(employee: darkwing, start_date: darkwing_start_date + 90, annual_
 
 ###### FUTURE EMPLOYEES ######
 
-daffy_start_date = Date.today + 10
+daffy_start_date = Time.zone.today + 10
 _daffy = Employee.create!(first_name: 'Daffy (future)',
                           last_name: 'Duck',
                           starting_salary: '51000.00',

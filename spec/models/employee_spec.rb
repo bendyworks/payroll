@@ -58,7 +58,7 @@ describe Employee do
     end
 
     context 'has end date' do
-      let(:end_date) { Date.today + 5 }
+      let(:end_date) { Time.zone.today + 5 }
 
       it 'returns latest salary' do
         expect(employee.ending_salary).to eq raise_salary.annual_amount
@@ -81,7 +81,7 @@ describe Employee do
       context 'current employee (has no end date)' do
         let(:daisie_end_date) { nil }
         it "returns number of years (decimal) since employee's start date" do
-          expect(daisie.weighted_years_experience).to eq((Date.today - daisie_start_date) / 365.0)
+          expect(daisie.weighted_years_experience).to eq((Time.zone.today - daisie_start_date) / 365.0)
         end
       end
     end
@@ -130,7 +130,7 @@ describe Employee do
     context 'employee has no end_date' do
       let(:end_date) { nil }
       it 'returns true after start date' do
-        expect(employee.employed_on?(Date.today)).to be true
+        expect(employee.employed_on?(Time.zone.today)).to be true
       end
     end
   end
@@ -147,7 +147,7 @@ describe Employee do
     end
 
     let!(:raise) { create :salary, employee: employee, start_date: raise_date, annual_amount: 200 }
-    let(:last_pay_date) { end_date || Date.today }
+    let(:last_pay_date) { end_date || Time.zone.today }
 
     let(:expected_salary_data) do
       [
@@ -174,7 +174,7 @@ describe Employee do
 
     context 'with future raise' do
       let(:end_date) { nil }
-      let(:raise_date) { Date.today + 1.week }
+      let(:raise_date) { Time.zone.today + 1.week }
 
       let(:expected_salary_data) do
         [
@@ -191,12 +191,12 @@ describe Employee do
   end
 
   describe 'current' do
-    let!(:started_today) { create :employee, start_date: Date.today }
-    let!(:leaving_today) { create :employee, end_date: Date.today }
-    let!(:gave_notice) { create :employee, end_date: Date.today + 7 }
+    let!(:started_today) { create :employee, start_date: Time.zone.today }
+    let!(:leaving_today) { create :employee, end_date: Time.zone.today }
+    let!(:gave_notice) { create :employee, end_date: Time.zone.today + 7 }
 
-    let!(:past_employee) { create :employee, end_date: Date.today - 7 }
-    let!(:not_started) { create :employee, start_date: Date.today + 14 }
+    let!(:past_employee) { create :employee, end_date: Time.zone.today - 7 }
+    let!(:not_started) { create :employee, start_date: Time.zone.today + 14 }
 
     it 'returns collection of employees employed today' do
       expect(Employee.current.sort).to eq [gave_notice, started_today, leaving_today].sort

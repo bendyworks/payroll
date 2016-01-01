@@ -48,10 +48,10 @@ class SalaryChart
   def add_salaries_today!(data_table)
     data_table.add_rows(1)
     row = data_table.rows.count - 1
-    data_table.set_cell(row, 0, Date.today)
+    data_table.set_cell(row, 0, Time.zone.today)
 
     @employees.each_with_index do |employee, employee_column_num|
-      data_table.set_cell(row, employee_column_num + 1, employee.salary_on(Date.today))
+      data_table.set_cell(row, employee_column_num + 1, employee.salary_on(Time.zone.today))
     end
   end
 
