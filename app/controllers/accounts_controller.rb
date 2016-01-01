@@ -2,7 +2,6 @@ class AccountsController < ApplicationController
   before_action :set_account, only: [:show, :edit, :update, :destroy]
 
   def upload_balances_form
-    puts 'In form action'
   end
 
   def upload_balances

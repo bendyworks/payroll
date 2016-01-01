@@ -1166,6 +1166,8 @@ Rails/HasAndBelongsToMany:
 Rails/Output:
   Description: 'Checks for calls to puts, print, etc.'
   Enabled: true
+  Exclude:
+    - 'db/seeds.rb'
 
 Rails/PluralizationGrammar:
   Description: 'Checks for incorrect grammar when using methods like `3.day.ago`.'
