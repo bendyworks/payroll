@@ -3,7 +3,7 @@ class Balance < ActiveRecord::Base
 
   belongs_to :account
   validates :account_id, presence: true
-  validates_uniqueness_of :date, scope: :account_id
+  validates :date, uniqueness: {scope: :account_id}
   validate :date_not_older_than_bendyworks
 
   def self.ordered_dates
