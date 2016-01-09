@@ -840,6 +840,9 @@ Metrics/MethodLength:
   Description: 'Avoid methods longer than 10 lines of code.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#short-methods'
   Enabled: true
+  Exclude:
+    - 'db/migrate/20141121201227_devise_create_users.rb'
+    - 'db/migrate/20141226171040_devise_invitable_add_to_users.rb'
 
 Metrics/ParameterLists:
   Description: 'Avoid parameter lists longer than three or four parameters.'

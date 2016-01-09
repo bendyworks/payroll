@@ -191,7 +191,7 @@ describe Employee do
     end
   end
 
-  describe 'current' do
+  context 'scopes' do
     let!(:started_today) { create :employee, start_date: Time.zone.today }
     let!(:leaving_today) { create :employee, end_date: Time.zone.today }
     let!(:gave_notice) { create :employee, end_date: Time.zone.today + 7 }
@@ -199,8 +199,21 @@ describe Employee do
     let!(:past_employee) { create :employee, end_date: Time.zone.today - 7 }
     let!(:not_started) { create :employee, start_date: Time.zone.today + 14 }
 
-    it 'returns collection of employees employed today' do
-      expect(Employee.current.sort).to eq [gave_notice, started_today, leaving_today].sort
+    describe 'current' do
+      it 'returns collection of employees employed today' do
+        expect(Employee.current.sort).to eq [gave_notice, started_today, leaving_today].sort
+      end
+    end
+
+    describe 'past_or_current' do
+      it 'returns all past or current employees' do
+        expect(Employee.past_or_current.sort).to eq [past_employee, gave_notice, started_today, leaving_today].sort
+      end
+    end
+    describe 'current_or_future' do
+      it 'returns all current OR future employees' do
+        expect(Employee.current_or_future.sort).to eq [gave_notice, started_today, leaving_today, not_started].sort
+      end
     end
   end
 end
