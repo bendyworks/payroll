@@ -9,7 +9,7 @@ module FilterEmployees
   private
 
   def filter_by_employee_choices(employee_choices, scope)
-    if [1,2].include?(employee_choices.try(:count))
+    if [1, 2].include?(employee_choices.try(:count))
       scope = scope.send employee_choices.keys.join('_or_')
     end
     scope

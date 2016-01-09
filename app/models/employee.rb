@@ -22,12 +22,12 @@ class Employee < ActiveRecord::Base
   end
 
   def self.past_or_current
-    where '(start_date <= :today AND (end_date IS NULL OR end_date >= :today))' +
+    where '(start_date <= :today AND (end_date IS NULL OR end_date >= :today))' \
           ' or end_date < :today', today: Time.zone.today
   end
 
   def self.current_or_future
-    where '(start_date <= :today AND (end_date IS NULL OR end_date >= :today))' +
+    where '(start_date <= :today AND (end_date IS NULL OR end_date >= :today))' \
           ' or start_date > :today', today: Time.zone.today
   end
 
