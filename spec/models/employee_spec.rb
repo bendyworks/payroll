@@ -206,13 +206,15 @@ describe Employee do
     end
 
     describe 'past_or_current' do
+      let(:expected_employees) { [past_employee, gave_notice, started_today, leaving_today] }
       it 'returns all past or current employees' do
-        expect(Employee.past_or_current.sort).to eq [past_employee, gave_notice, started_today, leaving_today].sort
+        expect(Employee.past_or_current.sort).to eq expected_employees.sort
       end
     end
     describe 'current_or_future' do
+      let(:expected_employees) { [gave_notice, started_today, leaving_today, not_started] }
       it 'returns all current OR future employees' do
-        expect(Employee.current_or_future.sort).to eq [gave_notice, started_today, leaving_today, not_started].sort
+        expect(Employee.current_or_future.sort).to eq expected_employees.sort
       end
     end
   end
