@@ -43,16 +43,27 @@ class ExperienceChart
 
     @employees.each_with_index do |em, employee_index|
       if employee == em
-        y_value = employee.current_or_last_pay
-        tooltip_text = employee.experience_tooltip
+        add_real_employee_cell data_table, row_num, employee, employee_index
       else
-        y_value = nil
-        tooltip_text = nil
+        add_placeholder_employee_cell data_table, row_num, employee_index
       end
-
-      employee_column = employee_index * 2 + 1
-      data_table.set_cell(row_num, employee_column, y_value)
-      data_table.set_cell(row_num, employee_column + 1, tooltip_text)
     end
+  end
+
+  def add_real_employee_cell(data_table, row_num, employee, employee_index)
+    y_value = employee.current_or_last_pay
+    tooltip_text = employee.experience_tooltip
+
+    add_employee_cell data_table, row_num, employee_index, y_value, tooltip_text
+  end
+
+  def add_placeholder_employee_cell(data_table, row_num, employee_index)
+    add_employee_cell data_table, row_num, employee_index, nil, nil
+  end
+
+  def add_employee_cell(data_table, row_num, employee_index, y_value, tooltip_text)
+    employee_column = employee_index * 2 + 1
+    data_table.set_cell(row_num, employee_column, y_value)
+    data_table.set_cell(row_num, employee_column + 1, tooltip_text)
   end
 end

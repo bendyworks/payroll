@@ -61,11 +61,8 @@ class Employee < ActiveRecord::Base
       data << { c: [date, salary_on(date)] }
     end
 
-    if end_date
-      data << { c: [end_date, ending_salary] }
-    elsif employed_on?(Time.zone.today) && !future_raise?
-      data << { c: [Time.zone.today, salary_on(Time.zone.today)] }
-    end
+    ending_salary_hash = ending_salary_data_hash
+    data << ending_salary_hash if ending_salary_hash
     data
   end
 
@@ -102,6 +99,14 @@ class Employee < ActiveRecord::Base
   end
 
   private
+
+  def ending_salary_data_hash
+    if end_date
+      { c: [end_date, ending_salary] }
+    elsif employed_on?(Time.zone.today) && !future_raise?
+      { c: [Time.zone.today, salary_on(Time.zone.today)] }
+    end
+  end
 
   def days_employed
     return 0 if Time.zone.today < start_date
