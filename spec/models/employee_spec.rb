@@ -80,8 +80,9 @@ describe Employee do
 
       context 'current employee (has no end date)' do
         let(:daisie_end_date) { nil }
+        let(:expected_weighted_years_experience) { (Time.zone.today - daisie_start_date) / 365.0 }
         it "returns number of years (decimal) since employee's start date" do
-          expect(daisie.weighted_years_experience).to eq((Time.zone.today - daisie_start_date) / 365.0)
+          expect(daisie.weighted_years_experience).to eq(expected_weighted_years_experience)
         end
       end
     end

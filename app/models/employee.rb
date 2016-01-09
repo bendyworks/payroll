@@ -9,7 +9,8 @@ class Employee < ActiveRecord::Base
   default_scope { order :first_name }
 
   def self.current
-    where 'start_date <= ? AND (end_date IS NULL OR end_date >= ?)', Time.zone.today, Time.zone.today
+    where 'start_date <= :today AND (end_date IS NULL OR end_date >= :today)',
+          today: Time.zone.today
   end
 
   def self.non_current
