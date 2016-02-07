@@ -43,6 +43,7 @@ exclude_paths:
 - config/**/*
 - db/**/*
 - features/**/*
+- lib/tasks/cucumber.rake
 - script/**/*
 - spec/**/*
 - vendor/**/*
