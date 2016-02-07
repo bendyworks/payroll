@@ -572,7 +572,7 @@ Style/SingleLineMethods:
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-single-line-methods'
   Enabled: true
 
-Style/SingleSpaceBeforeFirstArg:
+Style/SpaceBeforeFirstArg:
   Description: >-
                  Checks that exactly one space is used between a method name
                  and the first argument for method calls without parentheses.
@@ -728,7 +728,12 @@ Style/TrailingBlankLines:
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#newline-eof'
   Enabled: true
 
-Style/TrailingComma:
+Style/TrailingCommaInArguments:
+  Description: 'Checks for trailing comma in parameter lists and literals.'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-trailing-array-commas'
+  Enabled: true
+
+Style/TrailingCommaInLiteral:
   Description: 'Checks for trailing comma in parameter lists and literals.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-trailing-array-commas'
   Enabled: true
@@ -1046,6 +1051,8 @@ Lint/UnreachableCode:
 Lint/UselessAccessModifier:
   Description: 'Checks for useless access modifiers.'
   Enabled: true
+  Exclude:
+    - 'app/models/balance_csv_parser.rb'
 
 Lint/UselessAssignment:
   Description: 'Checks for useless assignment to a local variable.'
@@ -1144,10 +1151,6 @@ Rails/Date:
   Description: >-
                   Checks the correct usage of date aware methods,
                   such as Date.today, Date.current etc.
-  Enabled: true
-
-Rails/DefaultScope:
-  Description: 'Checks if the argument passed to default_scope is a block.'
   Enabled: true
 
 Rails/Delegate:
