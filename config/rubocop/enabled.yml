@@ -590,10 +590,6 @@ Style/SpaceAfterComma:
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#spaces-operators'
   Enabled: true
 
-Style/SpaceAfterControlKeyword:
-  Description: 'Use spaces after if/elsif/unless/while/until/case/when.'
-  Enabled: true
-
 Style/SpaceAfterMethodName:
   Description: >-
                  Do not put a space between a method name and the opening
@@ -609,6 +605,10 @@ Style/SpaceAfterNot:
 Style/SpaceAfterSemicolon:
   Description: 'Use spaces after semicolons.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#spaces-operators'
+  Enabled: true
+
+Style/SpaceAroundKeyword:
+  Description: 'Use spaces around if/elsif/unless/while/until/case/when.'
   Enabled: true
 
 Style/SpaceBeforeBlockBraces:
@@ -653,10 +653,6 @@ Style/SpaceAroundEqualsInParameterDefault:
 Style/SpaceAroundOperators:
   Description: 'Use a single space around operators.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#spaces-operators'
-  Enabled: true
-
-Style/SpaceBeforeModifierKeyword:
-  Description: 'Put a space before the modifier keyword.'
   Enabled: true
 
 Style/SpaceInsideBrackets:
