@@ -292,7 +292,7 @@ DEPENDENCIES
   rails_12factor
   rake
   rspec-rails
-  rubocop
+  rubocop (= 0.35.1)
   sass-rails
   sdoc
   selenium-webdriver
