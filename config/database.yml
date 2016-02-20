@@ -1,6 +1,7 @@
 default: &default
   adapter: postgresql
   encoding: unicode
+  username: payroll
   pool: 5
 
 development:
@@ -14,7 +15,6 @@ test: &test
 production:
   <<: *default
   database: payroll_production
-  username: payroll
   password: <%= ENV['PAYROLL_DATABASE_PASSWORD'] %>
 
 cucumber:
