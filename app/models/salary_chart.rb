@@ -24,7 +24,8 @@ class SalaryChart
 
   def create_employee_columns!(data_table)
     @employees.each do |employee|
-      data_table.new_column('number', employee.first_name)
+      data_table.new_column('number', employee.first_name + "\n$" +
+                                      employee.current_or_last_pay.to_i.to_s)
     end
   end
 
