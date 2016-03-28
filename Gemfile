@@ -24,6 +24,7 @@ gem 'jbuilder'
 
 group :development do
   gem 'spring'
+  gem 'rails-erd'
 end
 
 group :development, :test do
