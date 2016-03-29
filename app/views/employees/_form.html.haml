@@ -32,6 +32,9 @@
             %span.input-group-addon $
             = f.number_field :starting_salary, class: 'form-control', required: true
         .form-group.col-lg-12
+          = f.label :notes, 'Notes', class: 'control-label'
+          = f.text_area :notes, class: 'form-control'
+        .form-group.col-lg-12
           = f.check_box :billable
           = f.label :billable, class: 'control-label'
         .form-group.col-lg-12

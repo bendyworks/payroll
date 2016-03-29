@@ -49,5 +49,5 @@
   - if @employee.notes?
     %li.active
       = link_to 'Notes', "#"
-      %div= @employee.notes
+      %pre= @employee.notes
   = link_to 'Record a Raise', new_employee_salary_path(@employee), class: 'btn btn-success'
