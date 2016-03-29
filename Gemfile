@@ -1,53 +1,53 @@
 source 'https://rubygems.org'
 ruby '2.2.3'
 
-gem 'smarter_csv'
-gem 'airbrake'
-gem 'google_visualr'
-gem 'haml'
-gem 'haml-rails'
-gem 'devise'
-gem 'devise_invitable'
-gem 'bootstrap-sass'
-gem 'immigrant'
-gem 'puma'
+gem 'smarter_csv'       # importing csv files as array(s) of hashes
+gem 'airbrake'          # robust exception tracking
+gem 'google_visualr'    # Google Visualization API
+gem 'haml'              # HTML Abstraction Markup Language
+gem 'haml-rails'        # HAML generators
+gem 'devise'            # Flexible authentication solution
+gem 'devise_invitable'  # Invitation strategy for devise
+gem 'bootstrap-sass'    # SASS port of  Bootstrap 3
+gem 'immigrant'         # Foreign key migration generator
+gem 'puma'              # Ruby web server built for concurrency
 
-gem 'rails'
-gem 'pg'
-gem 'sass-rails'
-gem 'uglifier'
-gem 'coffee-rails'
+gem 'rails'             # Ruby on Rails
+gem 'pg'                # PostgreSQL
+gem 'sass-rails'        # Sass adapter
+gem 'uglifier'          # minifies JavaScript, wraps UglifyJS
+gem 'coffee-rails'      # CoffeeScript adapter
 
-gem 'jquery-rails'
-gem 'turbolinks'
-gem 'jbuilder'
+gem 'jquery-rails'      # jQuery and jQuery-ujs
+gem 'turbolinks'        # Faster link following
+gem 'jbuilder'          # Create JSON structures
 
 group :development do
-  gem 'spring'
-  gem 'rails-erd'
+  gem 'spring'          # Preloads your application
+  gem 'rails-erd'       # Generate an entity-relationship diagram
 end
 
 group :development, :test do
-  gem 'rspec-rails'
-  gem 'pry'
-  gem 'pry-byebug'
-  gem 'rubocop', require: false
+  gem 'rspec-rails'             # testing framework
+  gem 'pry'                     # IRB alternative and runtime dev console
+  gem 'pry-byebug'              # combine pry with byebug
+  gem 'rubocop', require: false # Automatic Ruby code style checking
 end
 
 group :test do
-  gem 'shoulda-matchers'
-  gem 'factory_girl_rails'
-  gem 'rake'
-  gem 'cucumber-rails', require: false
-  gem 'capybara'
-  gem 'selenium-webdriver'
-  gem 'database_cleaner'
+  gem 'shoulda-matchers'                # Collection of testing matchers
+  gem 'factory_girl_rails'              # Setup Ruby objects as test data
+  gem 'rake'                            # Make-like program
+  gem 'cucumber-rails', require: false  # Automated acceptance tests
+  gem 'capybara'                        # Integration testing tool
+  gem 'selenium-webdriver'              # Automated tests of websites
+  gem 'database_cleaner'                # Strategies for cleaning databases
 end
 
 group :production do
-  gem 'rails_12factor'
+  gem 'rails_12factor'  # Run Rails the 12factor way
 end
 
 group :doc do
-  gem 'sdoc'
+  gem 'sdoc'  # rdoc generator
 end
