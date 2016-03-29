@@ -45,9 +45,9 @@ group :test do
 end
 
 group :production do
-  gem 'rails_12factor'  # Run Rails the 12factor way
+  gem 'rails_12factor' # Run Rails the 12factor way
 end
 
 group :doc do
-  gem 'sdoc'  # rdoc generator
+  gem 'sdoc' # rdoc generator
 end
