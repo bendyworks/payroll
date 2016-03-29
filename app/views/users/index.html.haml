@@ -12,7 +12,7 @@
           %td= user.email
           - if user.pending?
             %td= 'Pending'
-            %td= link_to 'Resend', resend_invitation_path(user.id), class: 'btn btn-success', method: 'post'
+            %td= link_to 'Resend', resend_invitation_path(user.id), class: 'btn btn-success btn-xs', method: 'post'
           - else
             %td= 'Joined'
             %td
