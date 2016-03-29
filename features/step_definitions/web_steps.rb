@@ -17,3 +17,11 @@ end
 Then(/^I see "(.*?)"$/) do |text|
   expect(page.body).to have_text(text)
 end
+
+Then(/^I should see "(.*?)"$/) do |target_text|
+  expect(page).to have_content(target_text)
+end
+
+Then(/^I should not see "(.*?)"$/) do |target_text|
+  expect(page).to_not have_content(target_text)
+end
