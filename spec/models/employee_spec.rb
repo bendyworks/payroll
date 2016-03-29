@@ -11,6 +11,7 @@ describe Employee do
   it { should have_db_column(:billable).of_type(:boolean).with_options(default: true) }
   it { should have_db_column(:start_date).of_type(:date) }
   it { should have_db_column(:end_date).of_type(:date) }
+  it { should have_db_column(:notes).of_type(:text) }
 
   describe '#salary_on' do
     let(:start_date) { Date.parse('2013-7-10') }
