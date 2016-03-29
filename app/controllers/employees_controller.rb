@@ -49,7 +49,8 @@ class EmployeesController < ApplicationController
                                      :starting_salary,
                                      :direct_experience,
                                      :indirect_experience,
-                                     :billable)
+                                     :billable,
+                                     :notes)
   end
 
   def employee_salary_history_data
