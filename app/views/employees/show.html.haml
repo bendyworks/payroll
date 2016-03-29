@@ -46,4 +46,8 @@
             %td= salary.start_date.strftime('%b %e, %Y')
             %td= number_to_currency(salary.annual_amount, precision: 0)
             %td= link_to 'Delete', employee_salary_path(employee_id: @employee, id: salary), method: :delete
+  - if @employee.notes?
+    %li.active
+      = link_to 'Notes', "#"
+      %div= @employee.notes
   = link_to 'Record a Raise', new_employee_salary_path(@employee), class: 'btn btn-success'
