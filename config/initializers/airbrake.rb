@@ -38,7 +38,7 @@ Airbrake.configure do |c|
   # Array, which means Airbrake Ruby sends exceptions occurring in all
   # environments.
   # https://github.com/airbrake/airbrake-ruby#ignore_environments
-  c.ignore_environments = %w(test)
+  c.ignore_environments = %w(test development)
 end
 
 # If Airbrake doesn't send any expected exceptions, we suggest to uncomment the
