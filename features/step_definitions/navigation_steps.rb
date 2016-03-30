@@ -15,7 +15,7 @@ Given(/^I'm on the experience chart page$/) do
 end
 
 When(/^I'm on the salaries chart page$/) do
-  visit root_path
+  visit salaries_path
 end
 
 When(/^I'm on that employee page$/) do

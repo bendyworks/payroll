@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'pages/home'
+
   devise_for :users, skip: [:registrations]
   as :user do
     get 'users/edit' => 'devise/registrations#edit', as: 'edit_user_registration'
@@ -6,10 +8,13 @@ Rails.application.routes.draw do
   end
   post 'resend_invitation/:user_id' => 'users#resend_invitation', as: 'resend_invitation'
 
-  root 'charts#salaries'
+  # root 'charts#salaries'
+  root 'pages#home'
+
   get 'balances', to: 'charts#balances'
   get 'salaries', to: 'charts#salaries'
   get 'experience', to: 'charts#experience'
+  get 'home', to: 'pages#home'
 
   resources :employees, except: [:destroy] do
     resources :salaries, only: [:new, :create, :destroy]
