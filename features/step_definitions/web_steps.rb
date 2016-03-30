@@ -25,3 +25,11 @@ end
 Then(/^I should not see "(.*?)"$/) do |target_text|
   expect(page).to_not have_content(target_text)
 end
+
+Then(/^I should see #(.*?)$/) do |element_id|
+  fail "No DOM element exists with id '#{element_id}''" if has_no_css?("\##{element_id}")
+end
+
+Then(/^I should see a (.*?) tag$/) do |element_tag|
+  fail "No #{element_tag} DOM element exists" if has_no_css?("#{element_tag}")
+end
