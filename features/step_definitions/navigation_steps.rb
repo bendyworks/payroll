@@ -1,3 +1,7 @@
+Given(/^I am logged in$/) do
+  step "I'm logged in"
+end
+
 Given(/^I'm logged in$/) do
   @user = create :user
   visit new_user_session_path
