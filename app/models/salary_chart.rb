@@ -15,13 +15,6 @@ class SalaryChart
 
   private
 
-  def chart_options(chart_opts)
-    chart_opts ||= {}
-    opts = { width: 800, height: 500, legend: 'right',
-             vAxis: { minValue: 0, gridlines: { count: 10 } } }
-    opts.merge(chart_opts.slice(:width, :height, :legend))
-  end
-
   def chart_data
     data_table = GoogleVisualr::DataTable.new
     data_table.new_column('date', 'Date')
