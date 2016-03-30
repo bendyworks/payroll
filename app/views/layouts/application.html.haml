@@ -20,6 +20,7 @@
             .navbar-collapse.collapse.navbar-responsive-collapse
               - if user_signed_in?
                 %ul.nav.navbar-nav
+                  %li= link_to 'Home', root_path
                   %li= link_to 'Balances', balances_path
                   %li= link_to 'Salaries', salaries_path
                   %li= link_to 'Experience', experience_path
