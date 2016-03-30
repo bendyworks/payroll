@@ -31,5 +31,5 @@ Then(/^I should see #(.*?)$/) do |element_id|
 end
 
 Then(/^I should see a (.*?) tag$/) do |element_tag|
-  fail "No #{element_tag} DOM element exists" if has_no_css?("#{element_tag}")
+  fail "No #{element_tag} DOM element exists" if has_no_css?(element_tag.to_s)
 end
