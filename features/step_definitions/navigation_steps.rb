@@ -10,6 +10,10 @@ Given(/^I'm logged in$/) do
   click_on 'Log in'
 end
 
+When(/^I'm on the homepage$/) do
+  visit root_path
+end
+
 Given(/^I'm on the experience chart page$/) do
   visit experience_path
 end
