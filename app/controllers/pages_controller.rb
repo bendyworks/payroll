@@ -8,6 +8,11 @@ class PagesController < ApplicationController
                              vAxis: { textPosition: 'none' },
                              chartArea: { width: '100%', height: '100%' }
                             ).chart
+    # Event listener for when you select a data point on the chart...
+    # @chart.add_listener("select", "function() { alert('chart') }")
+
+    # Event listener for when the chart is ready...
+    # @chart.add_listener("ready", "function() { alert('ready') }")
   end
 
   def employee_chart_params
