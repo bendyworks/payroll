@@ -1,3 +1,16 @@
 // Place all the styles related to the charts controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+// Center Chart on page
+// #experience_chart {
+//   height: 500px;
+//   width: 800px;
+//   position: relative;
+//   left: 50%;
+//   margin-left: -400px;
+// }
+
+#salary_preview_chart {
+  cursor: pointer;
+}
