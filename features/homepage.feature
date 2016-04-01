@@ -9,3 +9,4 @@ Feature: Home Page
       And I'm logged in
     When I'm on the homepage
     Then a small salary history chart is present
+      And a small experience chart is present
