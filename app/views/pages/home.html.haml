@@ -1,5 +1,11 @@
 %h1 Home
 
-%h2= link_to 'Salaries', salaries_path
-#salary_preview_chart
-= render_chart @chart, 'salary_preview_chart'
+#row
+  .col-md-6.text-center
+    %h2= link_to 'Salaries', salaries_path
+    #salary_preview_chart.small-chart.center
+    = render_chart @salary_chart, 'salary_preview_chart'
+  .col-md-6.text-center
+    %h2= link_to 'Experience', experience_path
+    #experience_preview_chart.small-chart.center
+    = render_chart @experience_chart, 'experience_preview_chart'

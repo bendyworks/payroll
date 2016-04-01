@@ -2,15 +2,25 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-// Center Chart on page
-// #experience_chart {
-//   height: 500px;
-//   width: 800px;
-//   position: relative;
-//   left: 50%;
-//   margin-left: -400px;
-// }
-
+.large-chart {
+  position: relative;
+  height: 500px;
+  width: 800px;
+}
+.small-chart {
+  position: relative;
+  height: 200px;
+  width: 300px;
+}
+.large-chart.center {
+  left: 50%;
+  margin-left: -400px;
+}
+.small-chart.center {
+    left: 50%;
+    margin-left: -150px;
+}
+#experience_preview_chart,
 #salary_preview_chart {
   cursor: pointer;
 }
