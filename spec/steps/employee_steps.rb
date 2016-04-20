@@ -1,7 +1,7 @@
-Given(/^employee$/) do
+step "employee" do
   @employee ||= create :employee
 end
 
-Given(/^employees$/) do
+step "employees" do
   create_list :employee, 5
 end

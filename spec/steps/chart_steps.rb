@@ -1,4 +1,4 @@
-Then(/^the experience chart is present$/) do
+step "the experience chart is present" do
   within '.body' do
     expect(page).to have_content('Experience')
   end
@@ -7,7 +7,7 @@ Then(/^the experience chart is present$/) do
   end
 end
 
-Then(/^the salaries chart is present$/) do
+step "the salaries chart is present" do
   within '.body' do
     expect(page).to have_content('Salaries')
   end
@@ -16,7 +16,7 @@ Then(/^the salaries chart is present$/) do
   end
 end
 
-Then(/^their salary history chart is present$/) do
+step "their salary history chart is present" do
   within '.body' do
     expect(page).to have_content('Salary History')
   end
@@ -25,7 +25,7 @@ Then(/^their salary history chart is present$/) do
   end
 end
 
-Then(/^the balances chart is present$/) do
+step "the balances chart is present" do
   within '.body' do
     expect(page).to have_content('Balances')
   end
@@ -34,7 +34,7 @@ Then(/^the balances chart is present$/) do
   end
 end
 
-Then(/^current employment status is checked$/) do
+step "current employment status is checked" do
   current_checkbox = find('#employment_current')
   expect(current_checkbox).to be_checked
 end

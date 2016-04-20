@@ -37,7 +37,7 @@ group :test do
   gem 'shoulda-matchers'
   gem 'factory_girl_rails'
   gem 'rake'
-  gem 'cucumber-rails', require: false
+  gem 'turnip'
   gem 'capybara'
   gem 'selenium-webdriver'
   gem 'database_cleaner'

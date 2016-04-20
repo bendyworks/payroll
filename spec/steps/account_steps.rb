@@ -8,17 +8,17 @@ EXAMPLE_ACCOUNTS = { 'City Bank Checking' => 'Checking',
                      'WIP' => 'WIP',
                      'Prepaid' => 'Prepaid' }
 
-Given(/^account types$/) do
+step "account types" do
   AccountType.seed
 end
 
-Given(/^accounts$/) do
+step "accounts" do
   EXAMPLE_ACCOUNTS.each do |name, type|
     Account.create name: name, account_type: AccountType.find_by_name(type)
   end
 end
 
-Given(/^balances$/) do
+step "balances" do
   Account.all.each do |acct|
     10.times do |n|
       acct.balances.create! date: n.weeks.ago, amount: 300 + n
@@ -26,7 +26,7 @@ Given(/^balances$/) do
   end
 end
 
-When(/^I upload "(.*?)"$/) do |file_name|
+step "I upload :file_name" do |file_name|
   attach_file('balances_file', File.expand_path(file_name, Rails.root.join('features', 'support')))
   click_on 'Upload'
 end
