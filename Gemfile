@@ -42,6 +42,7 @@ group :test do
   gem 'selenium-webdriver'
   gem 'capybara-webkit'
   gem 'database_cleaner'
+  gem 'rspec-nc'
 end
 
 group :production do
