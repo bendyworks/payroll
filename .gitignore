@@ -15,3 +15,4 @@
 /log/*.log
 /tmp
 features/support/bendyworks.csv
+spec/acceptance/support/bendyworks.csv

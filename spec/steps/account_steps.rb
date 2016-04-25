@@ -27,6 +27,6 @@ step "balances" do
 end
 
 step "I upload :file_name" do |file_name|
-  attach_file('balances_file', File.expand_path(file_name, Rails.root.join('features', 'support')))
+  attach_file('balances_file', File.expand_path(file_name, Rails.root.join('spec', 'acceptance', 'support')))
   click_on 'Upload'
 end
