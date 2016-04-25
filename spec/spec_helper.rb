@@ -48,6 +48,12 @@ RSpec.configure do |config|
     DatabaseCleaner.clean_with(:truncation)
     DatabaseCleaner.strategy = :transaction
   end
+  
+  config.around(:each, type: :feature, javascript: true) do |example|
+    DatabaseCleaner.strategy = :truncation
+    example.run
+    DatabaseCleaner.strategy = :transaction
+  end
 
   config.before(:each) do
     DatabaseCleaner.start
@@ -56,6 +62,7 @@ RSpec.configure do |config|
   config.after(:each) do
     DatabaseCleaner.clean
   end
+
 # The settings below are suggested to provide a good initial experience
 # with RSpec, but feel free to customize to your heart's content.
 =begin
