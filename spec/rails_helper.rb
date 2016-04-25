@@ -33,7 +33,17 @@ Dir.glob("spec/steps/**/*steps.rb") { |f| load f, true }
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.maintain_test_schema!
 
-# Capybara.javascript_driver = :webkit
+Capybara.javascript_driver = :webkit
+Capybara::Webkit.configure do |config|
+  config.block_unknown_urls
+  config.allow_url("https://ajax.googleapis.com/ajax/static/modules/gviz/1.0/core/tooltip.css")
+  config.allow_url("https://www.google.com/uds/api/visualization/1.0/69d4d6122bf8841d4832e052c2e3bf39/format+en,default+en,ui+en,corechart+en.I.js")
+  config.allow_url("https://www.google.com/jsapi")
+  config.allow_url("www.google.com")
+  config.allow_url("https://www.google.com/uds/?file=visualization&v=1.0&packages=corechart&async=2")
+  config.allow_url("fonts.googleapis.com")
+  config.allow_url("http://fonts.googleapis.com/css?family=Lato:400,700,400italic")
+end
 
 RSpec.configure do |config|
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
