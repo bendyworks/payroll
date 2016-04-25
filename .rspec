@@ -1,3 +1,5 @@
 --color
 --require spec_helper
 -r turnip/rspec
+--format Nc
+--format progress
