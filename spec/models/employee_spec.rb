@@ -12,6 +12,29 @@ describe Employee do
   it { should have_db_column(:start_date).of_type(:date) }
   it { should have_db_column(:end_date).of_type(:date) }
 
+  describe '#display_pay' do
+    let(:start_date) { Date.parse('2015-08-07') }
+    let(:employee) { create :employee, start_date: start_date }
+
+    let!(:starting_salary) do
+      create(:salary, employee: employee, start_date: start_date, annual_amount: pay)
+    end
+
+    context 'when pay is a whole number of thousands' do
+      let(:pay) { 73_000 }
+      it 'returns annual pay in K without fractional part' do
+        expect(employee.display_pay).to eq('$73K')
+      end
+    end
+
+    context 'when pay is not a whole number of thousands' do
+      let(:pay) { 73_500 }
+      it 'returns annual pay in K with fractional part' do
+        expect(employee.display_pay).to eq('$73.5K')
+      end
+    end
+  end
+
   describe '#salary_on' do
     let(:start_date) { Date.parse('2013-7-10') }
     let(:raise_date) { Date.parse('2013-12-10') }
