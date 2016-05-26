@@ -27,8 +27,7 @@ class ExperienceChart
 
   def create_employee_columns_with_tooltips!(data_table)
     @employees.each do |employee|
-      data_table.new_column('number', employee.first_name + "\n$" +
-                                      employee.current_or_last_pay.to_i.to_s)
+      data_table.new_column('number', "#{employee.first_name} #{employee.display_pay}")
       data_table.new_column('string', 'tooltip text', nil, 'tooltip')
     end
   end

@@ -90,6 +90,12 @@ class Employee < ActiveRecord::Base
     salary_on(Time.zone.today) || ending_salary || starting_salary
   end
 
+  def display_pay
+    salary = current_or_last_pay
+    salary_in_ks = salary / 1000
+    "$#{format('%g', salary_in_ks)}K"
+  end
+
   def self.ordered_start_dates
     select('distinct start_date').unscoped.order('start_date').map(&:start_date)
   end
