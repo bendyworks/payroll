@@ -23,6 +23,8 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder'
 
+gem 'rubocop', require: false
+
 group :development do
   gem 'spring'
 end
@@ -31,7 +33,6 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'pry'
   gem 'pry-byebug'
-  gem 'rubocop', require: false
 end
 
 group :test do
