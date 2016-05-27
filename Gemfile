@@ -23,7 +23,7 @@ gem 'turbolinks'        # Faster link following
 gem 'jbuilder'          # Create JSON structures
 
 gem 'rake'
-
+gem 'rubocop', require: false # Automatic Ruby code style checking
 
 group :development do
   gem 'spring'          # Preloads your application
@@ -34,7 +34,6 @@ group :development, :test do
   gem 'rspec-rails'             # testing framework
   gem 'pry'                     # IRB alternative and runtime dev console
   gem 'pry-byebug'              # combine pry with byebug
-  gem 'rubocop', require: false # Automatic Ruby code style checking
 end
 
 group :test do
