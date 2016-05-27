@@ -11,6 +11,7 @@ gem 'devise_invitable'
 gem 'bootstrap-sass'
 gem 'immigrant'
 gem 'puma'
+gem 'rake'
 
 gem 'rails'
 gem 'pg'
@@ -36,7 +37,6 @@ end
 group :test do
   gem 'shoulda-matchers'
   gem 'factory_girl_rails'
-  gem 'rake'
   gem 'cucumber-rails', require: false
   gem 'capybara'
   gem 'selenium-webdriver'
