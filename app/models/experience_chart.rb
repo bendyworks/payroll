@@ -3,11 +3,13 @@ class ExperienceChart
 
   attr_reader :chart
 
-  def initialize(collection_opts)
+  def initialize(collection_opts, chart_opts = nil)
+    chart_opts ||= {}
     opts = { width: 800, height: 500,
              hAxis: { title: 'Years at Bendyworks plus partial prior experience', minValue: 0 },
              vAxis: { minValue: 0 } }
-
+    opts.merge!(chart_opts.slice(:width, :height, :legend, :title, :hAxis,
+                                 :vAxis, :chartArea))
     @employees = filtered_collection(collection_opts)
     @chart = GoogleVisualr::Interactive::ScatterChart.new(chart_data, opts)
   end

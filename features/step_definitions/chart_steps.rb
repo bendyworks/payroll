@@ -38,3 +38,17 @@ Then(/^current employment status is checked$/) do
   current_checkbox = find('#employment_current')
   expect(current_checkbox).to be_checked
 end
+
+Then(/^a small salary history chart is present$/) do
+  within '.body' do
+    expect(page).to have_content('Salaries')
+  end
+  expect(page).to have_css('#salary_preview_chart')
+end
+
+Then(/^a small experience chart is present$/) do
+  within '.body' do
+    expect(page).to have_content('Experience')
+  end
+  expect(page).to have_css('#experience_preview_chart')
+end
