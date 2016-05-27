@@ -3,10 +3,12 @@ class SalaryChart
 
   attr_reader :chart
 
-  def initialize(collection_opts)
+  def initialize(collection_opts, chart_opts = nil)
+    chart_opts ||= {}
     opts = { width: 800, height: 500, legend: 'right',
              vAxis: { minValue: 0, gridlines: { count: 10 } } }
-
+    opts.merge!(chart_opts.slice(:width, :height, :legend, :title, :hAxis,
+                                 :vAxis, :chartArea))
     @employees = filtered_collection(collection_opts)
     @chart = GoogleVisualr::Interactive::LineChart.new(chart_data, opts)
   end
