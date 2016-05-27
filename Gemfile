@@ -22,6 +22,9 @@ gem 'jquery-rails'      # jQuery and jQuery-ujs
 gem 'turbolinks'        # Faster link following
 gem 'jbuilder'          # Create JSON structures
 
+gem 'rake'
+
+
 group :development do
   gem 'spring'          # Preloads your application
   gem 'rails-erd'       # Generate an entity-relationship diagram
