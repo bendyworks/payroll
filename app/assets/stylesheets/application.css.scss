@@ -16,3 +16,8 @@
 
 @import 'bootstrap-sprockets';
 @import 'bootstrap';
+
+
+.navbar-default .navbar-nav > li > a.active_link {
+	color: #18bc9c;
+}

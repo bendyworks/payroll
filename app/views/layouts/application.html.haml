@@ -20,16 +20,16 @@
             .navbar-collapse.collapse.navbar-responsive-collapse
               - if user_signed_in?
                 %ul.nav.navbar-nav
-                  %li= link_to 'Home', root_path
-                  %li= link_to 'Balances', balances_path
-                  %li= link_to 'Salaries', salaries_path
-                  %li= link_to 'Experience', experience_path
+                  %li= link_to 'Home', root_path, class: ("active_link" if current_page?(root_path))
+                  %li= link_to 'Balances', balances_path, class: ("active_link" if current_page?(balances_path))
+                  %li= link_to 'Salaries', salaries_path, class: ("active_link" if current_page?(salaries_path))
+                  %li= link_to 'Experience', experience_path, class: ("active_link" if current_page?(experience_path))
                 %ul.nav.navbar-nav.navbar-right
                   %li.dropdown
                     = render "layouts/employees_dropdown"
                   %li.dropdown
                     = render "layouts/accounts_dropdown"
-                  %li= link_to 'Users', users_path
+                  %li= link_to 'Users', users_path, class: ("active_link" if current_page?(users_path))
                   %li.dropdown
                     %a.dropdown-toggle#charts{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#"}
                       = current_user.email
