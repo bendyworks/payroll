@@ -11,10 +11,12 @@
             = label_tag do
               = check_box_tag 'employment[past]', 1, params[:employment].try(:[], :past)
               Past
-          %span.checkbox-inline
-            = label_tag do
-              = check_box_tag 'employment[future]', 1, params[:employment].try(:[], :future)
-              Future
+          - @start_dates.each do |date|
+            - if date > Date.today
+              %span.checkbox-inline
+                = label_tag do
+                  = check_box_tag 'employment[future]', 1, params[:employment].try(:[], :future)
+                  Future
         .form-group
           %span.checkbox-inline
             = label_tag do
