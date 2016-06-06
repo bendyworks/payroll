@@ -1,6 +1,4 @@
 class ChartsController < ApplicationController
-  before_action :start_date
-
   def balances
     @chart = BalanceChart.new.chart
   end
@@ -14,14 +12,6 @@ class ChartsController < ApplicationController
   end
 
   private
-
-  def start_date
-    @employees = Employee.all
-    @start_dates = []
-    @employees.each do |employee|
-      @start_dates << employee.start_date
-    end
-  end
 
   def employee_chart_params
     employment = params[:employment].try(:permit, :past, :current, :future)
