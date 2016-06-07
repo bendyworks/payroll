@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   get 'experience', to: 'charts#experience'
   get 'home', to: 'pages#home'
 
-  resources :employees, except: [:destroy] do
+  resources :employees, except: :destroy do
     resources :salaries, only: [:new, :create, :destroy]
   end
 
