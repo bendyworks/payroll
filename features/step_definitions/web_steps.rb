@@ -10,7 +10,7 @@ When(/^I select "(.*?)" from "(.*?)"$/) do |menu_choice, label|
   select menu_choice, from: label
 end
 
-When(/^I press "(.*?)"$/) do |button_text|
+When(/^I press "([^"]*?)"$/) do |button_text|
   click_on button_text
 end
 

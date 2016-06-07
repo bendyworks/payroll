@@ -42,6 +42,7 @@ group :test do
   gem 'rake'                            # Make-like program
   gem 'cucumber-rails', require: false  # Automated acceptance tests
   gem 'capybara'                        # Integration testing tool
+  gem 'launchy'
   gem 'selenium-webdriver'              # Automated tests of websites
   gem 'database_cleaner'                # Strategies for cleaning databases
 end

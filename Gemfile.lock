@@ -135,6 +135,8 @@ GEM
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
     json (1.8.3)
+    launchy (2.4.3)
+      addressable (~> 2.3)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.3)
@@ -294,6 +296,7 @@ DEPENDENCIES
   immigrant
   jbuilder
   jquery-rails
+  launchy
   pg
   pry
   pry-byebug
@@ -313,5 +316,8 @@ DEPENDENCIES
   turbolinks
   uglifier
 
+RUBY VERSION
+   ruby 2.2.3p173
+
 BUNDLED WITH
-   1.11.2
+   1.12.5

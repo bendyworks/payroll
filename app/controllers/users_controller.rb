@@ -8,4 +8,10 @@ class UsersController < ApplicationController
     @user.invite!
     redirect_to users_path, notice: 'Invite resent'
   end
+
+  def destroy
+    @user = User.find(params[:id])
+    msg = @user.destroy ? 'User deleted.' : 'Failed to delete user. Please try again.'
+    redirect_to users_path, notice: msg
+  end
 end

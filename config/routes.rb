@@ -20,7 +20,7 @@ Rails.application.routes.draw do
     resources :salaries, only: [:new, :create, :destroy]
   end
 
-  resources :users, only: :index
+  resources :users, only: [:index, :destroy]
   resources :accounts, except: :index do
     collection do
       get :upload_balances_form
