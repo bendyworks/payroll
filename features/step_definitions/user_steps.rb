@@ -1,5 +1,5 @@
 Given(/^user "(.*?)"$/) do |email|
-  create :user, {email: email}
+  create :user, email: email
 end
 
 When(/^I delete user "([^"]*)"$/) do |user_email|
