@@ -2,12 +2,14 @@
   Employees
   %b.caret
 %ul.dropdown-menu
-  %li= link_to 'Add employee', new_employee_path
+  %li.add= link_to 'Add employee', new_employee_path, class: ("active_menu" if current_page?(new_employee_path))
   %li.divider
   %li.dropdown-header Current Employees
   - Employee.current.each do |e|
-    %li= link_to e.first_name, employee_path(e)
+    %li= link_to e.first_name, employee_path(e), class: ("active_menu" if current_page?(employee_path(e)))
   %li.divider
   %li.dropdown-header Inactive Employees
   - Employee.non_current.each do |e|
-    %li= link_to e.first_name, employee_path(e)
+    %li= link_to e.first_name, employee_path(e), class: ("active_menu" if current_page?(employee_path(e)))
+
+
