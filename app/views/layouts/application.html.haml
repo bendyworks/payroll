@@ -20,7 +20,7 @@
             .navbar-collapse.collapse.navbar-responsive-collapse
               - if user_signed_in?
                 %ul.nav.navbar-nav
-                  %li= link_to 'Home', root_path, class: ("active_link" if current_page?(root_path))
+                  %li= link_to image_tag("bendyworks-logo.png", width: 150, alt: 'Bendyworks Logo'), root_path, class: ("active_link" if current_page?(root_path))
                   %li= link_to 'Balances', balances_path, class: ("active_link" if current_page?(balances_path))
                   %li= link_to 'Salaries', salaries_path, class: ("active_link" if current_page?(salaries_path))
                   %li= link_to 'Experience', experience_path, class: ("active_link" if current_page?(experience_path))
