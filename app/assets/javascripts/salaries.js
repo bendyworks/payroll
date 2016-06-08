@@ -1,13 +1,12 @@
-// NOTE: JS `Date`s use 0 for January
+// NOTE: JS `Date`s are milliseconds from the epoch.  Ruby Dates are seconds from the epoch.
 
-// | Date                   | Daisie $59K | Donald (support) $40K | Mickey $55K | Minnie $49K |
-// |------------------------+-------------+-----------------------+-------------+-------------|
-// | new Date(2012, 10, 11) |        null | null                  | null        | null        |
-// | new Date(2013, 0, 1)   |     57000.0 | null                  | null        | null        |
-// | ...                    |             |                       |             |             |
-// | new Date(2013, 8, 28)  |     59000.0 | 40000.0               | 55000.0     | 49000.0     |
-// | new Date(2016, 5, 6)   |     59000.0 | 40000.0               | 55000.0     | 49000.0     |
-
+// | Date                      | Daisie $59K | Donald (support) $40K | Mickey $55K | Minnie $49K |
+// |---------------------------+-------------+-----------------------+-------------+-------------|
+// | new Date(1352613600000.0) |        null | null                  | null        | null        |
+// | new Date(1360303200000.0) |     57000.0 | null                  | null        | null        |
+// | ...                       |             |                       |             |             |
+// | new Date(1465362000000.0) |     59000.0 | 40000.0               | 55000.0     | 49000.0     |
+// | new Date(1466053200000.0) |     59000.0 | 40000.0               | 55000.0     | 49000.0     |
 
 google.load('visualization', '1.0', {
   packages: ['corechart'],
