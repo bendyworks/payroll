@@ -29,3 +29,7 @@ end
 Then(/^I'm on the balances chart page$/) do
   visit balances_path
 end
+
+When(/^I'm on the users page$/) do
+  visit users_path
+end
