@@ -15,14 +15,12 @@ class Salary < ActiveRecord::Base
     ordered_dates.map { |date| [date - 1, date] }.flatten
   end
 
-  def self.history_dates
-    @history_dates ||= (
-      Salary.ordered_dates_with_previous_dates + Employee.ordered_start_dates
-    ).sort.uniq
-  end
-
   def self.all_dates
     (Salary.history_dates << Time.zone.today).sort.uniq
+  end
+
+  def self.history_dates
+    (Salary.ordered_dates_with_previous_dates + Employee.ordered_start_dates).sort.uniq
   end
 
   private

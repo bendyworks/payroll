@@ -12,7 +12,7 @@ Then(/^the salaries chart is present$/) do
     expect(page).to have_content('Salaries')
   end
   within '#salaries_chart' do
-    expect(page).to have_content('2015')
+    expect(page).to have_content('2013')
   end
 end
 
