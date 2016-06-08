@@ -1,10 +1,16 @@
 class ChartsController < ApplicationController
+  include FilterEmployees
+
   def balances
     @chart = BalanceChart.new.chart
   end
 
   def salaries
-    @chart = SalaryChart.new(employee_chart_params).chart
+    @employees = filtered_collection(employee_chart_params).to_a
+    @all_dates = Salary.all_dates
+    @data_table = @all_dates.map do |date|
+      [date.to_time.to_f * 1000] + @employees.map { |e| e.salary_on(date) }
+    end
   end
 
   def experience

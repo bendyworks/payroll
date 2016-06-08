@@ -11,6 +11,7 @@
   position: relative;
   height: 200px;
   width: 300px;
+  cursor: pointer;
 }
 .large-chart.center {
   left: 50%;
@@ -19,8 +20,4 @@
 .small-chart.center {
     left: 50%;
     margin-left: -150px;
-}
-#experience_preview_chart,
-#salary_preview_chart {
-  cursor: pointer;
 }

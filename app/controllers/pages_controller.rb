@@ -1,6 +1,12 @@
 class PagesController < ApplicationController
+  include FilterEmployees
+
   def home
-    create_salary_chart
+    @employees = filtered_collection(employee_chart_params).to_a
+    @all_dates = Salary.all_dates
+    @data_table = @all_dates.map do |date|
+      [date.to_time.to_f * 1000] + @employees.map { |e| e.salary_on(date) }
+    end
     create_experience_chart
   end
 
@@ -12,22 +18,6 @@ class PagesController < ApplicationController
   end
 
   private
-
-  def create_salary_chart
-    @salary_chart = SalaryChart.new(employee_chart_params,
-                                    width: 300,
-                                    height: 200,
-                                    legend: 'none',
-                                    hAxis: { textPosition: 'none' },
-                                    vAxis: { textPosition: 'none' },
-                                    chartArea: { width: '100%', height: '100%' }
-                                   ).chart
-    # Event listener for when you select a data point on the chart...
-    # @salary_chart.add_listener("select", "function() { alert('chart') }")
-
-    # Event listener for when the chart is ready...
-    # @salary_chart.add_listener("ready", "function() { alert('ready') }")
-  end
 
   def create_experience_chart
     @experience_chart = ExperienceChart.new(employee_chart_params,

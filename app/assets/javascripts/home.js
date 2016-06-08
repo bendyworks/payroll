@@ -1,6 +1,6 @@
 (function(){
   function handlePageLoad() {
-    $("#salary_preview_chart").click(function(){
+    $("#salaries_chart").click(function(){
       window.location.href = window.location.protocol + "//" + window.location.host + "/salaries";
     });
     $("#experience_preview_chart").click(function(){
