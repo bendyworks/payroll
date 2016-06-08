@@ -43,7 +43,7 @@ Then(/^a small salary history chart is present$/) do
   within '.body' do
     expect(page).to have_content('Salaries')
   end
-  expect(page).to have_css('#salary_preview_chart')
+  expect(page).to have_css('#salaries_chart')
 end
 
 Then(/^a small experience chart is present$/) do
