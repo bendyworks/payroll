@@ -41,6 +41,7 @@ group :test do
   gem 'factory_girl_rails'              # Setup Ruby objects as test data
   gem 'cucumber-rails', require: false  # Automated acceptance tests
   gem 'capybara'                        # Integration testing tool
+  gem 'launchy'
   gem 'selenium-webdriver'              # Automated tests of websites
   gem 'database_cleaner'                # Strategies for cleaning databases
 end

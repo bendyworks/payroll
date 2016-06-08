@@ -722,7 +722,7 @@ Style/Tab:
 Style/TrailingBlankLines:
   Description: 'Checks trailing blank lines and final newline.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#newline-eof'
-  Enabled: true
+  Enabled: false
 
 Style/TrailingCommaInArguments:
   Description: 'Checks for trailing comma in parameter lists and literals.'

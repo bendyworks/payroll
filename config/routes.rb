@@ -16,11 +16,11 @@ Rails.application.routes.draw do
   get 'experience', to: 'charts#experience'
   get 'home', to: 'pages#home'
 
-  resources :employees, except: [:destroy] do
+  resources :employees, except: :destroy do
     resources :salaries, only: [:new, :create, :destroy]
   end
 
-  resources :users, only: :index
+  resources :users, only: [:index, :destroy]
   resources :accounts, except: :index do
     collection do
       get :upload_balances_form
