@@ -16,3 +16,18 @@
 
 @import 'bootstrap-sprockets';
 @import 'bootstrap';
+
+$color: #18bc9c;
+
+.navbar-default .navbar-nav > li > a.active_link {
+	color: $color;
+}
+
+li {
+	.add > a.active_menu {
+		color: $color;
+	}
+	:nth-child(n) > a.active_menu {
+		color: $color;
+	}
+}

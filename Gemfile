@@ -22,7 +22,7 @@ gem 'jquery-rails'      # jQuery and jQuery-ujs
 gem 'turbolinks'        # Faster link following
 gem 'jbuilder'          # Create JSON structures
 
-gem 'rake'
+gem 'rake'              # Make-like program
 gem 'rubocop', require: false # Automatic Ruby code style checking
 
 group :development do
@@ -39,7 +39,6 @@ end
 group :test do
   gem 'shoulda-matchers'                # Collection of testing matchers
   gem 'factory_girl_rails'              # Setup Ruby objects as test data
-  gem 'rake'                            # Make-like program
   gem 'cucumber-rails', require: false  # Automated acceptance tests
   gem 'capybara'                        # Integration testing tool
   gem 'launchy'
