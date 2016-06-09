@@ -5,16 +5,17 @@
     %tbody
       %tr
         %th Email
+        %th Admin
         %th Status
-        %th Actions
+        %th.text-center{ colspan: 2 } Actions
       - @users.each do |user|
         %tr{ id: "user_#{user.id}" }
           %td= user.email
+          %td= check_box_tag :admin, user.id, user.admin?, class: 'admin_checkbox'
           - if user.pending?
             %td= 'Pending'
-            %td
-              = link_to 'Resend', resend_invitation_path(user.id), class: 'btn btn-success btn-xs', method: 'post'
-              = link_to 'Delete', user_path(user), class: 'btn btn-danger btn-xs', method: 'delete'
+            %td.col-md-1.text-center= link_to 'Resend', resend_invitation_path(user.id), class: 'btn btn-success btn-xs', method: 'post'
           - else
             %td= 'Joined'
-            %td= link_to 'Delete', user_path(user), class: 'btn btn-danger btn-xs', method: 'delete'
+            %td
+          %td.col-md-1.text-center= link_to 'Delete', user_path(user), class: 'btn btn-danger btn-xs', method: 'delete'
