@@ -8,6 +8,7 @@ User.delete_all
 
 User.create!(email: 'admin@bendyworks.com',
              password: 'password',
+             admin: true,
              invitation_accepted_at: Time.zone.now)
 
 ###### FORMER EMPLOYEES ######
