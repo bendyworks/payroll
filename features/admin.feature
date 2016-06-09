@@ -6,20 +6,31 @@ Feature: Admin Users
   Scenario: View admins
     Given an admin user exists
       And a non-admin user exists
+      And I'm logged in
     When I'm on the users page
     Then the admin user should have admin checked
       And the non-admin user should not have admin checked
 
-  Scenario: Admin makes another user an admin
-    Given a non-admin user jake@example.com
-      And I'm on the users page
-    When I check the admin button for jake@example.com
-    Then jake@example.com should have admin checked
-      And jake@example.com should be an admin
+  Scenario: Single admin
+    Given an admin user exists
+      And I'm logged in
+    When I'm on the users page
+    Then the admin user should have admin checked
 
+  @javascript
+  Scenario: Admin makes another user an admin
+    Given a non-admin user exists
+      And I'm logged in
+      And I'm on the users page
+    When I check the admin button for that user
+    Then that user should have admin checked
+      And that user should be an admin
+
+  @javascript
   Scenario: Admin makes another user a non-admin
-    Given an admin user jake@example.com
-      And I'm on the admin page
-    When I uncheck the admin button for jake@example.com
-    Then jake@example.com should not have admin checked
-      And jake@example.com should not be an admin
+    Given an admin user exists
+      And I'm logged in
+      And I'm on the users page
+    When I uncheck the admin button for that user
+    Then that user should not have admin checked
+      And that user should not be an admin

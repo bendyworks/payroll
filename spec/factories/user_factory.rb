@@ -2,6 +2,7 @@ FactoryGirl.define do
   factory :user do
     sequence(:email) { |n| "user#{n}@bendyworks.com" }
     password 'password'
+    admin false
 
     trait :accepted_invitation do
       invitation_accepted_at Time.zone.now - 1.day

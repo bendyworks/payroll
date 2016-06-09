@@ -5,11 +5,13 @@
     %tbody
       %tr
         %th Email
+        %th Admin
         %th Status
         %th Actions
       - @users.each do |user|
         %tr{ id: "user_#{user.id}" }
           %td= user.email
+          %td= check_box_tag :admin, user.id, user.admin?, class: 'admin_checkbox'
           - if user.pending?
             %td= 'Pending'
             %td
