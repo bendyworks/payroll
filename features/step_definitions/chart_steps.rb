@@ -50,5 +50,5 @@ Then(/^a small experience chart is present$/) do
   within '.body' do
     expect(page).to have_content('Experience')
   end
-  expect(page).to have_css('#experience_preview_chart')
+  expect(page).to have_css('#experience_chart')
 end

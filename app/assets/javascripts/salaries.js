@@ -37,7 +37,7 @@ function draw_salaries_chart() {
       if(x !== null) {
         return {v: parseFloat(x)};
       } else {
-        return x;q
+        return x;
       }
     });
     var row_to_add = [{v: new Date(row[0])}].concat(rest_to_add);
