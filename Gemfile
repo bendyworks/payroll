@@ -3,7 +3,6 @@ ruby '2.2.3'
 
 gem 'smarter_csv'       # importing csv files as array(s) of hashes
 gem 'airbrake'          # robust exception tracking
-gem 'google_visualr'    # Google Visualization API
 gem 'haml'              # HTML Abstraction Markup Language
 gem 'haml-rails'        # HAML generators
 gem 'devise'            # Flexible authentication solution
