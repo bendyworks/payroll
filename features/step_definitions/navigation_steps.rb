@@ -7,19 +7,14 @@ Given(/^I'm logged in$/) do
   @logged_in = true
 end
 
+When(/^I'm on the (.*) page$/) do |page_name|
+  log_in_if_necessary
+  visit path_for(page_name)
+end
+
 When(/^I'm on the homepage$/) do
   log_in_if_necessary
   visit root_path
-end
-
-Given(/^I'm on the experience chart page$/) do
-  log_in_if_necessary
-  visit experience_path
-end
-
-When(/^I'm on the salaries chart page$/) do
-  log_in_if_necessary
-  visit salaries_path
 end
 
 When(/^I'm on that employee page$/) do
@@ -27,18 +22,23 @@ When(/^I'm on that employee page$/) do
   visit employee_path(@employee)
 end
 
-Then(/^I'm on the balances chart page$/) do
-  log_in_if_necessary
-  visit balances_path
-end
-
-When(/^I'm on the users page$/) do
-  log_in_if_necessary
-  visit users_path
-end
-
 private
 
 def log_in_if_necessary
   step "I'm logged in" unless @logged_in
+end
+
+def path_for page_name
+  case page_name
+  when 'balances chart'
+    balances_path
+  when 'experience chart'
+    experience_path
+  when 'salaries chart'
+    salaries_path
+  when 'users'
+    users_path
+  else
+    raise "page #{page_name} not recognized"
+  end
 end
