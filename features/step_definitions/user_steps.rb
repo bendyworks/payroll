@@ -1,8 +1,8 @@
-Given(/^an admin user exists$/) do
+Given(/^an admin user$/) do
   @admin = create :admin
 end
 
-Given(/^a non\-admin user exists$/) do
+Given(/^a non\-admin user$/) do
   @user = create :user
 end
 

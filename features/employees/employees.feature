@@ -18,7 +18,7 @@ Feature: Administer employees
     Then I see "Employee successfully created."
 
   Scenario: Update employee notes
-    Given employee "Scrooge" exists
+    Given employee "Scrooge"
       And I am logged in
       And I follow "Employees"
       And I follow "Scrooge"
