@@ -17,4 +17,4 @@
 
 // NOTE: Before you //= require_tree . consider importing specific
 // javascript on pages where you will use it.  That's what we're doing
-// with home.js for now.
+// now.
