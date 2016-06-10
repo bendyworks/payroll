@@ -1,9 +1,9 @@
 Given(/^an admin user exists$/) do
-  @admin = create :user, admin: true
+  @admin = create :admin
 end
 
 Given(/^a non\-admin user exists$/) do
-  @user = create :user, admin: false
+  @user = create :user
 end
 
 Then(/^the admin user should have admin checked$/) do
