@@ -14,4 +14,7 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require bootstrap-sprockets
-//= require_tree .
+
+// NOTE: Before you //= require_tree . consider importing specific
+// javascript on pages where you will use it.  That's what we're doing
+// now.

@@ -27,3 +27,14 @@ To change your password in the console:
   1. `u = User.find_by_email('your@email.com')`
   1. `u.password = 'newpassword'`
   1. `u.save`
+
+
+Let's use page specific JavaScript, which means that you need to
+remember these main ideas:
+  1. Don't `// require_tree .` in the `application.js` manifest.
+     JavaScript assets still live in the `app/assets/javascripts/`
+     directory.
+  1. Add new JavaScript assets to `config/intializers/assets.rb`'s
+     `Rails.application.config.assets.precompile` list.
+  1. Include the JavaScript in the specific view where it is required
+     by using a `javascript_include_tag`.

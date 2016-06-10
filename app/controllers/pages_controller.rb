@@ -1,8 +1,13 @@
 class PagesController < ApplicationController
+  include FilterEmployees
+
   def home
-    create_salary_chart
-    create_experience_chart
+    @employees = filtered_collection(employee_chart_params).to_a
+    @salary_data_table = create_salary_data_table @employees
+    @experience_data_table = create_experience_data_table @employees
   end
+
+  private
 
   def employee_chart_params
     employment = params[:employment].try(:permit, :past, :current, :future)
@@ -11,32 +16,22 @@ class PagesController < ApplicationController
     { employment: employment, billable: billable }
   end
 
-  private
-
-  def create_salary_chart
-    @salary_chart = SalaryChart.new(employee_chart_params,
-                                    width: 300,
-                                    height: 200,
-                                    legend: 'none',
-                                    hAxis: { textPosition: 'none' },
-                                    vAxis: { textPosition: 'none' },
-                                    chartArea: { width: '100%', height: '100%' }
-                                   ).chart
-    # Event listener for when you select a data point on the chart...
-    # @salary_chart.add_listener("select", "function() { alert('chart') }")
-
-    # Event listener for when the chart is ready...
-    # @salary_chart.add_listener("ready", "function() { alert('ready') }")
+  def create_experience_data_table(employees)
+    employees.map.with_index do |e, i|
+      row = Array.new((@employees.length * 2) + 1)
+      row[0] = e.weighted_years_experience
+      row[(2 * i) + 1] = e.current_or_last_pay
+      row[(2 * i) + 2] = e.experience_tooltip
+      row
+    end
   end
 
-  def create_experience_chart
-    @experience_chart = ExperienceChart.new(employee_chart_params,
-                                            width: 300,
-                                            height: 200,
-                                            legend: 'none',
-                                            hAxis: { textPosition: 'none' },
-                                            vAxis: { textPosition: 'none' },
-                                            chartArea: { width: '100%', height: '100%' }
-                                           ).chart
+  def create_salary_data_table(employees)
+    all_dates = Salary.all_dates
+    all_dates.map do |date|
+      # Multiply by 1000 to convert from seconds since the epoch to
+      # milliseconds since the epoch
+      [date.to_time.to_f * 1000] + employees.map { |e| e.salary_on(date) }
+    end
   end
 end
