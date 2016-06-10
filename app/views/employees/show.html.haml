@@ -1,3 +1,4 @@
+= javascript_include_tag 'salary'
 %h2= "#{@employee.first_name} #{@employee.last_name}"
 %h4= "#{@employee.employed_on?(Time.zone.today) ? 'Current' : 'Inactive'} Employee"
 %p= link_to 'Edit', edit_employee_path(@employee), class: 'btn btn-success'
@@ -5,8 +6,7 @@
 %ul.nav.nav-pills.nav-stacked
   %li.active
     = link_to 'Salary History', '#'
-    #salary_chart
-    = render_chart @chart, 'salary_chart'
+    #salary_chart{data: {employee_name: @employee.first_name, data_table: @employee.salary_data.to_json, chart_params: {width: 640, height: 400, legend: 'none', vAxis:{minValue: 0, gridlines: {count: 10}}}.to_json}}
   %li.active
     = link_to 'Experience', "#"
     %table.table.table-striped.table-hover

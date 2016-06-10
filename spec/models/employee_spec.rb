@@ -175,11 +175,13 @@ describe Employee do
     let(:last_pay_date) { end_date || Time.zone.today }
 
     let(:expected_salary_data) do
+      date_for_js = ->(date) { date.to_time.to_f * 1000 }
+
       [
-        { c: [start_date, 100] },
-        { c: [raise_date - 1, 100] },
-        { c: [raise_date, 200] },
-        { c: [last_pay_date, 200] }
+        { c: [date_for_js.call(start_date), 100] },
+        { c: [date_for_js.call(raise_date - 1), 100] },
+        { c: [date_for_js.call(raise_date), 200] },
+        { c: [date_for_js.call(last_pay_date), 200] }
       ]
     end
 
@@ -202,10 +204,12 @@ describe Employee do
       let(:raise_date) { Time.zone.today + 1.week }
 
       let(:expected_salary_data) do
+        date_for_js = ->(date) { date.to_time.to_f * 1000 }
+
         [
-          { c: [start_date, 100] },
-          { c: [raise_date - 1, 100] },
-          { c: [raise_date, 200] }
+          { c: [date_for_js.call(start_date), 100] },
+          { c: [date_for_js.call(raise_date - 1), 100] },
+          { c: [date_for_js.call(raise_date), 200] }
         ]
       end
 

@@ -1,14 +1,6 @@
 class EmployeesController < ApplicationController
   def show
     @employee = Employee.find(params[:id])
-    opts = { width: 640,
-             height: 400,
-             legend: 'none',
-             vAxis: { minValue: 0,
-                      gridlines: { count: 10 } }
-           }
-
-    @chart = GoogleVisualr::Interactive::LineChart.new(employee_salary_history_data, opts)
   end
 
   def new
@@ -51,11 +43,5 @@ class EmployeesController < ApplicationController
                                      :indirect_experience,
                                      :billable,
                                      :notes)
-  end
-
-  def employee_salary_history_data
-    GoogleVisualr::DataTable.new cols: [{ type: 'date', label: 'Date' },
-                                        { type: 'number', label: @employee.first_name }],
-                                 rows: @employee.salary_data
   end
 end
