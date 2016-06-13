@@ -8,14 +8,20 @@ class Employee < ActiveRecord::Base
 
   default_scope { order :first_name }
   scope :past, -> { where 'end_date < :today', today: Time.zone.today }
+  scope :current, lambda {
+    where 'start_date <= :today AND (end_date IS NULL OR end_date >= :today)',
+          today: Time.zone.today
+  }
+  scope :future, -> { where 'start_date > :today', today: Time.zone.today }
+  scope :non_current, lambda {
+    where 'start_date > :today OR end_date < :today', today: Time.zone.today
+  }
+  scope :billed, -> { where billable: true }
+  scope :support, -> { where billable: false }
 
   def self.current
     where 'start_date <= :today AND (end_date IS NULL OR end_date >= :today)',
           today: Time.zone.today
-  end
-
-  def self.future
-    where 'start_date > :today', today: Time.zone.today
   end
 
   def self.past_or_current
@@ -26,18 +32,6 @@ class Employee < ActiveRecord::Base
   def self.current_or_future
     where '(start_date <= :today AND (end_date IS NULL OR end_date >= :today))' \
           ' or start_date > :today', today: Time.zone.today
-  end
-
-  def self.non_current
-    where 'start_date > :today OR end_date < :today', today: Time.zone.today
-  end
-
-  def self.billed
-    where billable: true
-  end
-
-  def self.support
-    where billable: false
   end
 
   def employed_on?(date)
