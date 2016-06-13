@@ -21,3 +21,6 @@
   left: 50%;
   margin-left: -150px;
 }
+#salaries_chart > div > div:nth-child(1) > div > svg > g:nth-child(3) {
+  cursor: pointer;
+}
