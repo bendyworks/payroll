@@ -53,4 +53,20 @@ function draw_experience_chart() {
 
   var chart = new google.visualization.ScatterChart(document.getElementById('experience_chart'));
   chart.draw(data_table, chart_params);
+
+  var selectHandler = function(e) {
+    // Handle clicks on legend by checking whether row is null
+    // (meaning we've clicked on a column header, e.g. Daisie $59k).
+    // Selection is an empty array when double clicking, so don't do
+    // anything in that case.
+    //
+    // NOTE: This depends on the shape of the data columns.
+    var selection = chart.getSelection();
+    if ((selection.length > 0) && (selection[0]['row'] == null)) {
+      var employee_idx = (selection[0]['column'] - 1) / 2;
+      window.location = employees[employee_idx].employee_path_for_js;
+    };
+  };
+
+  google.visualization.events.addListener(chart, 'select', selectHandler);
 };
