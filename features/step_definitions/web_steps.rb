@@ -14,6 +14,14 @@ When(/^I press "([^"]*?)"$/) do |button_text|
   click_on button_text
 end
 
+When(/^I click on employee's name$/) do
+  find('text', text: @employee.first_name).click
+end
+
+Then(/^I should be on employee's page$/) do
+  expect(current_path).to eq employee_path(@employee)
+end
+
 Then(/^I see "(.*?)"$/) do |text|
   expect(page.body).to have_text(text)
 end
