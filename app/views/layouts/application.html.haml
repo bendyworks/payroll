@@ -29,7 +29,8 @@
                     = render "layouts/employees_dropdown"
                   %li.dropdown
                     = render "layouts/accounts_dropdown"
-                  %li= link_to 'Users', users_path, class: ("active_link" if current_page?(users_path))
+                  - if current_user.admin?
+                    %li= link_to 'Users', users_path, class: ("active_link" if current_page?(users_path))
                   %li.dropdown
                     %a.dropdown-toggle#charts{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#"}
                       = current_user.email

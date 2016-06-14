@@ -71,3 +71,9 @@ end
 Then(/^that user should not be an admin$/) do
   expect(@user.reload.admin).to be false
 end
+
+end
+
+Given(/^I'm a non\-admin user$/) do
+  expect(@user.admin).to be false
+end

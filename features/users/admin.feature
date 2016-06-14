@@ -1,6 +1,6 @@
 Feature: Admin Users
   In order to control who can add and delete other users
-  As an admin user 
+  As an admin user
   I want to add and delete other users
 
   Scenario: View admins

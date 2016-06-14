@@ -3,8 +3,8 @@ require 'rails_helper'
 describe UsersController do
   include Devise::TestHelpers
 
-  let(:user) { create :user }
-  before { sign_in user }
+  let(:admin) { create :user, admin: true }
+  before { sign_in admin }
 
   describe 'GET index' do
     it 'returns http success' do

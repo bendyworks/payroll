@@ -162,6 +162,8 @@ GEM
       byebug (~> 8.0)
       pry (~> 0.10)
     puma (2.16.0)
+    pundit (1.1.0)
+      activesupport (>= 3.0.0)
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -300,6 +302,7 @@ DEPENDENCIES
   pry
   pry-byebug
   puma
+  pundit
   rails
   rails-erd
   rails_12factor

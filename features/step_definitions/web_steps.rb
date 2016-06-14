@@ -33,3 +33,7 @@ end
 Then(/^I should see a (.*?) tag$/) do |element_tag|
   fail "No #{element_tag} DOM element exists" if has_no_css?(element_tag.to_s)
 end
+
+Then(/^I do not see the users link$/) do
+  expect(page).to_not have_selector(:link_or_button, 'Users')
+end

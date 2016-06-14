@@ -1,8 +1,10 @@
 class UsersController < ApplicationController
   before_action :find_user, only: [:set_admin_status, :destroy]
+  after_action :verify_authorized
 
   def index
     @users = User.all
+    authorize User
   end
 
   def resend_invitation

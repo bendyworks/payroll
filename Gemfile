@@ -11,6 +11,7 @@ gem 'devise_invitable'  # Invitation strategy for devise
 gem 'bootstrap-sass'    # SASS port of  Bootstrap 3
 gem 'immigrant'         # Foreign key migration generator
 gem 'puma'              # Ruby web server built for concurrency
+gem 'pundit'            # Pundit authorization system
 
 gem 'rails'             # Ruby on Rails
 gem 'pg'                # PostgreSQL
