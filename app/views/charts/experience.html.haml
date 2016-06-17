@@ -1,4 +1,4 @@
 = javascript_include_tag 'experience'
 %h1 Experience
-#experience_chart{data: {employees: @employees.to_json(methods: [:display_pay]), data_table: @data_table.to_json, chart_params: {width: 800, height: 500, hAxis: {title: 'Years at Bendyworks plus partial prior experience', minValue: 0}, vAxis: {minValue: 0}}.to_json}}
+#experience_chart{data: {employees: @employees.to_json(methods: [:display_pay, :employee_path_for_js]), data_table: @data_table.to_json, chart_params: {width: 800, height: 500, hAxis: {title: 'Years at Bendyworks plus partial prior experience', minValue: 0}, vAxis: {minValue: 0}}.to_json}}
 = render 'form'
