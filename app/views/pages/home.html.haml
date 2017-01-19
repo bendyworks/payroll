@@ -1,11 +1,12 @@
+= javascript_include_tag 'home'
+= javascript_include_tag 'salaries'
+= javascript_include_tag 'experience'
 %h1 Home
 
 #row
   .col-md-6.text-center
     %h2= link_to 'Salaries', salaries_path
-    #salary_preview_chart.small-chart.center
-    = render_chart @salary_chart, 'salary_preview_chart'
+    #salaries_chart.small-chart.center{data: {employees: @employees.to_json(methods: [:display_pay]), data_table: @salary_data_table.to_json, chart_params: {width: 300, height: 200, legend: "none", vAxis: {textPosition: "none"}, hAxis: {textPosition: "none"}, chartArea: {width: "100%", height: "100%"}}.to_json}}
   .col-md-6.text-center
     %h2= link_to 'Experience', experience_path
-    #experience_preview_chart.small-chart.center
-    = render_chart @experience_chart, 'experience_preview_chart'
+    #experience_chart.small-chart.center{data: {employees: @employees.to_json(methods: [:display_pay]), data_table: @experience_data_table.to_json, chart_params: {width: 300, height: 200, legend: 'none', hAxis: {textPosition: 'none'}, vAxis: {textPosition: 'none'}, chartArea: {width: '100%', height: '100%'}}.to_json}}

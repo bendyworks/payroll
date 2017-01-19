@@ -14,8 +14,32 @@ When(/^I press "([^"]*?)"$/) do |button_text|
   click_on button_text
 end
 
+When(/^I click on employee's name$/) do
+  find('text', text: @employee.first_name).click
+end
+
+Then(/^I should be on employee's page$/) do
+  expect(current_path).to eq employee_path(@employee)
+end
+
+When(/^I click on the small salary history chart$/) do
+  find('#salaries_chart').click
+end
+
+When(/^I click on the small experience chart$/) do
+  find('#experience_chart').click
+end
+
 Then(/^I see "(.*?)"$/) do |text|
   expect(page.body).to have_text(text)
+end
+
+Then(/^I should be on the salaries page$/) do
+  expect(current_path).to eq salaries_path
+end
+
+Then(/^I should be on the experience page$/) do
+  expect(current_path).to eq experience_path
 end
 
 Then(/^I should see "(.*?)"$/) do |target_text|

@@ -7,18 +7,21 @@ class Employee < ActiveRecord::Base
   validates :starting_salary, presence: true
 
   default_scope { order :first_name }
-
-  def self.past
-    where 'end_date < :today', today: Time.zone.today
-  end
+  scope :past, -> { where 'end_date < :today', today: Time.zone.today }
+  scope :current, lambda {
+    where 'start_date <= :today AND (end_date IS NULL OR end_date >= :today)',
+          today: Time.zone.today
+  }
+  scope :future, -> { where 'start_date > :today', today: Time.zone.today }
+  scope :non_current, lambda {
+    where 'start_date > :today OR end_date < :today', today: Time.zone.today
+  }
+  scope :billed, -> { where billable: true }
+  scope :support, -> { where billable: false }
 
   def self.current
     where 'start_date <= :today AND (end_date IS NULL OR end_date >= :today)',
           today: Time.zone.today
-  end
-
-  def self.future
-    where 'start_date > :today', today: Time.zone.today
   end
 
   def self.past_or_current
@@ -29,18 +32,6 @@ class Employee < ActiveRecord::Base
   def self.current_or_future
     where '(start_date <= :today AND (end_date IS NULL OR end_date >= :today))' \
           ' or start_date > :today', today: Time.zone.today
-  end
-
-  def self.non_current
-    where 'start_date > :today OR end_date < :today', today: Time.zone.today
-  end
-
-  def self.billed
-    where billable: true
-  end
-
-  def self.support
-    where billable: false
   end
 
   def employed_on?(date)
@@ -55,10 +46,10 @@ class Employee < ActiveRecord::Base
   end
 
   def salary_data
-    data = [{ c: [start_date, starting_salary] }]
+    data = [{ c: [date_for_js(start_date), starting_salary] }]
 
     salaries.ordered_dates_with_previous_dates.each do |date|
-      data << { c: [date, salary_on(date)] }
+      data << { c: [date_for_js(date), salary_on(date)] }
     end
 
     ending_salary_hash = ending_salary_data_hash
@@ -104,13 +95,23 @@ class Employee < ActiveRecord::Base
     "#{first_name}:\n#{all_experience_formatted}\n\$#{current_or_last_pay} salary"
   end
 
+  def employee_path_for_js
+    Rails.application.routes.url_helpers.employee_path(self)
+  end
+
   private
+
+  def date_for_js(date)
+    # Multiply by 1000 to convert from seconds since the epoch to
+    # milliseconds since the epoch
+    date.to_time.to_f * 1000
+  end
 
   def ending_salary_data_hash
     if end_date
-      { c: [end_date, ending_salary] }
+      { c: [date_for_js(end_date), ending_salary] }
     elsif employed_on?(Time.zone.today) && !future_raise?
-      { c: [Time.zone.today, salary_on(Time.zone.today)] }
+      { c: [date_for_js(Time.zone.today), salary_on(Time.zone.today)] }
     end
   end
 

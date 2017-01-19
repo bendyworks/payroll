@@ -11,16 +11,19 @@
   position: relative;
   height: 200px;
   width: 300px;
+  cursor: pointer;
 }
 .large-chart.center {
   left: 50%;
   margin-left: -400px;
 }
 .small-chart.center {
-    left: 50%;
-    margin-left: -150px;
+  left: 50%;
+  margin-left: -150px;
 }
-#experience_preview_chart,
-#salary_preview_chart {
+#salaries_chart > div > div:nth-child(1) > div > svg > g:nth-child(3) {
+  cursor: pointer;
+}
+#experience_chart > div > div:nth-child(1) > div > svg > g:nth-child(3) {
   cursor: pointer;
 }
