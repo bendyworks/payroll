@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Given(/^employee$/) do
   @employee ||= create :employee
 end

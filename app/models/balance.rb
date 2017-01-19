@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Balance < ActiveRecord::Base
   COMPANY_START_DATE = '2009/04/13'.to_date
 

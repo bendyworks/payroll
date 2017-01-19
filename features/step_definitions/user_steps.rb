@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Given(/^an admin user$/) do
   @admin = create :admin
 end

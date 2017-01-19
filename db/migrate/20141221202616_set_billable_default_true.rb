@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class SetBillableDefaultTrue < ActiveRecord::Migration
   def up
     change_column :employees, :billable, :boolean, default: true

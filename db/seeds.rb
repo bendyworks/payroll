@@ -1,4 +1,5 @@
 
+# frozen_string_literal: true
 AccountType.seed
 
 Salary.delete_all

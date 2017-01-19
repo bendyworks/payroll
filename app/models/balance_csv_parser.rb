@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class BalanceCsvParser
   def self.record(uploaded_io)
     csv = uploaded_io.read

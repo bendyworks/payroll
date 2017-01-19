@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class User < ActiveRecord::Base
   # Other available devise modules:
   #  :confirmable, :lockable, :timeoutable, :omniauthable

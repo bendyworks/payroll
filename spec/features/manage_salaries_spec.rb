@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 feature 'manage salaries' do
   let(:user) { create :user }
   let(:employee) { create :employee }

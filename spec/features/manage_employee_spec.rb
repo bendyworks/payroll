@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 feature 'manage employee' do
   let(:user) { create :user }
   before do

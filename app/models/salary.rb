@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class Salary < ActiveRecord::Base
   belongs_to :employee
   validates :start_date, presence: true, uniqueness: { scope: :employee_id }

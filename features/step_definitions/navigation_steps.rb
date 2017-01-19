@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 Given(/^I'm logged in$/) do
   @user = create :user
   visit new_user_session_path

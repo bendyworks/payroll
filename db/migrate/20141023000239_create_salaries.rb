@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class CreateSalaries < ActiveRecord::Migration
   def change
     create_table :salaries do |t|
