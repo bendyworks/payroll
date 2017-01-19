@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe ChartsController do
-  include Devise::TestHelpers
+  include Devise::Test::ControllerHelpers
 
   let(:user) { create :user }
   before { sign_in user }

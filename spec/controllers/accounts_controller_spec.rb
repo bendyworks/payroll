@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe AccountsController, type: :controller do
-  include Devise::TestHelpers
+  include Devise::Test::ControllerHelpers
 
   let(:user) { create :user }
   before { sign_in user }
