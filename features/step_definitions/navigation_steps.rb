@@ -28,17 +28,14 @@ def log_in_if_necessary
   step "I'm logged in" unless @logged_in
 end
 
-def path_for page_name
-  case page_name
-  when 'balances chart'
-    balances_path
-  when 'experience chart'
-    experience_path
-  when 'salaries chart'
-    salaries_path
-  when 'users'
-    users_path
-  else
-    raise "page #{page_name} not recognized"
-  end
+PATH_MAP = {
+  'balances chart' => 'balances',
+  'experience chart' => 'experience',
+  'salaries chart' => 'salaries',
+  'users' => 'users'
+}
+
+def path_for(page_name)
+  route_helper_prefix = PATH_MAP[page_name] || fail("page #{page_name} not recognized")
+  Rails.application.routes.url_helpers.send("#{route_helper_prefix}_path")
 end
