@@ -437,6 +437,8 @@ Style/FormatString:
     - sprintf
     - percent
 
+# Style/FrozenStringLiteralComment:
+
 # Built-in global variables are allowed by default.
 Style/GlobalVars:
   AllowedVariables: []
