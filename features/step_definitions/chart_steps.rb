@@ -53,3 +53,11 @@ Then(/^a small experience chart is present$/) do
   end
   expect(page).to have_css('#experience_chart')
 end
+
+When(/^I click on the small salary history chart$/) do
+  find('#salaries_chart').click
+end
+
+When(/^I click on the small experience chart$/) do
+  find('#experience_chart').click
+end

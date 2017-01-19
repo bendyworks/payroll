@@ -72,3 +72,7 @@ end
 Then(/^that user should not be an admin$/) do
   expect(@user.reload.admin).to be false
 end
+
+When(/^I click on employee's name$/) do
+  find('text', text: @employee.first_name).click
+end

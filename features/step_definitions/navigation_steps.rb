@@ -5,6 +5,8 @@ Given(/^I'm logged in$/) do
   fill_in 'Email', with: @user.email
   fill_in 'Password', with: 'password'
   click_on 'Log in'
+  sleep 1
+  expect(page.current_path).not_to eq(new_user_session_path)
   @logged_in = true
 end
 
@@ -21,6 +23,21 @@ end
 When(/^I'm on that employee page$/) do
   log_in_if_necessary
   visit employee_path(@employee)
+end
+
+Then(/^I should be on the salaries page$/) do
+  sleep 1
+  expect(current_path).to eq salaries_path
+end
+
+Then(/^I should be on the experience page$/) do
+  sleep 1
+  expect(current_path).to eq experience_path
+end
+
+Then(/^I should be on employee's page$/) do
+  sleep 1
+  expect(current_path).to eq employee_path(@employee)
 end
 
 private
