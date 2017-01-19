@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 require 'rails_helper'
 
-RSpec.describe AccountsController, type: :controller do
+describe AccountsController, type: :controller do
   include Devise::Test::ControllerHelpers
 
   let(:user) { create :user }

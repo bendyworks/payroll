@@ -5,4 +5,3 @@ inherit_from:
   - ./config/rubocop/config.yml
   - ./config/rubocop/enabled.yml
   - ./config/rubocop/disabled.yml
-

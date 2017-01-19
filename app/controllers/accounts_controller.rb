@@ -2,8 +2,7 @@
 class AccountsController < ApplicationController
   before_action :set_account, only: [:show, :edit, :update, :destroy]
 
-  def upload_balances_form
-  end
+  def upload_balances_form; end
 
   def upload_balances
     BalanceCsvParser.record params[:balances_file]
@@ -11,15 +10,13 @@ class AccountsController < ApplicationController
     render :upload_balances_form
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @account = Account.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @account = Account.new(account_params)
