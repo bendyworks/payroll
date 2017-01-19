@@ -4,7 +4,7 @@ Feature: Administer employees
   I want to create, read, update, and delete employees
 
   Scenario: Add employee
-    Given I am logged in
+    Given I'm logged in
     When I follow "Employees"
       And I follow "Add employee"
     Then I should see "Add New Employee"
@@ -18,8 +18,8 @@ Feature: Administer employees
     Then I see "Employee successfully created."
 
   Scenario: Update employee notes
-    Given employee "Scrooge" exists
-      And I am logged in
+    Given employee "Scrooge"
+      And I'm logged in
       And I follow "Employees"
       And I follow "Scrooge"
       And I press "Edit"

@@ -12,4 +12,8 @@ FactoryGirl.define do
       last_sign_in_at Time.zone.now - 1.hour
     end
   end
+
+  factory :admin, parent: :user do
+    admin true
+  end
 end

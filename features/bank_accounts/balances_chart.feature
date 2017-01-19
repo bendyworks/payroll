@@ -7,6 +7,5 @@ Feature: Balances chart
   Scenario: user views cashflow graph
     Given accounts
       And balances
-      And I'm logged in
     When I'm on the balances chart page
     Then the balances chart is present

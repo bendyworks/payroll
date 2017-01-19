@@ -1,35 +1,41 @@
-Given(/^I am logged in$/) do
-  step "I'm logged in"
-end
-
 Given(/^I'm logged in$/) do
   @user = create :user
   visit new_user_session_path
   fill_in 'Email', with: @user.email
   fill_in 'Password', with: 'password'
   click_on 'Log in'
+  @logged_in = true
+end
+
+When(/^I'm on the (.*) page$/) do |page_name|
+  log_in_if_necessary
+  visit path_for(page_name)
 end
 
 When(/^I'm on the homepage$/) do
+  log_in_if_necessary
   visit root_path
 end
 
-Given(/^I'm on the experience chart page$/) do
-  visit experience_path
-end
-
-When(/^I'm on the salaries chart page$/) do
-  visit salaries_path
-end
-
 When(/^I'm on that employee page$/) do
+  log_in_if_necessary
   visit employee_path(@employee)
 end
 
-Then(/^I'm on the balances chart page$/) do
-  visit balances_path
+private
+
+def log_in_if_necessary
+  step "I'm logged in" unless @logged_in
 end
 
-When(/^I'm on the users page$/) do
-  visit users_path
+PATH_MAP = {
+  'balances chart' => 'balances',
+  'experience chart' => 'experience',
+  'salaries chart' => 'salaries',
+  'users' => 'users'
+}
+
+def path_for(page_name)
+  route_helper_prefix = PATH_MAP[page_name] || fail("page #{page_name} not recognized")
+  Rails.application.routes.url_helpers.send("#{route_helper_prefix}_path")
 end
