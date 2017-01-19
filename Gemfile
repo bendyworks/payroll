@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.2.3'
+ruby '2.3.1'
 
 gem 'smarter_csv'       # importing csv files as array(s) of hashes
 gem 'airbrake'          # robust exception tracking
