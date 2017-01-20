@@ -4,7 +4,7 @@ CheckSaveReturnValueCheck: { }
 CheckDestroyReturnValueCheck: { }
 DefaultScopeIsEvilCheck: { }
 DryBundlerInCapistranoCheck: { }
-HashSyntaxCheck: { }
+HashSyntaxCheck: { ignored_files: [ 'lib/tasks/cucumber.rake' ] }
 IsolateSeedDataCheck: { }
 KeepFindersOnTheirOwnModelCheck: { }
 LawOfDemeterCheck: { }
