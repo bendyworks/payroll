@@ -59,6 +59,10 @@ Style/Attr:
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#attr'
   Enabled: true
 
+Style/AutoResourceCleanup:
+  Description: 'Suggests the usage of an auto resource cleanup version of a method (if available).'
+  Enabled: true
+
 Style/BeginBlock:
   Description: 'Avoid the use of BEGIN blocks.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-BEGIN-blocks'
@@ -132,6 +136,11 @@ Style/ClassVars:
 
 Style/ClosingParenthesisIndentation:
   Description: 'Checks the indentation of hanging closing parentheses.'
+  Enabled: true
+
+Style/CollectionMethods:
+  Description: 'Preferred collection methods.'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#map-find-select-reduce-size'
   Enabled: true
 
 Style/ColonMethodCall:
@@ -391,6 +400,10 @@ Style/MultilineTernaryOperator:
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-multiline-ternary'
   Enabled: true
 
+Style/MutableConstant:
+  Description: 'Do not assign mutable objects to constants.'
+  Enabled: true
+
 Style/NegatedIf:
   Description: >-
                  Favor unless over if for negative conditions
@@ -456,6 +469,10 @@ Style/OptionalArguments:
                  Checks for optional arguments that do not appear at the end
                  of the argument list
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#optional-arguments'
+  Enabled: true
+
+Style/OptionHash:
+  Description: "Don't use option hashes when you can use keyword arguments."
   Enabled: true
 
 Style/ParallelAssignment:
@@ -705,6 +722,10 @@ Style/StringLiteralsInInterpolation:
   Description: >-
                  Checks if uses of quotes inside expressions in interpolated
                  strings match the configured preference.
+  Enabled: true
+
+Style/StringMethods:
+  Description: 'Checks if configured preferred methods are used over non-preferred.'
   Enabled: true
 
 Style/StructInheritance:

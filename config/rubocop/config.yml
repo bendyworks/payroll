@@ -713,7 +713,7 @@ Style/SymbolProc:
     - respond_to
 
 Style/TrailingBlankLines:
-  # EnforcedStyle: final_newline
+  EnforcedStyle: final_newline
   SupportedStyles:
     - final_newline
     - final_blank_line
@@ -919,7 +919,7 @@ Rails/ScopeArgs:
 Rails/TimeZone:
   # The value `strict` means that `Time` should be used with `zone`.
   # The value `flexible` allows usage of `in_time_zone` instead of `zone`.
-  EnforcedStyle: flexible
+  EnforcedStyle: strict
   SupportedStyles:
     - strict
     - flexible
