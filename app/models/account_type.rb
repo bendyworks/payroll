@@ -10,7 +10,7 @@ class AccountType < ActiveRecord::Base
            'Loan',
            'Line of Credit',
            'WIP',
-           'Prepaid']
+           'Prepaid'].freeze
 
   def self.seed
     TYPES.each do |name|

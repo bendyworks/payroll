@@ -7,7 +7,7 @@ EXAMPLE_ACCOUNTS = { 'City Bank Checking' => 'Checking',
                      'SBA Loan' => 'Loan',
                      'City Bank LOC' => 'Line of Credit',
                      'WIP' => 'WIP',
-                     'Prepaid' => 'Prepaid' }
+                     'Prepaid' => 'Prepaid' }.freeze
 
 Given(/^account types$/) do
   AccountType.seed

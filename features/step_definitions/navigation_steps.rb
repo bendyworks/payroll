@@ -51,7 +51,7 @@ PATH_MAP = {
   'experience chart' => 'experience',
   'salaries chart' => 'salaries',
   'users' => 'users'
-}
+}.freeze
 
 def path_for(page_name)
   route_helper_prefix = PATH_MAP[page_name] || fail("page #{page_name} not recognized")
