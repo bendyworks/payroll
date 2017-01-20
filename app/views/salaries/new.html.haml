@@ -1,4 +1,4 @@
-%h2= "Record a Raise for #{@salary.employee.first_name} #{@salary.employee.last_name}"
+%h2= "Record a Raise for #{@salary.employee_first_name} #{@salary.employee_last_name}"
 - if @salary.errors.any?
   .alert.alert-danger
     %p= "#{pluralize(@salary.errors.count, "error")} prohibited this raise from being saved:"

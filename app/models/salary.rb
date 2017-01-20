@@ -6,6 +6,8 @@ class Salary < ActiveRecord::Base
   validates :annual_amount, presence: true
   validate :no_salaries_outside_employment_dates, if: :employee
 
+  delegate :first_name, :last_name, to: :employee, prefix: true
+
   default_scope { order('start_date') }
 
   def self.ordered_dates
