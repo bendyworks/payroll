@@ -8,7 +8,7 @@ HashSyntaxCheck: { ignored_files: [ 'lib/tasks/cucumber.rake' ] }
 IsolateSeedDataCheck: { }
 KeepFindersOnTheirOwnModelCheck: { }
 LawOfDemeterCheck: { }
-LongLineCheck: { max_line_length: 100 }
+LongLineCheck: { max_line_length: 100, ignored_files: [ 'config/initializers/devise.rb', 'config/puma.rb' ] }
 MoveCodeIntoControllerCheck: { }
 MoveCodeIntoHelperCheck: { array_count: 3 }
 MoveCodeIntoModelCheck: { use_count: 2 }
