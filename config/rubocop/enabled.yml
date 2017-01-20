@@ -1,5 +1,9 @@
 # These are all the cops that are enabled in the default configuration.
 
+Security/Eval:
+  Description: 'The use of eval represents a serious security risk.'
+  Enabled: true
+
 Style/AccessModifierIndentation:
   Description: Check indentation of private/protected visibility modifiers.
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#indent-public-private-protected'
@@ -966,10 +970,6 @@ Lint/EndInMethod:
 Lint/EnsureReturn:
   Description: 'Do not use return in an ensure block.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#no-return-ensure'
-  Enabled: true
-
-Lint/Eval:
-  Description: 'The use of eval represents a serious security risk.'
   Enabled: true
 
 Lint/FormatParameterMismatch:
