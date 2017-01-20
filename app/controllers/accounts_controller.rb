@@ -37,7 +37,7 @@ class AccountsController < ApplicationController
   end
 
   def destroy
-    @account.destroy
+    @account.destroy!
     redirect_to root_path, notice: 'Account was successfully destroyed.'
   end
 
