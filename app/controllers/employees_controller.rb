@@ -1,16 +1,14 @@
 # frozen_string_literal: true
 class EmployeesController < ApplicationController
-  def show
-    @employee = Employee.find(params[:id])
-  end
+  before_filter :set_employee, only: [:show, :edit, :update]
+
+  def show; end
 
   def new
     @employee = Employee.new
   end
 
-  def edit
-    @employee = Employee.find(params[:id])
-  end
+  def edit; end
 
   def create
     @employee = Employee.new(employee_params)
@@ -23,7 +21,6 @@ class EmployeesController < ApplicationController
   end
 
   def update
-    @employee = Employee.find(params[:id])
     if @employee.update(employee_params)
       redirect_to employee_path(@employee), notice: 'Employee successfully updated.'
     else
@@ -33,6 +30,10 @@ class EmployeesController < ApplicationController
   end
 
   private
+
+  def set_employee
+    @employee = Employee.find(params[:id])
+  end
 
   def employee_params
     params.require(:employee).permit(:first_name,
