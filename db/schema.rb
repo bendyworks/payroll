@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160608152041) do
+ActiveRecord::Schema.define(version: 20170120184403) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,8 @@ ActiveRecord::Schema.define(version: 20160608152041) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
   end
+
+  add_index "accounts", ["account_type_id"], name: "index_accounts_on_account_type_id", using: :btree
 
   create_table "balances", force: :cascade do |t|
     t.integer  "account_id"
@@ -61,6 +63,8 @@ ActiveRecord::Schema.define(version: 20160608152041) do
     t.datetime "updated_at"
   end
 
+  add_index "salaries", ["employee_id"], name: "index_salaries_on_employee_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",    null: false
     t.string   "encrypted_password",     default: ""
@@ -88,6 +92,7 @@ ActiveRecord::Schema.define(version: 20160608152041) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["invitation_token"], name: "index_users_on_invitation_token", unique: true, using: :btree
   add_index "users", ["invitations_count"], name: "index_users_on_invitations_count", using: :btree
+  add_index "users", ["invited_by_id", "invited_by_type"], name: "index_users_on_invited_by_id_and_invited_by_type", using: :btree
   add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
