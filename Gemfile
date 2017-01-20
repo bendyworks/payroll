@@ -34,6 +34,7 @@ end
 group :development, :test do
   gem 'pry'                     # IRB alternative and runtime dev console
   gem 'pry-byebug'              # combine pry with byebug
+  gem 'rails_best_practices'
   gem 'rspec-rails'             # testing framework
 end
 
