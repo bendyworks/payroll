@@ -4,8 +4,7 @@ PLANNING_FIELDS = [
   :first_name,
   :last_name,
   :display_pay,
-  :previous_pay,
-  :last_raise_date
+  :previous_pay
 ].freeze
 
 Then(/^I see planning information for those employees$/) do
@@ -17,13 +16,16 @@ Then(/^I see planning information for those employees$/) do
             expect(page).to have_content(employee.send(field))
           end
         end
+        within '#last_raise_date' do
+          expect(page).to have_content(employee.last_raise_date.strftime('%m/%d/%y'))
+        end
 
         within '#six_months' do
-          expect(page).to have_content(employee.last_raise_date + 6.months)
+          expect(page).to have_content((employee.last_raise_date + 6.months).strftime('%m/%d/%y'))
         end
 
         within '#twelve_months' do
-          expect(page).to have_content(employee.last_raise_date + 12.months)
+          expect(page).to have_content((employee.last_raise_date + 12.months).strftime('%m/%d/%y'))
         end
       end
     end
