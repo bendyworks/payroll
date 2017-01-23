@@ -87,19 +87,11 @@ class Employee < ActiveRecord::Base
   end
 
   def display_pay
-    salary = current_or_last_pay
-    if salary
-      salary_in_ks = salary / 1000
-      "$#{format('%g', salary_in_ks)}K"
-    end
+    format_salary current_or_last_pay
   end
 
   def display_previous_pay
-    salary = previous_pay
-    if salary
-      salary_in_ks = salary / 1000
-      "$#{format('%g', salary_in_ks)}K"
-    end
+    format_salary(previous_pay)
   end
 
   def previous_pay
@@ -151,5 +143,12 @@ class Employee < ActiveRecord::Base
 
   def future_raise?
     salaries.last && (salaries.last.start_date > Time.zone.today)
+  end
+
+  def format_salary(salary)
+    if salary
+      salary_in_ks = salary / 1000
+      "$#{format('%g', salary_in_ks)}K"
+    end
   end
 end
