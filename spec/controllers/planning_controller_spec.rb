@@ -8,9 +8,14 @@ RSpec.describe PlanningController, type: :controller do
   before { sign_in user }
 
   describe 'GET #index' do
-    it 'returns http success' do
+    let!(:current_employee) { create :employee }
+    let!(:leaving_employee) { create :employee, :current }
+    let!(:ex_employee) { create :employee, :past }
+    let!(:future_employee) { create :employee, :future }
+
+    it 'shows only current employees' do
       get :index
-      expect(response).to have_http_status(:success)
+      expect(assigns[:employees]).to eq([current_employee, leaving_employee])
     end
   end
 end
