@@ -14,6 +14,42 @@ describe Employee do
   it { should have_db_column(:end_date).of_type(:date) }
   it { should have_db_column(:notes).of_type(:text) }
 
+  describe '#previous_pay' do
+    let(:employee) { create :employee, starting_salary: 1_000 }
+    let(:previous_pay) { employee.reload.previous_pay }
+
+    context 'current employee' do
+      context 'with no raises' do
+        it 'returns nil' do
+          expect(previous_pay).to be_nil
+        end
+      end
+      context 'with one raise' do
+        let!(:only_raise) { create :salary, employee: employee, annual_amount: 2_000 }
+        it 'returns starting salary' do
+          expect(previous_pay).to eq(1_000)
+        end
+      end
+      context 'with two raises' do
+        let!(:first_raise) { create :salary, employee: employee, annual_amount: 2_000, start_date: 3.months.ago }
+        let!(:second_raise) { create :salary, employee: employee, annual_amount: 3_000, start_date: 2.months.ago }
+
+        it 'returns first raise' do
+          expect(previous_pay).to eq(2_000)
+        end
+      end
+      context 'with three raises' do
+        let!(:first_raise) { create :salary, employee: employee, annual_amount: 2_000, start_date: 3.months.ago }
+        let!(:second_raise) { create :salary, employee: employee, annual_amount: 3_000, start_date: 2.months.ago }
+        let!(:third_raise) { create :salary, employee: employee, annual_amount: 4_000, start_date: 1.months.ago }
+
+        it 'returns second raise' do
+          expect(previous_pay).to eq(3_000)
+        end
+      end
+    end
+  end
+
   describe '#display_pay' do
     let(:start_date) { Date.parse('2015-08-07') }
     let(:employee) { create :employee, start_date: start_date }

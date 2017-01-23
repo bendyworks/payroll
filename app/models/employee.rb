@@ -88,12 +88,26 @@ class Employee < ActiveRecord::Base
 
   def display_pay
     salary = current_or_last_pay
-    salary_in_ks = salary / 1000
-    "$#{format('%g', salary_in_ks)}K"
+    if salary
+      salary_in_ks = salary / 1000
+      "$#{format('%g', salary_in_ks)}K"
+    end
+  end
+
+  def display_previous_pay
+    salary = previous_pay
+    if salary
+      salary_in_ks = salary / 1000
+      "$#{format('%g', salary_in_ks)}K"
+    end
   end
 
   def previous_pay
-    'Prev Pay'
+    if salaries.empty?
+      nil
+    else
+      salaries[-2].try(:annual_amount) || starting_salary
+    end
   end
 
   def last_raise_date
