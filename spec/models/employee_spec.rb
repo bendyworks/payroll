@@ -14,6 +14,60 @@ describe Employee do
   it { should have_db_column(:end_date).of_type(:date) }
   it { should have_db_column(:notes).of_type(:text) }
 
+  describe '#last_raise_date' do
+    let(:start_date) { 4.months.ago.to_date }
+    let(:first_raise_date) { 3.months.ago.to_date }
+    let(:second_raise_date) { 2.months.ago.to_date }
+    let(:third_raise_date) { 1.months.ago.to_date }
+
+    let(:employee) { create :employee, starting_salary: 1_000, start_date: start_date }
+    let(:last_raise_date) { employee.reload.last_raise_date }
+
+    context 'current employee' do
+      context 'with no raises' do
+        it 'returns start date' do
+          expect(last_raise_date).to eq(start_date)
+        end
+      end
+      context 'with one raise' do
+        let!(:only_raise) { create :salary, employee: employee, start_date: first_raise_date }
+        it 'returns starting salary' do
+          expect(last_raise_date).to eq(first_raise_date)
+        end
+      end
+      context 'with two raises' do
+        let!(:first_raise) do
+          create :salary, employee: employee, start_date: first_raise_date
+        end
+
+        let!(:second_raise) do
+          create :salary, employee: employee, start_date: second_raise_date
+        end
+
+        it 'returns first raise' do
+          expect(last_raise_date).to eq(second_raise_date)
+        end
+      end
+      context 'with three raises' do
+        let!(:first_raise) do
+          create :salary, employee: employee, start_date: first_raise_date
+        end
+
+        let!(:second_raise) do
+          create :salary, employee: employee, start_date: second_raise_date
+        end
+
+        let!(:third_raise) do
+          create :salary, employee: employee, start_date: third_raise_date
+        end
+
+        it 'returns second raise' do
+          expect(last_raise_date).to eq(third_raise_date)
+        end
+      end
+    end
+  end
+
   describe '#previous_pay' do
     let(:employee) { create :employee, starting_salary: 1_000 }
     let(:previous_pay) { employee.reload.previous_pay }

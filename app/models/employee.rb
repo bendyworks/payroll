@@ -103,7 +103,11 @@ class Employee < ActiveRecord::Base
   end
 
   def last_raise_date
-    Date.today
+    if salaries.empty?
+      start_date
+    else
+      salaries.last.try(:start_date)
+    end
   end
 
   def experience_tooltip
