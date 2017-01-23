@@ -35,6 +35,10 @@ class Employee < ActiveRecord::Base
           ' or start_date > :today', today: Time.zone.today
   end
 
+  def self.ordered_start_dates
+    select('distinct start_date').unscoped.order('start_date').map(&:start_date)
+  end
+
   def employed_on?(date)
     date >= start_date && (end_date.nil? || date <= end_date)
   end
@@ -94,10 +98,6 @@ class Employee < ActiveRecord::Base
 
   def last_raise_date
     Date.today
-  end
-
-  def self.ordered_start_dates
-    select('distinct start_date').unscoped.order('start_date').map(&:start_date)
   end
 
   def experience_tooltip
