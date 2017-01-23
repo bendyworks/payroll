@@ -1,0 +1,15 @@
+%tr{id: "employee_#{employee.id}"}
+  %td#first_name
+    = employee.first_name
+  %td#last_name
+    = employee.last_name
+  %td#display_pay
+    = employee.display_pay
+  %td#last_raise_date
+    = employee.last_raise_date.strftime('%m/%d/%y')
+  %td#previous_pay
+    = employee.display_previous_pay
+  %td#six_months
+    = (employee.last_raise_date + 6.months).strftime('%m/%d/%y')
+  %td#twelve_months
+    = (employee.last_raise_date + 12.months).strftime('%m/%d/%y')

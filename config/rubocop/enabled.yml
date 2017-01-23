@@ -849,6 +849,8 @@ Metrics/BlockNesting:
 Metrics/ClassLength:
   Description: 'Avoid classes longer than 100 lines of code.'
   Enabled: true
+  Exclude:
+    - 'app/models/employee.rb'
 
 Metrics/ModuleLength:
   Description: 'Avoid modules longer than 100 lines of code.'

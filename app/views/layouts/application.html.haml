@@ -24,6 +24,7 @@
                   %li= link_to 'Balances', balances_path, class: ("active_link" if current_page?(balances_path))
                   %li= link_to 'Salaries', salaries_path, class: ("active_link" if current_page?(salaries_path))
                   %li= link_to 'Experience', experience_path, class: ("active_link" if current_page?(experience_path))
+                  %li= link_to 'Planning', planning_path, class: ("active_link" if current_page?(planning_path))
                 %ul.nav.navbar-nav.navbar-right
                   %li.dropdown
                     = render "layouts/employees_dropdown"

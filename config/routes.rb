@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 Rails.application.routes.draw do
   get 'pages/home'
+  root 'pages#home'
 
   devise_for :users, skip: [:registrations]
   as :user do
@@ -9,13 +10,11 @@ Rails.application.routes.draw do
   end
   post 'resend_invitation/:user_id' => 'users#resend_invitation', as: 'resend_invitation'
 
-  # root 'charts#salaries'
-  root 'pages#home'
-
+  get 'home', to: 'pages#home'
   get 'balances', to: 'charts#balances'
   get 'salaries', to: 'charts#salaries'
   get 'experience', to: 'charts#experience'
-  get 'home', to: 'pages#home'
+  get 'planning', to: 'planning#index'
 
   resources :employees, except: [:index, :destroy] do
     resources :salaries, only: [:new, :create, :destroy]

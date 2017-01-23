@@ -35,6 +35,10 @@ class Employee < ActiveRecord::Base
           ' or start_date > :today', today: Time.zone.today
   end
 
+  def self.ordered_start_dates
+    select('distinct start_date').unscoped.order('start_date').map(&:start_date)
+  end
+
   def employed_on?(date)
     date >= start_date && (end_date.nil? || date <= end_date)
   end
@@ -83,13 +87,27 @@ class Employee < ActiveRecord::Base
   end
 
   def display_pay
-    salary = current_or_last_pay
-    salary_in_ks = salary / 1000
-    "$#{format('%g', salary_in_ks)}K"
+    format_salary current_or_last_pay
   end
 
-  def self.ordered_start_dates
-    select('distinct start_date').unscoped.order('start_date').map(&:start_date)
+  def display_previous_pay
+    format_salary(previous_pay)
+  end
+
+  def previous_pay
+    if salaries.empty?
+      nil
+    else
+      salaries[-2].try(:annual_amount) || starting_salary
+    end
+  end
+
+  def last_raise_date
+    if salaries.empty?
+      start_date
+    else
+      salaries.last.try(:start_date)
+    end
   end
 
   def experience_tooltip
@@ -129,5 +147,12 @@ class Employee < ActiveRecord::Base
 
   def future_raise?
     salaries.last && (salaries.last.start_date > Time.zone.today)
+  end
+
+  def format_salary(salary)
+    if salary
+      salary_in_ks = salary / 1000
+      "$#{format('%g', salary_in_ks)}K"
+    end
   end
 end
