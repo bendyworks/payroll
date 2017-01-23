@@ -1,0 +1,14 @@
+%h1 Salary Planning
+
+%table#planning.table.table-striped
+  %thead.thead
+    %tr
+      %th First Name
+      %th Last Name
+      %th Current Pay
+      %th Previous Pay
+      %th Last Raise
+      %th 6 Months
+      %th 12 Months
+  %tbody
+    = render partial: 'planning/employee', collection: @employees, as: :employee

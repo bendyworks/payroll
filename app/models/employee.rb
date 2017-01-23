@@ -88,6 +88,14 @@ class Employee < ActiveRecord::Base
     "$#{format('%g', salary_in_ks)}K"
   end
 
+  def previous_pay
+    'Prev Pay'
+  end
+
+  def last_raise_date
+    Date.today
+  end
+
   def self.ordered_start_dates
     select('distinct start_date').unscoped.order('start_date').map(&:start_date)
   end

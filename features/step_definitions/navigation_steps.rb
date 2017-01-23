@@ -49,11 +49,12 @@ end
 PATH_MAP = {
   'balances chart' => 'balances',
   'experience chart' => 'experience',
+  'planning' => 'planning',
   'salaries chart' => 'salaries',
   'users' => 'users'
 }.freeze
 
 def path_for(page_name)
-  route_helper_prefix = PATH_MAP[page_name] || fail("page #{page_name} not recognized")
+  route_helper_prefix = PATH_MAP[page_name] || fail("#{page_name} page not recognized")
   Rails.application.routes.url_helpers.send("#{route_helper_prefix}_path")
 end
