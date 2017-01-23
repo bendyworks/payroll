@@ -31,17 +31,30 @@ describe Employee do
         end
       end
       context 'with two raises' do
-        let!(:first_raise) { create :salary, employee: employee, annual_amount: 2_000, start_date: 3.months.ago }
-        let!(:second_raise) { create :salary, employee: employee, annual_amount: 3_000, start_date: 2.months.ago }
+        let!(:first_raise) do
+          create :salary, employee: employee, annual_amount: 2_000, start_date: 3.months.ago
+        end
+
+        let!(:second_raise) do
+          create :salary, employee: employee, annual_amount: 3_000, start_date: 2.months.ago
+        end
 
         it 'returns first raise' do
           expect(previous_pay).to eq(2_000)
         end
       end
       context 'with three raises' do
-        let!(:first_raise) { create :salary, employee: employee, annual_amount: 2_000, start_date: 3.months.ago }
-        let!(:second_raise) { create :salary, employee: employee, annual_amount: 3_000, start_date: 2.months.ago }
-        let!(:third_raise) { create :salary, employee: employee, annual_amount: 4_000, start_date: 1.months.ago }
+        let!(:first_raise) do
+          create :salary, employee: employee, annual_amount: 2_000, start_date: 3.months.ago
+        end
+
+        let!(:second_raise) do
+          create :salary, employee: employee, annual_amount: 3_000, start_date: 2.months.ago
+        end
+
+        let!(:third_raise) do
+          create :salary, employee: employee, annual_amount: 4_000, start_date: 1.months.ago
+        end
 
         it 'returns second raise' do
           expect(previous_pay).to eq(3_000)

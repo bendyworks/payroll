@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 PLANNING_FIELDS = [
   :first_name,
   :last_name,
   :display_pay,
   :previous_pay,
   :last_raise_date
-]
+].freeze
 
 Then(/^I see planning information for those employees$/) do
   within '#planning' do

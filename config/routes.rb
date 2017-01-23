@@ -16,7 +16,6 @@ Rails.application.routes.draw do
   get 'experience', to: 'charts#experience'
   get 'planning', to: 'planning#index'
 
-
   resources :employees, except: [:index, :destroy] do
     resources :salaries, only: [:new, :create, :destroy]
   end
