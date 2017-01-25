@@ -21,6 +21,7 @@ gem 'uglifier'          # minifies JavaScript, wraps UglifyJS
 
 gem 'jbuilder'          # Create JSON structures
 gem 'jquery-rails'      # jQuery and jQuery-ujs
+gem 'jquery-turbolinks'
 gem 'turbolinks'        # Faster link following
 
 gem 'rake'              # Make-like program
