@@ -19,14 +19,6 @@ Then(/^I see planning information for those employees$/) do
         within '#last_raise_date' do
           expect(page).to have_content(employee.last_raise_date.strftime('%m/%d/%y'))
         end
-
-        within '#six_months' do
-          expect(page).to have_content((employee.last_raise_date + 6.months).strftime('%m/%d/%y'))
-        end
-
-        within '#twelve_months' do
-          expect(page).to have_content((employee.last_raise_date + 12.months).strftime('%m/%d/%y'))
-        end
       end
     end
   end
