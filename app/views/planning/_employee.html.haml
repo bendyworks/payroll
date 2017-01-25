@@ -9,3 +9,9 @@
     = employee.last_raise_date.strftime('%m/%d/%y')
   %td#previous_pay
     = employee.display_previous_pay
+  %td#planning_raise_date
+    = employee.planning_raise_date.try(:strftime, '%m/%d/%y')
+  %td#planning_raise_salary
+    = employee.planning_raise_salary
+  %td#planning_notes
+    = employee.planning_notes
