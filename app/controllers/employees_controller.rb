@@ -2,7 +2,12 @@
 class EmployeesController < ApplicationController
   before_filter :set_employee, only: [:show, :edit, :update]
 
-  def show; end
+  def show
+    respond_to do |format|
+      format.html
+      format.json { render json: @employee }
+    end
+  end
 
   def new
     @employee = Employee.new
@@ -44,6 +49,7 @@ class EmployeesController < ApplicationController
                                      :direct_experience,
                                      :indirect_experience,
                                      :billable,
-                                     :notes)
+                                     :notes,
+                                     :planning_notes)
   end
 end

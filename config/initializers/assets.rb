@@ -14,4 +14,5 @@ Rails.application.config.assets.precompile += %w(
   salaries.js
   salary.js
   users.js
+  rest_in_place/index.js
 )

@@ -1,4 +1,4 @@
-%tr{id: "employee_#{employee.id}"}
+%tr{id: "employee_#{employee.id}", 'data-object' => 'employee', 'data-url' => "employees/#{employee.id}"}
   %td#first_name
     = employee.first_name
   %td#last_name
@@ -14,4 +14,5 @@
   %td#planning_raise_salary
     = employee.planning_raise_salary
   %td#planning_notes
-    = employee.planning_notes
+    %span.rest-in-place{'data-attribute' => 'planning_notes', 'data-formtype' => 'textarea', 'data-placeholder' => '________'}
+      = employee.planning_notes
