@@ -35,15 +35,15 @@ Then(/^I should see a (.*?) tag$/) do |element_tag|
   fail "No #{element_tag} DOM element exists" if has_no_css?(element_tag.to_s)
 end
 
-When(/^I click the "([^"]*)" column header$/) do |column_header|
-  header = find(:xpath, '//th', text: column_header)
-  raise("Couldn't find #{column_header} column header") unless header
+When(/^I click the "([^"]*)" column header$/) do |col_header|
+  header = find(:xpath, '//th', text: col_header)
+  fail("Couldn't find #{col_header} column header") unless header
   header.click
 end
 
-Then(/^table rows are sorted by (ascending|descending) "([^"]*)"$/) do |direction, column_header|
+Then(/^table rows are sorted by (ascending|descending) "([^"]*)"$/) do |direction, col_header|
   direction_symbol = direction == 'ascending' ? '▾' : '▴'
-  actual_values = table_column_contents("#{column_header} #{direction_symbol}")
+  actual_values = table_column_contents("#{col_header} #{direction_symbol}")
 
   expected_values = actual_values.sort
   expected_values.reverse! if direction == 'descending'
@@ -53,22 +53,25 @@ end
 
 private
 
-def table_column_contents column_header
-  headers = within('thead') do
-    all('th').map{|header| header.text}
-  end
-  raise("Missing headers") if headers.empty?
+def table_column_contents(col_header)
+  hdrs = table_headers
+  fail('Missing headers') if hdrs.empty?
 
-  rows = within('tbody') do
+  rows = table_rows
+  fail('Missing rows') if rows.empty?
+
+  col_offset = hdrs.index(col_header) || fail("Missing '#{col_header}' from headers: '#{hdrs}'")
+  rows.map { |r| r[col_offset] }
+end
+
+def table_headers
+  within('thead') { all('th').map(&:text) }
+end
+
+def table_rows
+  within('tbody') do
     all('tr').map do |row|
-      within(row) do
-        all('td').map{|cell| cell.text}
-      end
+      within(row) { all('td').map(&:text) }
     end
   end
-  raise("Missing rows") if rows.empty?
-
-  column_offset = headers.index(column_header)
-  raise "Missing '#{column_header}' from headers: '#{headers}'" if column_offset.nil?
-  rows.map{|r| r[column_offset]}
 end
