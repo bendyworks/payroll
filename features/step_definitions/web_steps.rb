@@ -53,26 +53,21 @@ end
 
 private
 
-# TODO: refactor
 def table_column_contents column_header
-  headers = []
-  rows = []
-  within('thead') do
-    all('th').each do |header|
-      headers << header.text
-    end
+  headers = within('thead') do
+    all('th').map{|header| header.text}
   end
-  within('tbody') do
-    all('tr').each do |row|
-      result_row = []
+  raise("Missing headers") if headers.empty?
+
+  rows = within('tbody') do
+    all('tr').map do |row|
       within(row) do
-        all('td').each do |cell|
-          result_row << cell.text
-        end
+        all('td').map{|cell| cell.text}
       end
-      rows << result_row
     end
   end
+  raise("Missing rows") if rows.empty?
+
   column_offset = headers.index(column_header)
   raise "Missing '#{column_header}' from headers: '#{headers}'" if column_offset.nil?
   rows.map{|r| r[column_offset]}
