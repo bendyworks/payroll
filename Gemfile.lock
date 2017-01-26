@@ -46,6 +46,9 @@ GEM
     autoprefixer-rails (6.6.1)
       execjs
     bcrypt (3.1.11)
+    best_in_place (3.1.0)
+      actionpack (>= 3.2)
+      railties (>= 3.2)
     bootstrap-sass (3.3.7)
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
@@ -138,6 +141,8 @@ GEM
     jquery-turbolinks (2.1.0)
       railties (>= 3.1.0)
       turbolinks
+    jquery-ui-rails (6.0.1)
+      railties (>= 3.2.16)
     json (1.8.6)
     launchy (2.4.3)
       addressable (~> 2.3)
@@ -298,6 +303,7 @@ PLATFORMS
 
 DEPENDENCIES
   airbrake
+  best_in_place
   bootstrap-sass
   capybara
   coffee-rails
@@ -313,6 +319,7 @@ DEPENDENCIES
   jbuilder
   jquery-rails
   jquery-turbolinks
+  jquery-ui-rails
   launchy
   pg
   pry

@@ -13,7 +13,7 @@ class EmployeesController < ApplicationController
   def create
     @employee = Employee.new(employee_params)
     if @employee.save
-      redirect_to employee_path(@employee), notice: 'Employee successfully created.'
+      redirect_to @employee, notice: 'Employee successfully created.'
     else
       @errors = @employee.errors.full_messages
       render :new
@@ -21,11 +21,16 @@ class EmployeesController < ApplicationController
   end
 
   def update
-    if @employee.update(employee_params)
-      redirect_to employee_path(@employee), notice: 'Employee successfully updated.'
-    else
-      @errors = @employee.errors.full_messages
-      render :edit
+    respond_to do |format|
+      if @employee.update(employee_params)
+        format.html { redirect_to @employee, notice: 'Employee successfully updated.' }
+      else
+        format.html do
+          @errors = @employee.errors.full_messages
+          render :edit
+        end
+      end
+      format.json { respond_with_bip(@employee) }
     end
   end
 
@@ -44,6 +49,9 @@ class EmployeesController < ApplicationController
                                      :direct_experience,
                                      :indirect_experience,
                                      :billable,
-                                     :notes)
+                                     :notes,
+                                     :planning_raise_date,
+                                     :planning_raise_salary,
+                                     :planning_notes)
   end
 end

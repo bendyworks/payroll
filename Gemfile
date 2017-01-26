@@ -13,6 +13,7 @@ gem 'immigrant'         # Foreign key migration generator
 gem 'puma'              # Ruby web server built for concurrency
 gem 'smarter_csv'       # importing csv files as array(s) of hashes
 
+gem 'best_in_place'     # in place editing
 gem 'coffee-rails'      # CoffeeScript adapter
 gem 'pg'                # PostgreSQL
 gem 'rails'             # Ruby on Rails
@@ -22,6 +23,7 @@ gem 'uglifier'          # minifies JavaScript, wraps UglifyJS
 gem 'jbuilder'          # Create JSON structures
 gem 'jquery-rails'      # jQuery and jQuery-ujs
 gem 'jquery-turbolinks'
+gem 'jquery-ui-rails'
 gem 'turbolinks'        # Faster link following
 
 gem 'rake'              # Make-like program

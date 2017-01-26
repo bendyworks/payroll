@@ -11,6 +11,7 @@ Rails.application.config.assets.precompile += %w(
   home.js
   shared/sorttable.js
   experience.js
+  planning.js
   salaries.js
   salary.js
   users.js

@@ -875,6 +875,7 @@ Metrics/MethodLength:
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#short-methods'
   Enabled: true
   Exclude:
+    - 'app/controllers/employees_controller.rb'
     - 'db/migrate/20141121201227_devise_create_users.rb'
     - 'db/migrate/20141226171040_devise_invitable_add_to_users.rb'
 
