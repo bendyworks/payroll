@@ -41,15 +41,13 @@ When(/^I click the "([^"]*)" column header$/) do |column_header|
   header.click
 end
 
-Then(/^table rows are sorted by ascending "([^"]*)"$/) do |column_header|
-  actual_values = table_column_contents("#{column_header} ▾")
-  expected_values = actual_values.sort
-  expect(actual_values).to eq(expected_values)
-end
+Then(/^table rows are sorted by (ascending|descending) "([^"]*)"$/) do |direction, column_header|
+  direction_symbol = direction == 'ascending' ? '▾' : '▴'
+  actual_values = table_column_contents("#{column_header} #{direction_symbol}")
 
-Then(/^table rows are sorted by descending "([^"]*)"$/) do |column_header|
-  actual_values = table_column_contents("#{column_header} ▴")
-  expected_values = actual_values.sort.reverse
+  expected_values = actual_values.sort
+  expected_values.reverse! if direction == 'descending'
+
   expect(actual_values).to eq(expected_values)
 end
 
