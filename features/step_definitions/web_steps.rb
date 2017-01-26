@@ -34,3 +34,48 @@ end
 Then(/^I should see a (.*?) tag$/) do |element_tag|
   fail "No #{element_tag} DOM element exists" if has_no_css?(element_tag.to_s)
 end
+
+When(/^I click the "([^"]*)" column header$/) do |column_header|
+  header = find(:xpath, '//th', text: column_header)
+  raise("Couldn't find #{column_header} column header") unless header
+  header.click
+end
+
+Then(/^table rows are sorted by ascending "([^"]*)"$/) do |column_header|
+  actual_values = table_column_contents("#{column_header} ▾")
+  expected_values = actual_values.sort
+  expect(actual_values).to eq(expected_values)
+end
+
+Then(/^table rows are sorted by descending "([^"]*)"$/) do |column_header|
+  actual_values = table_column_contents("#{column_header} ▴")
+  expected_values = actual_values.sort.reverse
+  expect(actual_values).to eq(expected_values)
+end
+
+private
+
+# TODO: refactor
+def table_column_contents column_header
+  headers = []
+  rows = []
+  within('thead') do
+    all('th').each do |header|
+      headers << header.text
+    end
+  end
+  within('tbody') do
+    all('tr').each do |row|
+      result_row = []
+      within(row) do
+        all('td').each do |cell|
+          result_row << cell.text
+        end
+      end
+      rows << result_row
+    end
+  end
+  column_offset = headers.index(column_header)
+  raise "Missing '#{column_header}' from headers: '#{headers}'" if column_offset.nil?
+  rows.map{|r| r[column_offset]}
+end
