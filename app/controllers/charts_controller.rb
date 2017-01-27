@@ -1,22 +1,30 @@
 # frozen_string_literal: true
 class ChartsController < ApplicationController
   include FilterEmployees
+  before_filter :set_employees, only: [:home, :salaries, :experience]
+
+  def home
+    @salary_data_table = create_salary_data_table @employees
+    @experience_data_table = create_experience_data_table @employees
+  end
 
   def balances
     @chart = BalanceChart.new.chart
   end
 
   def salaries
-    @employees = filtered_collection(employee_chart_params).to_a
     @data_table = create_salary_data_table(@employees)
   end
 
   def experience
-    @employees = filtered_collection(employee_chart_params).to_a
     @data_table = create_experience_data_table(@employees)
   end
 
   private
+
+  def set_employees
+    @employees = filtered_collection(employee_chart_params).to_a
+  end
 
   def employee_chart_params
     employment = params[:employment].try(:permit, :past, :current, :future)

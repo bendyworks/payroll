@@ -7,6 +7,13 @@ describe ChartsController do
   let(:user) { create :user }
   before { sign_in user }
 
+  describe 'GET #home' do
+    it 'returns http success' do
+      get :home
+      expect(response).to have_http_status(:success)
+    end
+  end
+
   describe 'GET salaries' do
     let!(:current_employee) { create :employee, :current }
     let!(:salary_1) { create :salary, employee: current_employee }
