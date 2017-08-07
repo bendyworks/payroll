@@ -18,6 +18,10 @@ To get this up and running:
 To run the tests:
   1. `rake`
 
+To deploy:
+  1. once: `git remote add heroku https://git.heroku.com/bendyworks-payroll.git`
+  1. `bin/deploy.sh`
+
 To create a new user:
   1. From the project directory, start the console with `rails c`.
   1. `User.create(email: 'your@email.com', password: 'yourpassword')`
