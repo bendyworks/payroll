@@ -64,7 +64,7 @@ GEM
     childprocess (0.7.1)
       ffi (~> 1.0, >= 1.0.11)
     choice (0.2.0)
-    code_analyzer (0.4.7)
+    code_analyzer (0.4.8)
       sexp_processor
     coderay (1.1.1)
     coffee-rails (4.2.1)
@@ -206,9 +206,9 @@ GEM
     rails_12factor (0.0.3)
       rails_serve_static_assets
       rails_stdout_logging
-    rails_best_practices (1.17.0)
+    rails_best_practices (1.19.0)
       activesupport
-      code_analyzer (>= 0.4.3)
+      code_analyzer (>= 0.4.8)
       erubis
       i18n
       json
@@ -271,7 +271,7 @@ GEM
     selenium-webdriver (3.4.4)
       childprocess (~> 0.5)
       rubyzip (~> 1.0)
-    sexp_processor (4.6.0)
+    sexp_processor (4.10.0)
     shoulda-matchers (3.1.1)
       activesupport (>= 4.0.0)
     slop (3.6.0)
