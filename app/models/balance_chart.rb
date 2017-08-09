@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class BalanceChart
   attr_reader :chart
 

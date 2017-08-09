@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 When(/^I follow "(.*?)"$/) do |link_text|
   click_link link_text
 end

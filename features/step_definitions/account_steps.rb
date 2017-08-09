@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 EXAMPLE_ACCOUNTS = { 'City Bank Checking' => 'Checking',
                      'Discover' => 'Credit Card',
                      'City Bank Savings' => 'Savings',

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 Then(/^the experience chart is present$/) do
   within '.body' do
     expect(page).to have_content('Experience')

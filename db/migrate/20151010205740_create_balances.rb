@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class CreateBalances < ActiveRecord::Migration
   def change
     create_table :balances do |t|

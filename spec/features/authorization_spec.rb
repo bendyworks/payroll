@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 feature 'Authorization' do
   context 'not logged in' do
     scenario 'visit to root is redirected to login page' do

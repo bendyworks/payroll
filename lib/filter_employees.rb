@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module FilterEmployees
   def filtered_collection(params)
     scope = Employee.all

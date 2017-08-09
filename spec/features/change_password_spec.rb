@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 feature 'change password' do
   let(:user) { create :user }
   before do

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class UsersController < ApplicationController
   before_action :find_user, only: [:set_admin_status, :destroy]
 

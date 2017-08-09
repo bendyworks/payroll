@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class SalariesController < ApplicationController
   def new
     employee = Employee.find(params[:employee_id])

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class ChartsController < ApplicationController
   include FilterEmployees
   before_filter :set_employees, only: [:home, :salaries, :experience]
