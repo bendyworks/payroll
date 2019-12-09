@@ -1,6 +1,6 @@
 %h2 Edit account
-- unless devise_error_messages! == ""
-  .form_error.alert.alert-danger= devise_error_messages!
+- unless resource.errors.empty?
+  .form_error.alert.alert-danger= render "devise/shared/error_messages", resource: resource
 .col-lg-9
   .well.bs-component
     = form_for(resource, as: resource_name, url: user_registration_path(resource), html: { method: :patch, class: 'form-horizontal' }) do |f|

@@ -1,5 +1,5 @@
 %h2= t 'devise.invitations.edit.header'
-= devise_error_messages!
+= render "devise/shared/error_messages", resource: resource
 .col-lg-9
   .well.bs-component
     = form_for resource, as: resource_name, url: invitation_path(resource_name), html: { method: :put } do |f|
