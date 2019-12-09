@@ -16,7 +16,7 @@ gem 'smarter_csv'       # importing csv files as array(s) of hashes
 
 gem 'best_in_place'     # in place editing
 gem 'coffee-rails'      # CoffeeScript adapter
-gem 'pg', '0.21'                # PostgreSQL
+gem 'pg', '0.21'        # PostgreSQL
 gem 'rails', '4.2.8'    # Ruby on Rails
 gem 'sass-rails'        # Sass adapter
 gem 'uglifier'          # minifies JavaScript, wraps UglifyJS
@@ -29,6 +29,8 @@ gem 'turbolinks'        # Faster link following
 
 gem 'rake'              # Make-like program
 gem 'rubocop', require: false # Automatic Ruby code style checking
+gem 'rubocop-performance', require: false # Rubocop extension for performance checks
+gem 'rubocop-rails', require: false # Rubocop extension for Rails checks
 
 group :development do
   gem 'rails-erd'       # Generate an entity-relationship diagram
@@ -46,7 +48,7 @@ group :test do
   gem 'capybara'                        # Integration testing tool
   gem 'cucumber-rails', require: false  # Automated acceptance tests
   gem 'database_cleaner'                # Strategies for cleaning databases
-  gem 'factory_bot_rails'              # Setup Ruby objects as test data
+  gem 'factory_bot_rails'               # Setup Ruby objects as test data
   gem 'launchy'
   gem 'selenium-webdriver'              # Automated tests of websites
   gem 'shoulda-matchers'                # Collection of testing matchers

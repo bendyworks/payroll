@@ -1,6 +1,10 @@
 # This is the default configuration file. Enabling and disabling is configured
 # in separate files. This file adds all other parameters apart from Enabled.
 
+require: 
+  - rubocop-performance
+  - rubocop-rails
+
 inherit_from:
   - ./config/rubocop/config.yml
   - ./config/rubocop/enabled.yml
