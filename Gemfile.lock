@@ -176,7 +176,7 @@ GEM
     parallel (1.19.1)
     parser (2.6.5.0)
       ast (~> 2.4.0)
-    pg (0.21.0)
+    pg (0.20.0)
     pry (0.12.2)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
@@ -341,7 +341,7 @@ DEPENDENCIES
   jquery-turbolinks
   jquery-ui-rails
   launchy
-  pg (= 0.21)
+  pg (= 0.20)
   pry
   pry-byebug
   puma
