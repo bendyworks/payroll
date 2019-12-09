@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-task :rails_best_practices do
+task rails_best_practices: :environment do
   sh 'rails_best_practices'
 end
 

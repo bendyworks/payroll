@@ -1,33 +1,33 @@
 # frozen_string_literal: true
 
-FactoryGirl.define do
+FactoryBot.define do
   factory :employee do
     sequence(:first_name) { |n| "##{n}" }
-    last_name 'Bendyworker'
-    start_date Date.parse('2013-1-1')
-    starting_salary 500
+    last_name { 'Bendyworker' }
+    start_date { Date.parse('2013-1-1') }
+    starting_salary { 500 }
 
     trait :current do
-      end_date Time.zone.today + 1
-      first_name 'Current'
+      end_date { Time.zone.today + 1 }
+      first_name { 'Current' }
     end
 
     trait :past do
-      end_date Time.zone.today - 1
-      first_name 'Past'
+      end_date { Time.zone.today - 1 }
+      first_name { 'Past' }
     end
 
     trait :future do
-      start_date Time.zone.today + 10
-      first_name 'Future'
+      start_date { Time.zone.today + 10 }
+      first_name { 'Future' }
     end
 
     trait :billable do
-      billable true
+      billable { true }
     end
 
     trait :support do
-      billable false
+      billable { false }
     end
   end
 end
