@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class EmployeesController < ApplicationController
-  before_filter :set_employee, only: [:show, :edit, :update]
+  before_action :set_employee, only: [:show, :edit, :update]
 
   def show; end
 
