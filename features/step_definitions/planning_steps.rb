@@ -19,7 +19,7 @@ Then(/^I see planning information for those employees$/) do
           expected_content = employee.send(field)
           expected_content = expected_content.strftime('%m/%d/%y') if expected_content.class == Date
 
-          verify_field_value field, expected_content
+          verify_field_value field, expected_content unless expected_content.nil?
         end
       end
     end

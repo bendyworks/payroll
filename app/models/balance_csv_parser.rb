@@ -2,7 +2,7 @@
 
 class BalanceCsvParser
   def self.record(uploaded_io)
-    csv = uploaded_io.read
+    csv = File.read(uploaded_io, encoding: "utf-8")
     csv.sub!(/^Date,/, 'Account,')
     account_hashes = SmarterCSV.process(StringIO.new(csv))
     record_accounts account_hashes
