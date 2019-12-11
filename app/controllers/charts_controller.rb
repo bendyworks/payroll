@@ -2,7 +2,7 @@
 
 class ChartsController < ApplicationController
   include FilterEmployees
-  before_filter :set_employees, only: [:home, :salaries, :experience]
+  before_action :set_employees, only: [:home, :salaries, :experience]
 
   def home
     @salary_data_table = create_salary_data_table @employees

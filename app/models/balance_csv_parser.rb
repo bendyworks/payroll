@@ -2,7 +2,7 @@
 
 class BalanceCsvParser
   def self.record(uploaded_io)
-    csv = uploaded_io.read
+    csv = File.read(uploaded_io, encoding: "utf-8")
     csv.sub!(/^Date,/, 'Account,')
     account_hashes = SmarterCSV.process(StringIO.new(csv))
     record_accounts account_hashes
@@ -31,7 +31,7 @@ class BalanceCsvParser
     date = parse_date(date_sym)
     amount = parse_amount(balance_string)
     balance = Balance.find_or_initialize_by(account_id: account.id, date: date)
-    balance.update_attributes! amount: amount
+    balance.update! amount: amount
   end
   private_class_method :record_account_entry
 

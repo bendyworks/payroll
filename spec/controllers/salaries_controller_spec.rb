@@ -12,12 +12,12 @@ describe SalariesController do
     let(:employee) { create :employee }
 
     it 'returns http success' do
-      get :new, employee_id: employee.to_param
+      get :new, params: { employee_id: employee.to_param }
       expect(response).to have_http_status(:success)
     end
 
     it 'assigns a new salary as @salary' do
-      get :new, employee_id: employee.to_param
+      get :new, params: { employee_id: employee.to_param }
       expect(assigns(:salary)).to be_a_new(Salary)
     end
   end
@@ -33,12 +33,12 @@ describe SalariesController do
 
       it 'creates a new Salary' do
         expect do
-          post :create, post_params
+          post :create, params: post_params
         end.to change(Salary, :count).by(1)
       end
 
       it 'assigns a newly created salary as @salary' do
-        post :create, post_params
+        post :create, params: post_params
         expect(assigns(:salary)).to be_a(Salary)
         expect(assigns(:salary)).to be_persisted
       end
@@ -50,12 +50,12 @@ describe SalariesController do
       end
 
       it 'assigns a newly created but unsaved salary as @salary' do
-        post :create, post_params
+        post :create, params: post_params
         expect(assigns(:salary)).to be_a_new(Salary)
       end
 
       it "re-renders the 'new' template" do
-        post :create, post_params
+        post :create, params: post_params
         expect(response).to render_template('new')
       end
     end
@@ -66,7 +66,7 @@ describe SalariesController do
 
     it 'deletes the selected salary' do
       expect do
-        delete :destroy, employee_id: salary.employee.to_param, id: salary.to_param
+        delete :destroy, params: { employee_id: salary.employee.to_param, id: salary.to_param }
       end.to change(Salary, :count).by(-1)
       expect { salary.reload }.to raise_error(ActiveRecord::RecordNotFound)
     end
