@@ -16,8 +16,8 @@ gem 'smarter_csv'       # importing csv files as array(s) of hashes
 
 gem 'best_in_place'     # in place editing
 gem 'coffee-rails'      # CoffeeScript adapter
-gem 'pg', '0.21'        # PostgreSQL
-gem 'rails', '5.1.7'    # Ruby on Rails
+gem 'pg'                # PostgreSQL
+gem 'rails', '5.2.4'    # Ruby on Rails
 gem 'sass-rails'        # Sass adapter
 gem 'uglifier'          # minifies JavaScript, wraps UglifyJS
 
