@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-ruby '2.5.1'
+ruby '2.5.3'
 
 gem 'airbrake'          # robust exception tracking
 gem 'bootstrap-sass'    # SASS port of  Bootstrap 3
@@ -14,10 +14,10 @@ gem 'immigrant'         # Foreign key migration generator
 gem 'puma'              # Ruby web server built for concurrency
 gem 'smarter_csv'       # importing csv files as array(s) of hashes
 
-gem 'best_in_place'     # in place editing
+gem 'best_in_place', git: 'https://github.com/bendyworks/best_in_place' # in place editing
 gem 'coffee-rails'      # CoffeeScript adapter
 gem 'pg'                # PostgreSQL
-gem 'rails', '5.2.4'    # Ruby on Rails
+gem 'rails', '6.0.1'    # Ruby on Rails
 gem 'sass-rails'        # Sass adapter
 gem 'uglifier'          # minifies JavaScript, wraps UglifyJS
 
@@ -41,7 +41,7 @@ group :development, :test do
   gem 'pry'                     # IRB alternative and runtime dev console
   gem 'pry-byebug'              # combine pry with byebug
   gem 'rails_best_practices'
-  gem 'rspec-rails'             # testing framework
+  gem 'rspec-rails', '4.0.0.beta3' # testing framework
 end
 
 group :test do

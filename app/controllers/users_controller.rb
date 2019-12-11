@@ -14,7 +14,7 @@ class UsersController < ApplicationController
   end
 
   def set_admin_status
-    if @user.update_attributes admin: (params[:checked] == 'true')
+    if @user.update admin: (params[:checked] == 'true')
       render json: 'ok'
     else
       alert(@user.email + ' was not set to admin.')

@@ -31,7 +31,7 @@ class BalanceCsvParser
     date = parse_date(date_sym)
     amount = parse_amount(balance_string)
     balance = Balance.find_or_initialize_by(account_id: account.id, date: date)
-    balance.update_attributes! amount: amount
+    balance.update! amount: amount
   end
   private_class_method :record_account_entry
 

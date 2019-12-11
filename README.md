@@ -29,7 +29,7 @@ To create a new user:
 To change your password in the console:
   1. From the project directory, start the console with `rails c`.
   1. `u = User.find_by_email('your@email.com')`
-  1. `u.update_attributes password: 'newpassword'`
+  1. `u.update password: 'newpassword'`
 
 Let's use page specific JavaScript, which means that you need to
 remember these main ideas:
