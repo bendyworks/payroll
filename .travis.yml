@@ -12,6 +12,7 @@ before_install:
   - export PATH=$PATH:$PWD/geckodriver
   - sudo service postgresql restart 9.3
   - gem install bundler
+  - gem list -a
 before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
   - cp config/database.yml.travis config/database.yml
