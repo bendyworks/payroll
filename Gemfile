@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-ruby '2.5.3'
+ruby '2.6.3'
 
 gem 'airbrake'          # robust exception tracking
 gem 'bootstrap-sass'    # SASS port of  Bootstrap 3
