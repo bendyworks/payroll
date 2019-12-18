@@ -119,6 +119,10 @@ class Employee < ActiveRecord::Base
     Rails.application.routes.url_helpers.employee_path(self)
   end
 
+  def bip_planning_raise_date
+    planning_raise_date.try(:strftime, '%m/%d/%Y')
+  end
+
   private
 
   def date_for_js(date)

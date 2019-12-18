@@ -11,7 +11,7 @@
     = employee.display_pay
   %td#planning_raise_date
     -# = employee.planning_raise_date.try(:strftime, '%m/%d/%y')
-    = best_in_place employee, :planning_raise_date, as: :date, place_holder: '--'
+    = best_in_place employee, :planning_raise_date, display_as: :bip_planning_raise_date, place_holder: '--', html_attrs: { type: 'date' }
   %td#planning_raise_salary
     = best_in_place employee, :planning_raise_salary, place_holder: '--'
   %td#planning_notes

@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/bendyworks/best_in_place
-  revision: 39c9061e8ba580717fcc9b199721658a467633fa
+  revision: c05f1dccba45413ca5f0d9c910deb3703c51bc5d
   specs:
     best_in_place (3.1.1)
       actionpack (>= 3.2)
@@ -220,7 +220,7 @@ GEM
     public_suffix (4.0.1)
     puma (4.3.1)
       nio4r (~> 2.0)
-    rack (2.0.7)
+    rack (2.0.8)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rails (6.0.1)
@@ -342,7 +342,7 @@ GEM
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     temple (0.8.2)
-    thor (0.20.3)
+    thor (1.0.1)
     thread_safe (0.3.6)
     tilt (2.0.10)
     turbolinks (5.2.1)
@@ -412,4 +412,4 @@ RUBY VERSION
    ruby 2.6.3p62
 
 BUNDLED WITH
-   2.0.2
+   2.1.0
