@@ -55,10 +55,6 @@ group :test do
   gem 'shoulda-matchers'                # Collection of testing matchers
 end
 
-group :production do
-  gem 'rails_12factor' # Run Rails the 12factor way
-end
-
 group :doc do
   gem 'sdoc' # rdoc generator
 end
