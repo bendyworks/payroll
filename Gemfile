@@ -17,7 +17,7 @@ gem 'smarter_csv'       # importing csv files as array(s) of hashes
 gem 'best_in_place', git: 'https://github.com/bendyworks/best_in_place' # in place editing
 gem 'coffee-rails'      # CoffeeScript adapter
 gem 'pg'                # PostgreSQL
-gem 'rails', '6.0.1'    # Ruby on Rails
+gem 'rails', '6.0.2'    # Ruby on Rails
 gem 'sass-rails'        # Sass adapter
 gem 'uglifier'          # minifies JavaScript, wraps UglifyJS
 
@@ -53,10 +53,6 @@ group :test do
   gem 'rails-controller-testing'        # Allows us to use assigns in testing
   gem 'selenium-webdriver'              # Automated tests of websites
   gem 'shoulda-matchers'                # Collection of testing matchers
-end
-
-group :production do
-  gem 'rails_12factor' # Run Rails the 12factor way
 end
 
 group :doc do

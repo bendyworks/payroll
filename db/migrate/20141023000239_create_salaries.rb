@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class CreateSalaries < ActiveRecord::Migration
+class CreateSalaries < ActiveRecord::Migration[6.0]
   def change
     create_table :salaries do |t|
       t.date :start_date
