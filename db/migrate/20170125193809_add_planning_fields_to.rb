@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AddPlanningFieldsTo < ActiveRecord::Migration
+class AddPlanningFieldsTo < ActiveRecord::Migration[6.0]
   def change
     add_column :employees, :planning_raise_date, :date
     add_column :employees, :planning_raise_salary, :decimal

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class AddNonNullToColumns < ActiveRecord::Migration
+class AddNonNullToColumns < ActiveRecord::Migration[6.0]
   def change
     change_column_null :employees, :start_date, false
     change_column_null :salaries, :start_date, false
