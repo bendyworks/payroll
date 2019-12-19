@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(version: 2017_01_25_193809) do
     t.decimal "starting_salary", default: "0.0", null: false
     t.text "notes"
     t.date "planning_raise_date"
-    t.string "planning_raise_salary"
+    t.decimal "planning_raise_salary"
     t.text "planning_notes"
   end
 
