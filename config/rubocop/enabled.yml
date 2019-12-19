@@ -873,14 +873,6 @@ Metrics/CyclomaticComplexity:
                  of test cases needed to validate a method.
   Enabled: true
 
-Metrics/LineLength:
-  Description: 'Limit lines to 80 characters.'
-  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#80-character-limits'
-  Enabled: true
-  Exclude:
-    - 'config/initializers/devise.rb'
-    - 'script/cucumber'
-
 Metrics/MethodLength:
   Description: 'Avoid methods longer than 10 lines of code.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#short-methods'
@@ -936,6 +928,14 @@ Layout/ConditionPosition:
                  the keyword.
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#same-line-condition'
   Enabled: true
+
+Layout/LineLength:
+  Description: 'Limit lines to 80 characters.'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#80-character-limits'
+  Enabled: true
+  Exclude:
+    - 'config/initializers/devise.rb'
+    - 'script/cucumber'
 
 Lint/Debugger:
   Description: 'Check for debugger calls.'
