@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2017_01_25_193809) do
+ActiveRecord::Schema.define(version: 2019_12_19_153625) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(version: 2017_01_25_193809) do
     t.decimal "starting_salary", default: "0.0", null: false
     t.text "notes"
     t.date "planning_raise_date"
-    t.decimal "planning_raise_salary"
+    t.string "planning_raise_salary"
     t.text "planning_notes"
   end
 
