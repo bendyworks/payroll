@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/bendyworks/best_in_place
-  revision: 39c9061e8ba580717fcc9b199721658a467633fa
+  revision: c05f1dccba45413ca5f0d9c910deb3703c51bc5d
   specs:
     best_in_place (3.1.1)
       actionpack (>= 3.2)

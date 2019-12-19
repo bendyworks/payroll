@@ -52,7 +52,25 @@ Then(/^table rows are sorted by (ascending|descending) "([^"]*)"$/) do |directio
   expect(actual_values).to eq(expected_values)
 end
 
+Then(/^table US date rows are sorted by (ascending|descending) "([^"]*)"$/) do |direction, col_header|
+  direction_symbol = direction == 'ascending' ? '▾' : '▴'
+  actual_values = table_column_contents("#{col_header} #{direction_symbol}")
+
+  expected_values = sorted_dates(actual_values)
+  expected_values.reverse! if direction == 'descending'
+
+  expect(actual_values).to eq(expected_values)
+end
+
 private
+
+def sorted_dates(date_strings)
+  dates = date_strings.collect do |str|
+    format_str = "%m/%d/" + (str =~ /\d{4}/ ? "%Y" : "%y")
+    Date.strptime(str, format_str)
+  end
+  dates.sort.map{|date| date.strftime("%m/%d/%Y")}
+end
 
 def table_column_contents(col_header)
   hdrs = table_headers

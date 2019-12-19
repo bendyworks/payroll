@@ -27,7 +27,11 @@ Then(/^I see planning information for those employees$/) do
 end
 
 When(/^I edit planning fields in place$/) do
-  in_place_edit 'planning_raise_date', '01/14/2018'
+  # Firefox limitation: we can't enter a non-iso8601 value into an <input type="date">,
+  # it acts as if it never typed the date in at all but doesn't throw errors.
+  # https://github.com/mozilla/geckodriver/issues/1070#issuecomment-348133506
+  # So: we don't enter it like 01/14/2018 as if the user did
+  in_place_edit 'planning_raise_date', '2018-01-14'
   in_place_edit 'planning_raise_salary', '15976'
   in_place_edit 'planning_notes', 'What do you think?'
 end

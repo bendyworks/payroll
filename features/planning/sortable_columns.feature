@@ -4,7 +4,7 @@ Feature: Sortable Planning Columns
   I want to order any column ascending or descending at will
 
   @javascript
-  Scenario Outline: Every column sortable by clicking header
+  Scenario Outline: Every non-US-formatted date column sortable by clicking header
     Given 3 employees
       And I'm on the planning page
     When I click the "<header>" column header
@@ -18,6 +18,17 @@ Feature: Sortable Planning Columns
       | Current             |
       | Since               |
       | Previous            |
-      | Proposed Date       |
       | Proposed Raise      |
       | Proposal Discussion |
+
+  @javascript
+  Scenario Outline: Every US-formatted date column sortable by clicking header
+    Given 3 employees
+      And I'm on the planning page
+    When I click the "<header>" column header
+      Then table US date rows are sorted by ascending "<header>"
+    When I click the "<header>" column header
+      Then table US date rows are sorted by descending "<header>"
+    Examples:
+      | header        |
+      | Proposed Date |
