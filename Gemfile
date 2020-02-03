@@ -3,7 +3,6 @@
 source 'https://rubygems.org'
 ruby '2.6.5'
 
-gem 'airbrake'          # robust exception tracking
 gem 'bootstrap-sass'    # SASS port of  Bootstrap 3
 gem 'devise'            # Flexible authentication solution
 gem 'devise_invitable'  # Invitation strategy for devise

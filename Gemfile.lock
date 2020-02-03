@@ -72,10 +72,6 @@ GEM
       zeitwerk (~> 2.2)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
-    airbrake (10.0.1)
-      airbrake-ruby (~> 4.13)
-    airbrake-ruby (4.13.0)
-      rbtree3 (~> 0.5)
     ast (2.4.0)
     autoprefixer-rails (9.7.3)
       execjs
@@ -268,7 +264,6 @@ GEM
       thor (>= 0.20.3, < 2.0)
     rainbow (3.0.0)
     rake (13.0.1)
-    rbtree3 (0.6.0)
     rdoc (6.2.0)
     regexp_parser (1.6.0)
     require_all (3.0.0)
@@ -361,7 +356,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  airbrake
   best_in_place!
   bootstrap-sass
   capybara
@@ -406,4 +400,4 @@ RUBY VERSION
    ruby 2.6.5p114
 
 BUNDLED WITH
-   2.1.1
+   2.1.4
