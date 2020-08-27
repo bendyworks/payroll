@@ -101,7 +101,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    concurrent-ruby (1.1.6)
+    concurrent-ruby (1.1.7)
     crass (1.0.6)
     cucumber (4.0.1)
       builder (~> 3.2, >= 3.2.3)
@@ -172,7 +172,7 @@ GEM
       haml (>= 4.0, < 6)
       nokogiri (>= 1.6.0)
       ruby_parser (~> 3.5)
-    i18n (1.8.3)
+    i18n (1.8.5)
       concurrent-ruby (~> 1.0)
     immigrant (0.3.6)
       activerecord (>= 3.0)
@@ -339,7 +339,7 @@ GEM
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
     sexp_processor (4.14.1)
-    shoulda-matchers (4.3.0)
+    shoulda-matchers (4.4.1)
       activesupport (>= 4.2.0)
     smarter_csv (1.2.6)
     spring (2.1.1)
@@ -371,7 +371,7 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.3.1)
+    zeitwerk (2.4.0)
 
 PLATFORMS
   ruby
