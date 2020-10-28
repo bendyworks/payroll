@@ -910,6 +910,10 @@ Lint/AssignmentInCondition:
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#safe-assignment-in-condition'
   Enabled: true
 
+Lint/BinaryOperatorWithIdenticalOperands:
+  Description: 'Checks for comparison of something with itself.'
+  Enabled: true
+
 Layout/BlockAlignment:
   Description: 'Align block ends correctly.'
   Enabled: true
@@ -1074,10 +1078,6 @@ Lint/UselessAccessModifier:
 Lint/UselessAssignment:
   Description: 'Checks for useless assignment to a local variable.'
   StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#underscore-unused-vars'
-  Enabled: true
-
-Lint/UselessComparison:
-  Description: 'Checks for comparison of something with itself.'
   Enabled: true
 
 Lint/UselessElseWithoutRescue:
