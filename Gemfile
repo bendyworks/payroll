@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-ruby '2.6.5'
+ruby '2.7.2'
 
 gem 'bootstrap-sass'    # SASS port of  Bootstrap 3
 gem 'devise'            # Flexible authentication solution
