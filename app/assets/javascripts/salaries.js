@@ -27,7 +27,7 @@ function draw_salaries_chart() {
   employees.map(function(employee) {
     data_table.addColumn({
       "type": "number",
-      "label": employee.first_name + " " + employee.display_pay
+      "label": employee.display_name + " " + employee.display_pay
     });
   });
 

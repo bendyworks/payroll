@@ -1,4 +1,4 @@
 = javascript_include_tag 'salaries'
 %h1 Salaries
-#salaries_chart{data: {employees: @employees.to_json(methods: [:display_pay, :employee_path_for_js]), data_table: @data_table.to_json, chart_params: {width: 800, height: 500, legend: "right", vAxis: {minValue: 0, gridlines: {count: 10}}}.to_json}}
+#salaries_chart{data: {employees: @employees.to_json(methods: [:display_name, :display_pay, :employee_path_for_js]), data_table: @data_table.to_json, chart_params: {width: 800, height: 500, legend: "right", vAxis: {minValue: 0, gridlines: {count: 10}}}.to_json}}
 = render 'form'
