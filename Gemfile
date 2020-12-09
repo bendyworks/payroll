@@ -30,6 +30,8 @@ gem 'rake'              # Make-like program
 gem 'rubocop', require: false # Automatic Ruby code style checking
 gem 'rubocop-performance', require: false # Rubocop extension for performance checks
 gem 'rubocop-rails', require: false # Rubocop extension for Rails checks
+gem 'rubocop-rake', require: false # Rubocop extension for Rake checks
+gem 'rubocop-rspec', require: false # Rubocop extension for rspec checks
 
 group :development do
   gem 'rails-erd'       # Generate an entity-relationship diagram
