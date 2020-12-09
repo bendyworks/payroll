@@ -15,6 +15,14 @@ describe Employee do
   it { should have_db_column(:end_date).of_type(:date) }
   it { should have_db_column(:notes).of_type(:text) }
 
+  describe '#display_name' do
+    let(:employee) { create :employee, first_name: "Daisy", last_name: "Duck" }
+    it 'returns first and last name' do
+      expect(employee.display_name).to eq("#{employee.first_name} #{employee.last_name}")
+    end
+  end
+
+
   describe '#last_raise_date' do
     let(:start_date) { 4.months.ago.to_date }
     let(:first_raise_date) { 3.months.ago.to_date }
