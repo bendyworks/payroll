@@ -37,3 +37,10 @@ end
 Given(/^employee "([^"]*)"$/) do |employee_name|
   @employee = create(:employee, first_name: employee_name)
 end
+
+Given(/^former employee "([^"]*)"/) do |employee_name|
+  create(:employee,
+  first_name: employee_name,
+  start_date: '03/01/2016',
+  end_date: '03/01/2018')
+end

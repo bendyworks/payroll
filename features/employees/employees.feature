@@ -28,3 +28,20 @@ Feature: Administer employees
     Then I should see a pre tag
       And I should see "Notes"
       And I should see "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+
+  Scenario: Add back employee
+    Given former employee "Luke"
+      And I'm logged in
+      And I follow "Employees"
+      And I follow "Luke"
+      And I press "Edit"
+    When I press "Add new start date"
+    Then I should see "New start date"
+
+    When I fill in "New start date" with "12/01/2020"
+      And I press "Save"
+    Then I should see "Second start date"
+      And I should see "12/01/2020"
+      And I should see "Second end date"
+      And I should see "First start date"
+      And I should see "First end date"
