@@ -21,7 +21,8 @@
           = f.label :end_date, class: 'control-label'
           = f.date_field :end_date, class: 'form-control'
         .form-group.col-lg-12
-          = link_to 'Add new start date', '', :onclick => "expose_new_start_date(); return false", class: 'btn btn-primary'
+          = f.label :new_start_date, class: 'control-label'
+          = f.date_field :new_start_date, class: 'form-control'
         .form-group.col-lg-12
           = f.label :direct_experience, 'Direct experience (months)', class: 'control-label'
           = f.number_field :direct_experience, class: 'form-control'

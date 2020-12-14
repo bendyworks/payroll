@@ -127,6 +127,10 @@ class Employee < ActiveRecord::Base
     planning_raise_date.try(:strftime, '%m/%d/%Y')
   end
 
+  def new_start_date
+    start_date
+  end
+
   private
 
   def date_for_js(date)

@@ -35,7 +35,6 @@ Feature: Administer employees
       And I follow "Employees"
       And I follow "Luke"
       And I press "Edit"
-    When I press "Add new start date"
     Then I should see "New start date"
 
     When I fill in "New start date" with "12/01/2020"
