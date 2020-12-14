@@ -22,7 +22,6 @@ describe Employee do
     end
   end
 
-
   describe '#last_raise_date' do
     let(:start_date) { 4.months.ago.to_date }
     let(:first_raise_date) { 3.months.ago.to_date }
