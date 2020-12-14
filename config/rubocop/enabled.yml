@@ -1224,6 +1224,12 @@ Lint/ToEnumArguments: # (new in 1.1)
   Enabled: true
 Lint/UnmodifiedReduceAccumulator: # (new in 1.1)
   Enabled: true
+Lint/DuplicateBranch: # (new in 1.3)
+  Enabled: true
+Lint/EmptyClass: # (new in 1.3)
+  Enabled: true
+Lint/UnexpectedBlockArity: # (new in 1.5)
+  Enabled: true
 Style/ArgumentsForwarding: # (new in 1.1)
   Enabled: true
 Style/CollectionCompact: # (new in 1.2)
@@ -1233,6 +1239,10 @@ Style/DocumentDynamicEvalDefinition: # (new in 1.1)
 Style/NegatedIfElseCondition: # (new in 1.2)
   Enabled: true
 Style/SwapValues: # (new in 1.1)
+  Enabled: true
+Style/NilLambda: # (new in 1.3)
+  Enabled: true
+Style/RedundantArgument: # (new in 1.4)
   Enabled: true
 Performance/AncestorsInclude: # (new in 1.7)
   Enabled: true
@@ -1251,6 +1261,14 @@ Performance/Squeeze: # (new in 1.7)
 Performance/StringInclude: # (new in 1.7)
   Enabled: true
 Performance/Sum: # (new in 1.8)
+  Enabled: true
+Performance/BlockGivenWithExplicitBlock: # (new in 1.9)
+  Enabled: true
+Performance/CollectionLiteralInLoop: # (new in 1.8)
+  Enabled: true
+Performance/ConstantRegexp: # (new in 1.9)
+  Enabled: true
+Performance/MethodObjectAsBlock: # (new in 1.9)
   Enabled: true
 Rails/ActiveRecordCallbacksOrder: # (new in 2.7)
   Enabled: true
@@ -1281,4 +1299,8 @@ Rails/SquishedSQLHeredocs: # (new in 2.8)
 Rails/WhereExists: # (new in 2.7)
   Enabled: true
 Rails/WhereNot: # (new in 2.8)
+  Enabled: true
+Rails/AttributeDefaultBlockValue: # (new in 2.9)
+  Enabled: true
+Rails/WhereEquals: # (new in 2.9)
   Enabled: true
