@@ -4,6 +4,8 @@
 require:
   - rubocop-performance
   - rubocop-rails
+  - rubocop-rake
+  - rubocop-rspec
 
 inherit_from:
   - ./config/rubocop/config.yml
