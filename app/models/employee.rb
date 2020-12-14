@@ -44,6 +44,10 @@ class Employee < ActiveRecord::Base
     date >= start_date && (end_date.nil? || date <= end_date)
   end
 
+  def display_name
+    "#{first_name} #{last_name}"
+  end
+
   def salary_on(date)
     return nil unless employed_on?(date)
 
