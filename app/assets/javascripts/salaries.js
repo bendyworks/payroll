@@ -38,25 +38,17 @@ function draw_salaries_chart() {
   data.map(function(row) {
     const salary_date = new Date(row[0]);
     var rest = row.slice(1);
-    var rest_to_add = rest.map(function(x) {
+    var rest_to_add = rest.flatMap(function(x, i) {
       if(x !== null) {
-        return {v: parseFloat(x)};
+        return [{v: parseFloat(x)}, {
+          v: `${salary_date.toLocaleDateString("en-US", { month: 'long', year: 'numeric' })}
+            ${employees[i].display_name}: $${(x / 1000).toString()}k`
+         }];
       } else {
-        return x;
+        return [{v: x},{v: ""}];
       }
     });
-    var mix_to_add = rest_to_add.reduce(function (row, v, i) {
-      if(v !== null) {
-        return row.concat(
-          v,
-          `${salary_date.toLocaleDateString("en-US", { month: 'long', year: 'numeric' })}
-            ${employees[i].display_name}: $${(v.v / 1000).toString()}k`
-          );
-      } else {
-        return row.concat(v, "");
-      }
-    }, []);
-    var row_to_add = [{v: salary_date}].concat(mix_to_add);
+    var row_to_add = [{v: salary_date}].concat(rest_to_add);
 
     data_table.addRow(row_to_add);
   });
