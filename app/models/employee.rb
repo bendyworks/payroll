@@ -2,6 +2,7 @@
 
 class Employee < ActiveRecord::Base
   has_many :salaries, dependent: :destroy
+  has_many :tenures, dependent: :destroy
 
   validates :first_name, presence: true
   validates :last_name, presence: true
