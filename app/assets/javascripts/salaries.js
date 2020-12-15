@@ -27,11 +27,16 @@ function draw_salaries_chart() {
   employees.map(function(employee) {
     data_table.addColumn({
       "type": "number",
-      "label": employee.display_name + " " + employee.display_pay
+      "label": employee.display_name
+    });
+    data_table.addColumn({
+      "type": "string",
+      "role": "tooltip"
     });
   });
 
   data.map(function(row) {
+    const salary_date = new Date(row[0]);
     var rest = row.slice(1);
     var rest_to_add = rest.map(function(x) {
       if(x !== null) {
@@ -40,7 +45,18 @@ function draw_salaries_chart() {
         return x;
       }
     });
-    var row_to_add = [{v: new Date(row[0])}].concat(rest_to_add);
+    var mix_to_add = rest_to_add.reduce(function (row, v, i) {
+      if(v !== null) {
+        return row.concat(
+          v,
+          `${salary_date.toLocaleDateString("en-US", { month: 'long', year: 'numeric' })}
+            ${employees[i].display_name}: $${(v.v / 1000).toString()}k`
+          );
+      } else {
+        return row.concat(v, "");
+      }
+    }, []);
+    var row_to_add = [{v: salary_date}].concat(mix_to_add);
 
     data_table.addRow(row_to_add);
   });
