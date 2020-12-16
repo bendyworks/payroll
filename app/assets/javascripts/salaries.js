@@ -1,14 +1,3 @@
-// NOTE: JS `Date`s are milliseconds from the epoch.  Ruby Dates are seconds from the epoch.
-
-// | Date                      | Daisie $59K | tooltip           | Donald (support) $40K | tooltip    
-// |---------------------------+-------------+-------------------+-----------------------+-----------------------------|
-// | new Date(1352613600000.0) |        null | ""                | null                  | ""                          |
-// | new Date(1360303200000.0) |     57000.0 | Fri Feb 08, 2013  | null                  | ""                          |
-// | ...                       |             | Daisie Duck: $57k |                       |                             |
-// | new Date(1465362000000.0) |     59000.0 | Wed Jun, 8 2016   | 40000.0               | Wed Jun, 8 2016             |
-// |                           |             | Daisie Duck: $59k |                       | Donald (support) Duck: $40k |
-// | new Date(1466053200000.0) |     59000.0 | Thu Jun, 16 2016  | 40000.0               | Thu Jun, 16 2016            |
-// |                           |             | Daisie Duck: $59k |                       | Donald (support) Duck       |
 google.load('visualization', '1.0', {
   packages: ['corechart'],
   callback: draw_salaries_chart
