@@ -64,7 +64,9 @@ function draw_salaries_chart() {
     // anything in that case.
     var selection = chart.getSelection();
     if ((selection.length > 0) && (selection[0]['row'] == null)) {
-      var employee_idx = selection[0]['column'] - 1;
+
+      var colno = selection[0]['column']
+      var employee_idx = colno - (1 + Math.floor(colno/2))
       window.location = employees[employee_idx].employee_path_for_js;
     };
   };
