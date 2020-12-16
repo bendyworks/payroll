@@ -39,14 +39,14 @@ function draw_salaries_chart() {
   data.map(function(row) {
     const salary_date = new Date(row[0]);
     var rest = row.slice(1);
-    var rest_to_add = rest.flatMap(function(x, i) {
-      if(x !== null) {
-        return [{v: parseFloat(x)}, {
+    var rest_to_add = rest.flatMap(function(salary, i) {
+      if(salary !== null) {
+        return [{v: parseFloat(salary)}, {
           v: `${salary_date.toLocaleDateString("en-US", { month: 'short', day: 'numeric', year: 'numeric' })}
-            ${employees[i].display_name}: $${(x / 1000).toString()}k`
+            ${employees[i].display_name}: $${(salary / 1000).toString()}k`
          }];
       } else {
-        return [{v: x},{v: ""}];
+        return [{v: salary},{v: ""}];
       }
     });
     var row_to_add = [{v: salary_date}].concat(rest_to_add);
