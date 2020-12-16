@@ -6,7 +6,6 @@ class Employee < ActiveRecord::Base
 
   validates :first_name, presence: true
   validates :last_name, presence: true
-  validates :start_date, presence: true
   validates :starting_salary, presence: true
 
   default_scope { order :first_name }
@@ -23,22 +22,30 @@ class Employee < ActiveRecord::Base
   scope :support, -> { where billable: false }
 
   def self.current
-    where 'start_date <= :today AND (end_date IS NULL OR end_date >= :today)',
+    where 'tenures.last.start_date <= :today AND (tenures.last.end_date IS NULL OR tenures.last.end_date >= :today)',
           today: Time.zone.today
   end
 
   def self.past_or_current
-    where '(start_date <= :today AND (end_date IS NULL OR end_date >= :today))' \
-          ' or end_date < :today', today: Time.zone.today
+    where '(tenures.last.start_date <= :today AND (tenures.last.end_date IS NULL OR tenures.last.end_date >= :today))' \
+          ' or tenures.last.end_date < :today', today: Time.zone.today
   end
 
   def self.current_or_future
-    where '(start_date <= :today AND (end_date IS NULL OR end_date >= :today))' \
-          ' or start_date > :today', today: Time.zone.today
+    where '(tenures.last.start_date <= :today AND (tenures.last.end_date IS NULL OR tenures.last.end_date >= :today))' \
+          ' or tenures.last.start_date > :today', today: Time.zone.today
   end
 
   def self.ordered_start_dates
     select('distinct start_date').unscoped.order('start_date').map(&:start_date)
+  end
+
+  def start_date
+    tenures.first.start_date
+  end
+
+  def end_date
+    tenures.first.end_date
   end
 
   def employed_on?(date)

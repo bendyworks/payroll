@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :employee do
     sequence(:first_name) { |n| "##{n}" }
     last_name { 'Bendyworker' }
-    start_date { Date.parse('2013-1-1') }
+    tenures { [Tenure.new(start_date: Date.parse('2013-1-1'))] }
     starting_salary { 500 }
 
     trait :current do
