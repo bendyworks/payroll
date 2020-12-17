@@ -38,7 +38,7 @@ function draw_salaries_chart() {
         return [salary,""];
       }
     });
-    var row_to_add = [{v: salary_date}].concat(rest_to_add);
+    var row_to_add = [salary_date].concat(rest_to_add);
 
     data_table.addRow(row_to_add);
   });
