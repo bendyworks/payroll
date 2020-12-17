@@ -30,12 +30,12 @@ function draw_salaries_chart() {
     var rest = row.slice(1);
     var rest_to_add = rest.flatMap(function(salary, i) {
       if(salary !== null) {
-        return [{v: parseFloat(salary)}, {
-          v: `${salary_date.toLocaleDateString("en-US", { month: 'short', day: 'numeric', year: 'numeric' })}
+        return [parseFloat(salary),
+          `${salary_date.toLocaleDateString("en-US", { month: 'short', day: 'numeric', year: 'numeric' })}
             ${employees[i].display_name}: $${(salary / 1000).toString()}k`
-         }];
+         ];
       } else {
-        return [{v: salary},{v: ""}];
+        return [salary,""];
       }
     });
     var row_to_add = [{v: salary_date}].concat(rest_to_add);
