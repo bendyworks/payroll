@@ -6,7 +6,7 @@ class ChartsController < ApplicationController
 
   def home
     @salary_data_table = create_salary_data_table @employees
-    @experience_data_table = create_experience_data_table @employees
+    @experience_data_table = ExperienceGraph.new(@employees).to_table
   end
 
   def balances
@@ -18,7 +18,7 @@ class ChartsController < ApplicationController
   end
 
   def experience
-    @data_table = create_experience_data_table(@employees)
+    @data_table = ExperienceGraph.new(@employees).to_table
   end
 
   private
@@ -32,16 +32,6 @@ class ChartsController < ApplicationController
     billable = params[:billable].try(:permit, :true, :false)
     employment = { 'current' => '1' } if employment.nil? && billable.nil?
     { employment: employment, billable: billable }
-  end
-
-  def create_experience_data_table(employees)
-    employees.map.with_index do |e, i|
-      row = Array.new((@employees.length * 2) + 1)
-      row[0] = e.weighted_years_experience
-      row[(2 * i) + 1] = e.current_or_last_pay
-      row[(2 * i) + 2] = e.experience_tooltip
-      row
-    end
   end
 
   def create_salary_data_table(employees)
