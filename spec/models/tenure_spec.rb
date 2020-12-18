@@ -5,7 +5,7 @@ require 'rails_helper'
 describe Tenure do  
   it { should belong_to :employee }
   it { should validate_presence_of :start_date }
-  it { should validate_presence_of :employee_id }
+  it { should validate_presence_of :employee }
 
   it 'validates employee salary start dates unique' do
     create :tenure

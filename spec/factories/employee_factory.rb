@@ -7,19 +7,43 @@ FactoryBot.define do
     tenures { [Tenure.new(start_date: Date.parse('2013-1-1'))] }
     starting_salary { 500 }
 
+    trait :with_start do
+      transient do
+        start_date { Date.parse('2013-1-1') }
+      end
+      after(:build) do |employee, evaluator|
+        employee.tenures = [FactoryBot.create(:tenure, start_date: evaluator.start_date)]
+      end
+    end
+
     trait :current do
-      end_date { Time.zone.today + 1 }
+      transient do
+        end_date { Time.zone.today + 1 }
+      end
       first_name { 'Current' }
+      after(:build) do |employee, evaluator|
+        employee.tenures = [FactoryBot.create(:tenure, end_date: evaluator.end_date)]
+      end
     end
 
     trait :past do
-      end_date { Time.zone.today - 1 }
+      transient do
+        end_date { Time.zone.today - 1 }
+      end
       first_name { 'Past' }
+      after(:build) do |employee, evaluator|
+        employee.tenures = [FactoryBot.create(:tenure, end_date: evaluator.end_date)]
+      end
     end
 
     trait :future do
-      start_date { Time.zone.today + 10 }
+      transient do
+        start_date { Time.zone.today + 10 }
+      end
       first_name { 'Future' }
+      after(:build) do |employee, evaluator|
+        employee.tenures = [FactoryBot.create(:tenure, start_date: evaluator.start_date)]
+      end
     end
 
     trait :billable do
