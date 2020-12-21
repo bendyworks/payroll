@@ -18,6 +18,10 @@ class ExperienceGraph
   private
 
   def experience_tooltip(employee)
-    "#{employee.display_name}:\n#{employee.all_experience_formatted}\n#{employee.display_pay} salary"
+    <<~TOOLTIP.strip
+      #{employee.display_name}:
+      #{employee.all_experience_formatted}
+      #{employee.display_pay} salary
+    TOOLTIP
   end
 end
