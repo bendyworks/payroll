@@ -21,7 +21,7 @@ RSpec.describe SalaryGraph do
         first_existing_date = Date.new(2030,12,12)
         first_expected_date_format = first_existing_date.to_time.to_f * 1000
         expected_first_salary = 130_000
-        
+
         second_existing_date = Date.new(2035,02,10)
         second_expected_date_format = second_existing_date.to_time.to_f * 1000
         expected_second_salary = 150_000
