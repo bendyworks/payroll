@@ -129,10 +129,6 @@ class Employee < ActiveRecord::Base
     end
   end
 
-  def experience_tooltip
-    "#{display_name}:\n#{all_experience_formatted}\n#{display_pay} salary"
-  end
-
   def employee_path_for_js
     Rails.application.routes.url_helpers.employee_path(self)
   end
