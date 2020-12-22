@@ -45,7 +45,7 @@ describe Salary do
   end
 
   describe 'validation no_salaries_outside_employment_dates' do
-    let(:employee) { create :employee, end_date: Time.zone.today + 5 }
+    let(:employee) { create :employee, tenures_attributes: [{end_date: Time.zone.today + 5}] }
 
     it 'allows salary starting on employee start date' do
       salary = employee.salaries.create(start_date: employee.start_date, annual_amount: 5)

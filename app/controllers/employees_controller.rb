@@ -44,8 +44,6 @@ class EmployeesController < ApplicationController
   def employee_params
     params.require(:employee).permit(:first_name,
                                      :last_name,
-                                     :start_date,
-                                     :end_date,
                                      :starting_salary,
                                      :direct_experience,
                                      :indirect_experience,
@@ -53,6 +51,7 @@ class EmployeesController < ApplicationController
                                      :notes,
                                      :planning_raise_date,
                                      :planning_raise_salary,
-                                     :planning_notes)
+                                     :planning_notes,
+                                     tenures_attributes: [ :start_date, :end_date, :_destroy])
   end
 end
