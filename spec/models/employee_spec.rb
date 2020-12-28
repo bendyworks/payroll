@@ -179,7 +179,12 @@ describe Employee do
   end
 
   describe '#ending_salary' do
-    let(:employee) { create :employee, tenures_attributes: [{end_date: end_date}] }
+    let(:employee) do
+      build(:employee).tap do |employee|
+        employee.tenures = [build(:tenure, end_date: end_date)]
+        employee.save
+      end
+    end
     let!(:salary) { create :salary, employee: employee }
     let!(:raise_salary) { create :salary, employee: employee, start_date: salary.start_date + 5 }
 
