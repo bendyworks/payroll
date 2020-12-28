@@ -6,7 +6,9 @@ FactoryBot.define do
     last_name { 'Bendyworker' }
     # tenures { [Tenure.new(start_date: Date.parse('2013-1-1'))] }
     starting_salary { 500 }
-    tenures_attributes { attributes_for(:tenure) }
+    after :create do |employee|
+      create_list :tenure, 1, employee: employee
+    end
 
 =begin     trait :current do
       transient do
