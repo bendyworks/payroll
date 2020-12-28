@@ -3,6 +3,20 @@ google.load('visualization', '1.0', {
   callback: draw_salaries_chart
 });
 
+function parseRow(row) {
+  return row.map(function (x, i) {
+    // First row is date--example: 1357016400000
+    if (i == 0) {
+      return new Date(x)
+      // Odd rows are salaries in floats--example: "50000.0"
+    } else if ((i % 2) == 1 && x !== null) {
+      return parseFloat(x);
+    } else {
+      return x;
+    }
+  });
+};
+
 function draw_salaries_chart() {
   var data_table = new google.visualization.DataTable();
   var data = $("#salaries_chart").data("dataTable");
@@ -25,24 +39,14 @@ function draw_salaries_chart() {
     });
   });
 
-  data.map(function(row) {
-    var rest = row.slice(1);
-    var rest_to_add = rest.map(function(x, i) {
-      if((i % 2) == 0 && x !== null) {
-        return {v: parseFloat(x)};
-      } else {
-        return x;
-      }
-    });
-    var row_to_add = [{v: new Date(row[0])}].concat(rest_to_add);
-
-    data_table.addRow(row_to_add);
+  data.map(function (row) {
+    data_table.addRow(parseRow(row));
   });
 
   var chart = new google.visualization.LineChart(document.getElementById('salaries_chart'));
   chart.draw(data_table, chart_params);
 
-  var selectHandler = function(e) {
+  var selectHandler = function() {
     // Handle clicks on legend by checking whether row is null
     // (meaning we've clicked on a column header, e.g. Daisie $59k).
     // Selection is an empty array when double clicking, so don't do
