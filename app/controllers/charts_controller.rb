@@ -31,7 +31,7 @@ class ChartsController < ApplicationController
     employment = params[:employment].try(:permit, :past, :current, :future)
     billable = params[:billable].try(:permit, :true, :false)
     employment = { 'current' => '1' } if employment.nil? && billable.nil?
-    { employment: employment, billable: billable }
+    { employment: employment.to_h, billable: billable.to_h }
   end
 
   def create_experience_data_table(employees)
