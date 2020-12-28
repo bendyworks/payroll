@@ -4,19 +4,11 @@ FactoryBot.define do
   factory :employee do
     sequence(:first_name) { |n| "##{n}" }
     last_name { 'Bendyworker' }
-    tenures { [Tenure.new(start_date: Date.parse('2013-1-1'))] }
+    # tenures { [Tenure.new(start_date: Date.parse('2013-1-1'))] }
     starting_salary { 500 }
+    tenures_attributes { attributes_for(:tenure) }
 
-    trait :with_start do
-      transient do
-        start_date { Date.parse('2013-1-1') }
-      end
-      after(:build) do |employee, evaluator|
-        employee.tenures = [FactoryBot.create(:tenure, start_date: evaluator.start_date)]
-      end
-    end
-
-    trait :current do
+=begin     trait :current do
       transient do
         end_date { Time.zone.today + 1 }
       end
@@ -44,7 +36,8 @@ FactoryBot.define do
       after(:build) do |employee, evaluator|
         employee.tenures = [FactoryBot.create(:tenure, start_date: evaluator.start_date)]
       end
-    end
+    end 
+=end
 
     trait :billable do
       billable { true }

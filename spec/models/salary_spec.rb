@@ -48,6 +48,7 @@ describe Salary do
     let(:employee) { create :employee, tenures_attributes: [{end_date: Time.zone.today + 5}] }
 
     it 'allows salary starting on employee start date' do
+      binding.pry
       salary = employee.salaries.create(start_date: employee.start_date, annual_amount: 5)
       expect(salary).to be_valid
     end
