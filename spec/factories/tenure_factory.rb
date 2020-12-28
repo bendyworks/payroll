@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :tenure do
-    sequence(:start_date) { |n| Date.parse("2013-1-#{n}") }
+    sequence(:start_date) { |n| 1.year.ago + n.day }
     employee
   end
 end

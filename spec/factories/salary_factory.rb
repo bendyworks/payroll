@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :salary do
-    start_date { Date.parse('2013-2-1') }
+    sequence(:start_date) { |n| 6.months.ago + n.day }
     annual_amount { 700 }
     employee
   end
