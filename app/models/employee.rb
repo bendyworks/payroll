@@ -10,31 +10,31 @@ class Employee < ActiveRecord::Base
   validates :starting_salary, presence: true
 
   default_scope { order :first_name }
-  scope :past, -> { where 'end_date < :today', today: Time.zone.today }
+  scope :past, -> { joins(:tenures).where 'tenures.end_date < :today', today: Time.zone.today }
   scope :current, lambda {
-    where 'start_date <= :today AND (end_date IS NULL OR end_date >= :today)',
+    joins(:tenures).where 'tenures.start_date <= :today AND (tenures.end_date IS NULL OR tenures.end_date >= :today)',
           today: Time.zone.today
   }
-  scope :future, -> { where 'start_date > :today', today: Time.zone.today }
+  scope :future, -> { joins(:tenures).where 'tenures.start_date > :today', today: Time.zone.today }
   scope :non_current, lambda {
-    where 'start_date > :today OR end_date < :today', today: Time.zone.today
+    joins(:tenures).where 'tenures.start_date > :today OR tenures.end_date < :today', today: Time.zone.today
   }
   scope :billed, -> { where billable: true }
   scope :support, -> { where billable: false }
 
   def self.current
-    where 'tenures.last.start_date <= :today AND (tenures.last.end_date IS NULL OR tenures.last.end_date >= :today)',
+    joins(:tenures).where 'tenures.start_date <= :today AND (tenures.end_date IS NULL OR tenures.end_date >= :today)',
           today: Time.zone.today
   end
 
   def self.past_or_current
-    where '(tenures.last.start_date <= :today AND (tenures.last.end_date IS NULL OR tenures.last.end_date >= :today))' \
-          ' or tenures.last.end_date < :today', today: Time.zone.today
+    joins(:tenures).where '(tenures.start_date <= :today AND (tenures.end_date IS NULL OR tenures.end_date >= :today))' \
+          ' or tenures.end_date < :today', today: Time.zone.today
   end
 
   def self.current_or_future
-    where '(tenures.last.start_date <= :today AND (tenures.last.end_date IS NULL OR tenures.last.end_date >= :today))' \
-          ' or tenures.last.start_date > :today', today: Time.zone.today
+    joins(:tenures).where '(tenures.start_date <= :today AND (tenures.end_date IS NULL OR tenures.end_date >= :today))' \
+          ' or tenures.start_date > :today', today: Time.zone.today
   end
 
   def self.ordered_start_dates
