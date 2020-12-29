@@ -37,10 +37,6 @@ class Employee < ActiveRecord::Base
           ' or tenures.start_date > :today', today: Time.zone.today
   end
 
-  def self.ordered_start_dates
-    select('distinct start_date').unscoped.order('start_date').map(&:start_date)
-  end
-
   def start_date
     tenures.first.start_date
   end

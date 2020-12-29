@@ -10,9 +10,24 @@ RSpec.describe PlanningController, type: :controller do
 
   describe 'GET #index' do
     let!(:current_employee) { create :employee }
-    let!(:leaving_employee) { create :employee, :current }
-    let!(:ex_employee) { create :employee, :past }
-    let!(:future_employee) { create :employee, :future }
+    let!(:leaving_employee) do
+      build(:employee).tap do |employee|
+        employee.tenures = [build(:tenure, end_date: Time.zone.today + 1)]
+        employee.save
+      end
+    end
+    let!(:ex_employee) do
+      build(:employee).tap do |employee|
+        employee.tenures = [build(:tenure, end_date: Time.zone.today - 1)]
+        employee.save
+      end
+    end
+    let!(:future_employee) do
+      build(:employee).tap do |employee|
+        employee.tenures = [build(:tenure, start_date: Time.zone.today + 10)]
+        employee.save
+      end
+    end
 
     it 'shows only current employees' do
       get :index

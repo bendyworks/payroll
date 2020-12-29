@@ -339,12 +339,37 @@ describe Employee do
   end
 
   context 'scopes' do
-    let!(:started_today) { create :employee, tenures_attributes: [{start_date: Time.zone.today}] }
-    let!(:leaving_today) { create :employee, tenures_attributes: [{end_date: Time.zone.today}] }
-    let!(:gave_notice) { create :employee, tenures_attributes: [{end_date: Time.zone.today + 7}] }
+    let!(:started_today) do
+      build(:employee).tap do |employee|
+        employee.tenures = [build(:tenure, start_date: Time.zone.today)]
+        employee.save
+      end
+    end
+    let!(:leaving_today) do
+      build(:employee).tap do |employee|
+        employee.tenures = [build(:tenure, end_date: Time.zone.today)]
+        employee.save
+      end
+    end
+    let!(:gave_notice) do
+      build(:employee).tap do |employee|
+        employee.tenures = [build(:tenure, end_date: Time.zone.today + 7)]
+        employee.save
+      end
+    end
 
-    let!(:past_employee) { create :employee, tenures_attributes: [{end_date: Time.zone.today - 7}] }
-    let!(:not_started) { create :employee, tenures_attributes: [{start_date: Time.zone.today + 14}] }
+    let!(:past_employee) do
+      build(:employee).tap do |employee|
+        employee.tenures = [build(:tenure, end_date: Time.zone.today - 7)]
+        employee.save
+      end
+    end
+    let!(:not_started) do
+      build(:employee).tap do |employee|
+        employee.tenures = [build(:tenure, start_date: Time.zone.today + 14)]
+        employee.save
+      end
+    end
 
     describe 'current' do
       it 'returns collection of employees employed today' do

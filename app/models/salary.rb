@@ -24,7 +24,7 @@ class Salary < ActiveRecord::Base
   end
 
   def self.history_dates
-    (Salary.ordered_dates_with_previous_dates + Employee.ordered_start_dates).sort.uniq
+    (Salary.ordered_dates_with_previous_dates + Tenure.ordered_start_dates).sort.uniq
   end
 
   private
