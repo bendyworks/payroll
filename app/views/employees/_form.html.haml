@@ -14,7 +14,7 @@
         .form-group.col-lg-12
           = f.label :last_name, class: 'control-label'
           = f.text_field :last_name, class: 'form-control', required: true
-        = f.fields_for :tenure do |tenure_f|
+        = f.fields_for :tenures, @employee.tenures.build do |tenure_f|
           .form-group.col-lg-12
             = tenure_f.label :start_date, class: 'control-label'
             = tenure_f.date_field :start_date, class: 'form-control', required: true
