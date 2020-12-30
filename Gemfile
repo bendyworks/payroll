@@ -36,6 +36,7 @@ gem 'rubocop-rspec', require: false # Rubocop extension for rspec checks
 group :development do
   gem 'rails-erd'       # Generate an entity-relationship diagram
   gem 'spring'          # Preloads your application
+  gem 'spring-commands-rspec'
 end
 
 group :development, :test do
