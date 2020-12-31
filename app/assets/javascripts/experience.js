@@ -38,13 +38,9 @@ function draw_experience_chart() {
     var row_to_add = row.map(function(x) {
       var parsed = parseFloat(x);
       if(isNaN(parsed)) {
-        if(x !== null) {
-          return {v: x};
-        } else {
-          return x;
-        }
+        return x;
       } else {
-        return {v: parsed};
+        return parsed;
       }
     });
 
@@ -54,7 +50,7 @@ function draw_experience_chart() {
   var chart = new google.visualization.ScatterChart(document.getElementById('experience_chart'));
   chart.draw(data_table, chart_params);
 
-  var selectHandler = function(e) {
+  var selectHandler = function() {
     // Handle clicks on legend by checking whether row is null
     // (meaning we've clicked on a column header, e.g. Daisie $59k).
     // Selection is an empty array when double clicking, so don't do
