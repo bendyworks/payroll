@@ -22,11 +22,6 @@ class Employee < ActiveRecord::Base
   scope :billed, -> { where billable: true }
   scope :support, -> { where billable: false }
 
-  def self.current
-    joins(:tenures).where 'tenures.start_date <= :today AND (tenures.end_date IS NULL OR tenures.end_date >= :today)',
-          today: Time.zone.today
-  end
-
   def self.past_or_current
     joins(:tenures).where '(tenures.start_date <= :today AND (tenures.end_date IS NULL OR tenures.end_date >= :today))' \
           ' or tenures.end_date < :today', today: Time.zone.today

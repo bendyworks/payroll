@@ -377,6 +377,12 @@ describe Employee do
       end
     end
 
+    describe 'non_current' do
+      it 'returns collection of employees not employed today' do
+        expect(Employee.non_current.sort).to eq [past_employee, not_started].sort
+      end
+    end
+
     describe 'past_or_current' do
       let(:expected_employees) { [past_employee, gave_notice, started_today, leaving_today] }
       it 'returns all past or current employees' do

@@ -29,6 +29,7 @@ Feature: Administer employees
       And I should see "Notes"
       And I should see "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
 
+  @javascript
   Scenario: Add back employee
     Given former employee "Luke"
       And I'm logged in
