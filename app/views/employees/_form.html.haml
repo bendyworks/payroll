@@ -14,12 +14,32 @@
         .form-group.col-lg-12
           = f.label :last_name, class: 'control-label'
           = f.text_field :last_name, class: 'form-control', required: true
-        = f.fields_for :tenures, @employee.tenures.build do |tenure_f|
+        -# Label these by number when there are multiple existing tenures
+        = f.fields_for :tenures do |tenure_f|
+          = tenure_f.hidden_field :id
           .form-group.col-lg-12
             = tenure_f.label :start_date, class: 'control-label'
             = tenure_f.date_field :start_date, class: 'form-control', required: true
           .form-group.col-lg-12
             = tenure_f.label :end_date, class: 'control-label'
+            = tenure_f.date_field :end_date, class: 'form-control'
+        -# Only show this if
+        -# - All other Tenures have an end date, or creating a new employee
+        -# Label should show "New" if there are previous tenures
+        -# Only require this if creating a new employee
+        = f.fields_for :tenures, @employee.tenures.build do |tenure_f|
+          .form-group.col-lg-12
+            -if @employee.new_record?
+              = tenure_f.label :start_date, class: 'control-label'
+              = tenure_f.date_field :start_date, class: 'form-control', required: true
+            -else
+              = tenure_f.label :start_date, 'New start date', class: 'control-label'
+              = tenure_f.date_field :start_date, class: 'form-control'
+          .form-group.col-lg-12
+            -if @employee.new_record?
+              = tenure_f.label :end_date, class: 'control-label'
+            -else
+              = tenure_f.label :end_date, 'New end date', class: 'control-label'
             = tenure_f.date_field :end_date, class: 'form-control'
         .form-group.col-lg-12
           = f.label :direct_experience, 'Direct experience (months)', class: 'control-label'

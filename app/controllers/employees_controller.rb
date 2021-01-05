@@ -22,6 +22,7 @@ class EmployeesController < ApplicationController
   end
 
   def update
+    # binding.pry
     respond_to do |format|
       if @employee.update(employee_params)
         format.html { redirect_to @employee, notice: 'Employee successfully updated.' }
@@ -52,6 +53,6 @@ class EmployeesController < ApplicationController
                                      :planning_raise_date,
                                      :planning_raise_salary,
                                      :planning_notes,
-                                     tenures_attributes: [ :start_date, :end_date, :_destroy])
+                                     tenures_attributes: [ :id, :start_date, :end_date, :_destroy])
   end
 end

@@ -29,7 +29,6 @@ Feature: Administer employees
       And I should see "Notes"
       And I should see "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
 
-  @javascript
   Scenario: Add back employee
     Given former employee "Luke"
       And I'm logged in
@@ -38,10 +37,12 @@ Feature: Administer employees
       And I press "Edit"
     Then I should see "New start date"
 
-    When I fill in "New start date" with "12/01/2020"
+    When I fill in "New start date" with "01/12/2020"
       And I press "Save"
-    Then I should see "Second start date"
-      And I should see "12/01/2020"
-      And I should see "Second end date"
-      And I should see "First start date"
-      And I should see "First end date"
+    Then I should see "Dec 1, 2020"
+
+    When I press "Edit"
+    Then I should see "2nd start date"
+      And I should see "2nd end date"
+      And I should see "1st start date"
+      And I should see "1st end date"
