@@ -19,7 +19,8 @@ darkwing_start_date = Date.parse('2012-11-11')
 darkwing_end_date = Date.parse('2014-1-1')
 darkwing = Employee.create!(first_name: 'Darkwing (gone)', last_name: 'Duck',
                             starting_salary: '100000',
-                            tenures: [Tenure.new(start_date: darkwing_start_date, end_date: darkwing_end_date)])
+                            tenures: [Tenure.new(start_date: darkwing_start_date,
+                                                 end_date: darkwing_end_date)])
 Salary.create!(employee: darkwing, start_date: darkwing_start_date + 90, annual_amount: '200000')
 
 ###### FUTURE EMPLOYEES ######

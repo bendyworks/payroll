@@ -3,7 +3,8 @@
 class Employee < ActiveRecord::Base
   has_many :salaries, dependent: :destroy
   has_many :tenures, dependent: :destroy
-  accepts_nested_attributes_for :tenures, reject_if: proc { |attributes| attributes['start_date'].blank? }, allow_destroy: true
+  accepts_nested_attributes_for :tenures,
+    reject_if: proc { |attributes| attributes['start_date'].blank? }, allow_destroy: true
 
   validates :first_name, presence: true
   validates :last_name, presence: true
@@ -12,23 +13,26 @@ class Employee < ActiveRecord::Base
   default_scope { order :first_name }
   scope :past, -> { joins(:tenures).where 'tenures.end_date < :today', today: Time.zone.today }
   scope :current, lambda {
-    joins(:tenures).where 'tenures.start_date <= :today AND (tenures.end_date IS NULL OR tenures.end_date >= :today)',
-          today: Time.zone.today
+    joins(:tenures).where 'tenures.start_date <= :today' \
+          ' AND (tenures.end_date IS NULL OR tenures.end_date >= :today)', today: Time.zone.today
   }
   scope :future, -> { joins(:tenures).where 'tenures.start_date > :today', today: Time.zone.today }
   scope :non_current, lambda {
-    joins(:tenures).where 'tenures.start_date > :today OR tenures.end_date < :today', today: Time.zone.today
+    joins(:tenures).where 'tenures.start_date > :today OR tenures.end_date < :today',
+          today: Time.zone.today
   }
   scope :billed, -> { where billable: true }
   scope :support, -> { where billable: false }
 
   def self.past_or_current
-    joins(:tenures).where '(tenures.start_date <= :today AND (tenures.end_date IS NULL OR tenures.end_date >= :today))' \
+    joins(:tenures).where '(tenures.start_date <= :today' \
+          ' AND (tenures.end_date IS NULL OR tenures.end_date >= :today))' \
           ' or tenures.end_date < :today', today: Time.zone.today
   end
 
   def self.current_or_future
-    joins(:tenures).where '(tenures.start_date <= :today AND (tenures.end_date IS NULL OR tenures.end_date >= :today))' \
+    joins(:tenures).where '(tenures.start_date <= :today' \
+          ' AND (tenures.end_date IS NULL OR tenures.end_date >= :today))' \
           ' or tenures.start_date > :today', today: Time.zone.today
   end
 
@@ -125,10 +129,6 @@ class Employee < ActiveRecord::Base
 
   def bip_planning_raise_date
     planning_raise_date.try(:strftime, '%m/%d/%Y')
-  end
-
-  def new_start_date
-    start_date
   end
 
   private

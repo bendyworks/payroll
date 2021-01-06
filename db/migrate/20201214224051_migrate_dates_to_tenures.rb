@@ -7,7 +7,7 @@ class MigrateDatesToTenures < ActiveRecord::Migration[6.1]
     remove_column :employees, :start_date
     remove_column :employees, :end_date
   end
-  
+
   def down
     add_column :employees, :start_date
     add_column :employees, :end_date
