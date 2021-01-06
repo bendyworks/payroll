@@ -370,27 +370,56 @@ describe Employee do
         employee.save
       end
     end
+    let!(:returned) do
+      build(:employee).tap do |employee|
+        employee.tenures = [build(:tenure, start_date: Time.zone.today - 14,
+                                           end_date: Time.zone.today - 7),
+                            build(:tenure, start_date: Time.zone.today)]
+        employee.save
+      end
+    end
+    let!(:returning_soon) do
+      build(:employee).tap do |employee|
+        employee.tenures = [build(:tenure, start_date: Time.zone.today - 14,
+                                           end_date: Time.zone.today - 7),
+                            build(:tenure, start_date: Time.zone.today + 7)]
+        employee.save
+      end
+    end
+    let!(:left_twice) do
+      build(:employee).tap do |employee|
+        employee.tenures = [build(:tenure, start_date: Time.zone.today - 21,
+                                           end_date: Time.zone.today - 14),
+                            build(:tenure, start_date: Time.zone.today - 7,
+                                           end_date: Time.zone.today - 1)]
+        employee.save
+      end
+    end
 
     describe 'current' do
       it 'returns collection of employees employed today' do
-        expect(Employee.current.sort).to eq [gave_notice, started_today, leaving_today].sort
+        expect(Employee.current.sort).to eq [gave_notice, started_today, leaving_today, returned].sort
       end
     end
 
     describe 'non_current' do
       it 'returns collection of employees not employed today' do
-        expect(Employee.non_current.sort).to eq [past_employee, not_started].sort
+        expect(Employee.non_current.sort).to eq [past_employee, not_started, returning_soon, left_twice].sort
       end
     end
 
     describe 'past_or_current' do
-      let(:expected_employees) { [past_employee, gave_notice, started_today, leaving_today] }
+      let(:expected_employees) { 
+        [past_employee, gave_notice, started_today, leaving_today, returned, returning_soon, left_twice] 
+      }
       it 'returns all past or current employees' do
         expect(Employee.past_or_current.sort).to eq expected_employees.sort
       end
     end
     describe 'current_or_future' do
-      let(:expected_employees) { [gave_notice, started_today, leaving_today, not_started] }
+      let(:expected_employees) { 
+        [gave_notice, started_today, leaving_today, not_started, returned, returning_soon] 
+      }
       it 'returns all current OR future employees' do
         expect(Employee.current_or_future.sort).to eq expected_employees.sort
       end
