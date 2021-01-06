@@ -18,8 +18,11 @@ class Employee < ActiveRecord::Base
   }
   scope :future, -> { joins(:tenures).where 'tenures.start_date > :today', today: Time.zone.today }
   scope :non_current, lambda {
-    joins(:tenures).where 'tenures.start_date > :today OR tenures.end_date < :today',
-          today: Time.zone.today
+    joins(:tenures)
+      .where('tenures.start_date = (SELECT MAX(tenures.start_date) ' \
+             'FROM tenures WHERE tenures.employee_id = employees.id)')
+      .group('employees.id')
+      .where('tenures.start_date > :today OR tenures.end_date < :today', today: Time.zone.today)
   }
   scope :billed, -> { where billable: true }
   scope :support, -> { where billable: false }
