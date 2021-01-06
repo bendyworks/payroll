@@ -340,38 +340,38 @@ describe Employee do
 
   context 'scopes' do
     let!(:started_today) do
-      build(:employee).tap do |employee|
+      build(:employee, first_name: 'Started Today').tap do |employee|
         employee.tenures = [build(:tenure, start_date: Time.zone.today)]
         employee.save
       end
     end
     let!(:leaving_today) do
-      build(:employee).tap do |employee|
+      build(:employee, first_name: 'Leaving Today').tap do |employee|
         employee.tenures = [build(:tenure, end_date: Time.zone.today)]
         employee.save
       end
     end
     let!(:gave_notice) do
-      build(:employee).tap do |employee|
+      build(:employee, first_name: 'Gave Notice').tap do |employee|
         employee.tenures = [build(:tenure, end_date: Time.zone.today + 7)]
         employee.save
       end
     end
 
     let!(:past_employee) do
-      build(:employee).tap do |employee|
+      build(:employee, first_name: 'Past Employee').tap do |employee|
         employee.tenures = [build(:tenure, end_date: Time.zone.today - 7)]
         employee.save
       end
     end
     let!(:not_started) do
-      build(:employee).tap do |employee|
+      build(:employee, first_name: 'Not Started').tap do |employee|
         employee.tenures = [build(:tenure, start_date: Time.zone.today + 14)]
         employee.save
       end
     end
     let!(:returned) do
-      build(:employee).tap do |employee|
+      build(:employee, first_name: 'Returned').tap do |employee|
         employee.tenures = [build(:tenure, start_date: Time.zone.today - 14,
                                            end_date: Time.zone.today - 7),
                             build(:tenure, start_date: Time.zone.today)]
@@ -379,7 +379,7 @@ describe Employee do
       end
     end
     let!(:returning_soon) do
-      build(:employee).tap do |employee|
+      build(:employee, first_name: 'Returning Soon').tap do |employee|
         employee.tenures = [build(:tenure, start_date: Time.zone.today - 14,
                                            end_date: Time.zone.today - 7),
                             build(:tenure, start_date: Time.zone.today + 7)]
@@ -387,7 +387,7 @@ describe Employee do
       end
     end
     let!(:left_twice) do
-      build(:employee).tap do |employee|
+      build(:employee, first_name: 'Left Twice').tap do |employee|
         employee.tenures = [build(:tenure, start_date: Time.zone.today - 21,
                                            end_date: Time.zone.today - 14),
                             build(:tenure, start_date: Time.zone.today - 7,
@@ -408,17 +408,34 @@ describe Employee do
       end
     end
 
-    describe 'past_or_current' do
-      let(:expected_employees) { 
-        [past_employee, gave_notice, started_today, leaving_today, returned, returning_soon, left_twice] 
-      }
-      it 'returns all past or current employees' do
-        expect(Employee.past_or_current.sort).to eq expected_employees.sort
+    describe 'past' do
+      let(:expected_employees) { [past_employee.first_name, left_twice.first_name] }
+
+      it 'returns all past employees' do
+        expect(Employee.past.map(&:first_name).sort).to eq expected_employees.sort
       end
     end
+
+    describe 'past_or_current' do
+      let(:expected_employees) do
+        [
+          past_employee.first_name,
+          gave_notice.first_name,
+          started_today.first_name,
+          leaving_today.first_name,
+          returned.first_name,
+          left_twice.first_name
+        ]
+      end
+
+      it 'returns all past or current employees' do
+        expect(described_class.past_or_current.map(&:first_name).sort).to eq expected_employees.sort
+      end
+    end
+
     describe 'current_or_future' do
-      let(:expected_employees) { 
-        [gave_notice, started_today, leaving_today, not_started, returned, returning_soon] 
+      let(:expected_employees) {
+        [gave_notice, started_today, leaving_today, not_started, returned, returning_soon]
       }
       it 'returns all current OR future employees' do
         expect(Employee.current_or_future.sort).to eq expected_employees.sort

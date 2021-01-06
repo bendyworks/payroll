@@ -27,11 +27,25 @@ class Employee < ActiveRecord::Base
   scope :billed, -> { where billable: true }
   scope :support, -> { where billable: false }
 
-  def self.past_or_current
-    joins(:tenures).where '(tenures.start_date <= :today' \
+  scope :past, lambda {
+    joins(:tenures)
+      .where('tenures.start_date = (SELECT MAX(tenures.start_date) ' \
+             'FROM tenures WHERE tenures.employee_id = employees.id)')
+      .group('employees.id')
+      .where 'tenures.end_date < :today', today: Time.zone.today }
+  scope :current, lambda {
+    joins(:tenures).where 'tenures.start_date <= :today' \
+          ' AND (tenures.end_date IS NULL OR tenures.end_date >= :today)', today: Time.zone.today
+  }
+  scope :past_or_current, lambda {
+    joins(:tenures)
+      .where('tenures.start_date = (SELECT MAX(tenures.start_date) ' \
+             'FROM tenures WHERE tenures.employee_id = employees.id)')
+      .group('employees.id')
+      .where('(tenures.start_date <= :today' \
           ' AND (tenures.end_date IS NULL OR tenures.end_date >= :today))' \
-          ' or tenures.end_date < :today', today: Time.zone.today
-  end
+          ' OR tenures.end_date < :today', today: Time.zone.today)
+  }
 
   def self.current_or_future
     joins(:tenures).where '(tenures.start_date <= :today' \
