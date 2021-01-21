@@ -26,7 +26,12 @@ describe Employee do
     let(:second_raise_date) { 2.months.ago.to_date }
     let(:third_raise_date) { 1.months.ago.to_date }
 
-    let(:employee) { create :employee, starting_salary: 1_000, tenures_attributes: [{start_date: start_date}] }
+    let!(:employee) do
+      build(:employee, starting_salary: 1_000).tap do |employee|
+        employee.tenures = [build(:tenure, start_date: start_date)]
+        employee.save
+      end
+    end
     let(:last_raise_date) { employee.reload.last_raise_date }
 
     context 'current employee' do
@@ -275,6 +280,29 @@ describe Employee do
         expect(employee.employed_on?(Time.zone.today)).to be true
       end
     end
+
+    context 'exmployee has multiple tenures' do
+      let(:first_start_date) { Date.parse('2013-1-1') }
+      let(:first_end_date) { Date.parse('2014-6-1') }
+      let(:second_start_date) { Date.parse('2015-1-1') }
+      let!(:returned) do
+        build(:employee, first_name: 'Returned').tap do |employee|
+          employee.tenures = [build(:tenure, start_date: first_start_date,
+                                             end_date: first_end_date),
+                              build(:tenure, start_date: second_start_date)]
+          employee.save
+        end
+      end
+      it 'returns true during original tenure' do
+        expect(returned.employed_on?(first_start_date + 1)).to be true
+      end
+      it 'returns false between tenures' do
+        expect(returned.employed_on?(first_end_date + 1)).to be false
+      end
+      it 'returns true during second tenure' do
+        expect(returned.employed_on?(second_start_date + 1)).to be true
+      end
+    end
   end
 
   describe '#salary_data' do
@@ -282,12 +310,10 @@ describe Employee do
     let(:raise_date) { Date.parse '2002-10-10' }
 
     let(:employee) do
-      create :employee, first_name: 'Joan',
-                        starting_salary: 100,
-                        tenures_attributes: [{
-                          start_date: start_date,
-                          end_date: end_date
-                        }]
+      build(:employee, first_name: 'Joan', starting_salary: 100).tap do |employee|
+        employee.tenures = [build(:tenure, start_date: start_date, end_date: end_date)]
+        employee.save
+      end
     end
 
     let!(:raise) { create :salary, employee: employee, start_date: raise_date, annual_amount: 200 }
