@@ -212,7 +212,12 @@ describe Employee do
 
   describe '#weighted_years_experience' do
     context 'employee had no prior experience' do
-      let!(:daisie) { create :employee, tenures_attributes: [{start_date: daisie_start_date, end_date: daisie_end_date}] }
+      let!(:daisie) do
+        build(:employee).tap do |employee|
+          employee.tenures = [build(:tenure, start_date: daisie_start_date, end_date: daisie_end_date)]
+          employee.save
+        end
+      end
       let(:daisie_start_date) { Date.parse('2012-1-1') }
 
       context 'employee has left (has an end date)' do
@@ -233,13 +238,10 @@ describe Employee do
 
     context 'employee has prior experience' do
       let!(:daisie) do
-        create :employee,
-               tenures_attributes: [{
-                start_date: Date.parse('2012-1-1'),
-                end_date: Date.parse('2014-7-1'),
-               }],
-               direct_experience: 12,
-               indirect_experience: 12
+        build(:employee, direct_experience: 12, indirect_experience: 12).tap do |employee|
+          employee.tenures = [build(:tenure, start_date: Date.parse('2012-1-1'), end_date: Date.parse('2014-7-1'))]
+          employee.save
+        end
       end
 
       it 'counts half of direct experience, quarter of indirect experience' do
@@ -247,6 +249,26 @@ describe Employee do
         expect(daisie.weighted_years_experience).to be_within(0.05).of 3.25
       end
     end
+
+    context 'employee has multiple tenures' do
+      let(:daisie_first_start_date) { Date.parse('2012-1-1') }
+      let(:daisie_end_date) { Date.parse('2014-7-1') }
+      let(:daisie_second_start_date) { Date.parse('2015-1-1') }
+      let!(:daisie) do
+        build(:employee).tap do |employee|
+          employee.tenures = [build(:tenure, start_date: daisie_first_start_date, end_date: daisie_end_date),
+                              build(:tenure, start_date: daisie_second_start_date)]
+          employee.save
+        end
+      end
+      let(:expected_weighted_years_experience) { ((daisie_end_date - daisie_first_start_date) \
+        + (Time.zone.today - daisie_second_start_date)) / 365.0 }
+
+      it 'returns number of years (decimal) in both tenures' do
+        expect(daisie.weighted_years_experience).to be_within(0.05).of expected_weighted_years_experience
+      end
+    end
+
   end
 
   describe '#employed_on?' do

@@ -166,10 +166,14 @@ class Employee < ActiveRecord::Base
   end
 
   def days_employed
-    return 0 if Time.zone.today < start_date
+    total_days = 0
+    for tenure in tenures
+      break if Time.zone.today < tenure.start_date
 
-    experience_end = [end_date, Time.zone.today].compact.min
-    (experience_end - start_date).to_i
+      experience_end = [tenure.end_date, Time.zone.today].compact.min
+      total_days += (experience_end - tenure.start_date).to_i
+    end
+    total_days
   end
 
   def prior_experience_day_equivalent
