@@ -184,30 +184,62 @@ describe Employee do
   end
 
   describe '#ending_salary' do
-    let(:employee) do
-      build(:employee).tap do |employee|
-        employee.tenures = [build(:tenure, end_date: end_date)]
-        employee.save
+    context 'single tenure' do
+      let(:employee) do
+        build(:employee).tap do |employee|
+          employee.tenures = [build(:tenure, end_date: end_date)]
+          employee.save
+        end
+      end
+      let!(:salary) { create :salary, employee: employee }
+      let!(:raise_salary) { create :salary, employee: employee, start_date: salary.start_date + 5 }
+
+      context 'no end date' do
+        let(:end_date) { nil }
+
+        it 'returns nil' do
+          expect(employee.ending_salary).to be_nil
+        end
+      end
+
+      context 'has end date' do
+        let(:end_date) { Time.zone.today + 5 }
+
+        it 'returns latest salary' do
+          expect(employee.ending_salary).to eq raise_salary.annual_amount
+        end
       end
     end
-    let!(:salary) { create :salary, employee: employee }
-    let!(:raise_salary) { create :salary, employee: employee, start_date: salary.start_date + 5 }
 
-    context 'no end date' do
-      let(:end_date) { nil }
+    context 'multiple tenures' do
+      let(:start_date) { Time.zone.today - 7 }
+      let(:returned) do
+        build(:employee).tap do |employee|
+          employee.tenures = [build(:tenure, start_date: Time.zone.today - 28, end_date: Time.zone.today - 14),
+                              build(:tenure, start_date: start_date, end_date: end_date)]
+          employee.save
+        end
+      end
+      let!(:returned_salary) { create :salary, employee: returned, start_date: Time.zone.today - 28 }
+      let!(:returned_raise_salary) { create :salary, employee: returned, start_date: start_date + 5 }
 
-      it 'returns nil' do
-        expect(employee.ending_salary).to be_nil
+      context 'has multiple tenures and no end date on the latest one' do
+        let(:end_date) { nil }
+
+        it 'returns nil' do
+          expect(returned.ending_salary).to be_nil
+        end
+      end
+
+      context 'has multiple tenures, all with end dates' do
+        let(:end_date) { Time.zone.today + 5 }
+
+        it 'returns latest salary' do
+          expect(returned.ending_salary).to eq returned_raise_salary.annual_amount
+        end
       end
     end
 
-    context 'has end date' do
-      let(:end_date) { Time.zone.today + 5 }
-
-      it 'returns latest salary' do
-        expect(employee.ending_salary).to eq raise_salary.annual_amount
-      end
-    end
   end
 
   describe '#weighted_years_experience' do

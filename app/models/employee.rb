@@ -58,7 +58,8 @@ class Employee < ActiveRecord::Base
   end
 
   def end_date
-    (tenures.map { |tenure| tenure.end_date }).compact.min
+    end_dates = (tenures.map { |tenure| tenure.end_date })
+    end_dates.include?(nil) ? nil : end_dates.min
   end
 
   def employed_on?(date)
