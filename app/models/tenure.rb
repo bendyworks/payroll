@@ -5,6 +5,7 @@ class Tenure < ActiveRecord::Base
   validates :start_date, presence: true, uniqueness: { scope: :employee_id }
   validates :employee, presence: true
   validate :tenures_are_sequential, if: :employee
+  validate :start_date_is_before_end_date
 
   def self.ordered_start_dates
     select('distinct start_date').unscoped.order('start_date').map(&:start_date)
@@ -19,6 +20,12 @@ class Tenure < ActiveRecord::Base
   end
 
   private
+
+  def start_date_is_before_end_date
+    unless !end_date || start_date < end_date
+      errors.add(:end_date, 'must be after start date')
+    end
+  end
 
   def tenures_are_sequential
     unless !previous_tenure || previous_tenure.end_date < start_date
