@@ -12,7 +12,7 @@ Feature: Experience Chart
 
   @javascript
   Scenario: user clicks on employee in experience chart legend
-    Given employees
+    Given 3 employees
       And employee
       And I'm logged in
     When I'm on the experience chart page
