@@ -34,6 +34,22 @@ Given(/^3 employees$/) do
          planning_notes: 'Can this wait until June')
 end
 
+Given(/current support employee Juniper/) do
+  create(:employee, :current, :support, first_name: "Juniper")
+end
+
+Given('past support employee George') do
+  create(:employee, :past, :billable, first_name: "George")
+end
+
+Given('current billable Mary') do
+  create(:employee, :current, :billable, first_name: "Mary")
+end
+
+Given('past billable Frida') do
+  create(:employee, :past, :billable, first_name: "Frida")
+end
+
 Given(/^employee "([^"]*)"$/) do |employee_name|
   @employee = create(:employee, first_name: employee_name)
 end

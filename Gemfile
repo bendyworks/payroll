@@ -16,7 +16,7 @@ gem 'smarter_csv'       # importing csv files as array(s) of hashes
 gem 'best_in_place', git: 'https://github.com/bendyworks/best_in_place' # in place editing
 gem 'coffee-rails'      # CoffeeScript adapter
 gem 'pg'                # PostgreSQL
-gem 'rails', '6.1.0'    # Ruby on Rails
+gem 'rails', '6.1.1'    # Ruby on Rails
 gem 'sass-rails'        # Sass adapter
 gem 'uglifier'          # minifies JavaScript, wraps UglifyJS
 
@@ -36,13 +36,14 @@ gem 'rubocop-rspec', require: false # Rubocop extension for rspec checks
 group :development do
   gem 'rails-erd'       # Generate an entity-relationship diagram
   gem 'spring'          # Preloads your application
+  gem 'spring-commands-rspec'
 end
 
 group :development, :test do
   gem 'pry'                     # IRB alternative and runtime dev console
   gem 'pry-byebug'              # combine pry with byebug
   gem 'rails_best_practices'
-  gem 'rspec-rails', '4.0.1' # testing framework
+  gem 'rspec-rails', '4.0.2' # testing framework
 end
 
 group :test do

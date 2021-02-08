@@ -570,5 +570,11 @@ describe Employee do
         expect(Employee.current_or_future.sort).to eq expected_employees.sort
       end
     end
+    describe 'past_or_future' do
+      let(:expected_employees) { [not_started, past_employee] }
+      it 'returns all current OR future employees' do
+        expect(Employee.past_or_future.sort).to eq expected_employees.sort
+      end
+    end
   end
 end

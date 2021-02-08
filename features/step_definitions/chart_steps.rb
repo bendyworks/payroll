@@ -41,6 +41,22 @@ Then(/^current employment status is checked$/) do
   expect(current_checkbox).to be_checked
 end
 
+When('I apply {string} only') do |string|
+  ["Current", "Past", "Billable", "Support"].each do |checkbox|
+    box = find_field(checkbox)
+    if box.checked?
+      box.click
+    end
+  end
+
+  find_field(string).click
+  click_button "Apply"
+end
+
+Then('I should not see George and Frida') do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
 Then(/^a small salary history chart is present$/) do
   within '.body' do
     expect(page).to have_content('Salaries')
