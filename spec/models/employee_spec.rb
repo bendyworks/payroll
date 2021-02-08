@@ -360,47 +360,19 @@ describe Employee do
   end
 
   describe '#salary_data' do
-    let(:start_date) { Date.parse '2001-10-10' }
-    let(:raise_date) { Date.parse '2002-10-10' }
+    context 'single tenure' do
+      let(:start_date) { Date.parse '2001-10-10' }
+      let(:raise_date) { Date.parse '2002-10-10' }
 
-    let(:employee) do
-      build(:employee, first_name: 'Joan', starting_salary: 100).tap do |employee|
-        employee.tenures = [build(:tenure, start_date: start_date, end_date: end_date)]
-        employee.save
+      let(:employee) do
+        build(:employee, first_name: 'Joan', starting_salary: 100).tap do |employee|
+          employee.tenures = [build(:tenure, start_date: start_date, end_date: end_date)]
+          employee.save
+        end
       end
-    end
 
-    let!(:raise) { create :salary, employee: employee, start_date: raise_date, annual_amount: 200 }
-    let(:last_pay_date) { end_date || Time.zone.today }
-
-    let(:expected_salary_data) do
-      date_for_js = ->(date) { date.to_time.to_f * 1000 }
-
-      [
-        { c: [date_for_js.call(start_date), 100] },
-        { c: [date_for_js.call(raise_date - 1), 100] },
-        { c: [date_for_js.call(raise_date), 200] },
-        { c: [date_for_js.call(last_pay_date), 200] }
-      ]
-    end
-
-    context 'current employee' do
-      let(:end_date) { nil }
-      it 'returns ordered set of dates and salary on those dates' do
-        expect(employee.salary_data).to eql(expected_salary_data)
-      end
-    end
-
-    context 'past employee' do
-      let(:end_date) { Date.parse '2003-10-10' }
-      it 'returns ordered set of dates and salary on those dates' do
-        expect(employee.salary_data).to eql(expected_salary_data)
-      end
-    end
-
-    context 'with future raise' do
-      let(:end_date) { nil }
-      let(:raise_date) { Time.zone.today + 1.week }
+      let!(:raise) { create :salary, employee: employee, start_date: raise_date, annual_amount: 200 }
+      let(:last_pay_date) { end_date || Time.zone.today }
 
       let(:expected_salary_data) do
         date_for_js = ->(date) { date.to_time.to_f * 1000 }
@@ -408,13 +380,90 @@ describe Employee do
         [
           { c: [date_for_js.call(start_date), 100] },
           { c: [date_for_js.call(raise_date - 1), 100] },
-          { c: [date_for_js.call(raise_date), 200] }
+          { c: [date_for_js.call(raise_date), 200] },
+          { c: [date_for_js.call(last_pay_date), 200] }
         ]
       end
 
-      it 'future raise date comes last' do
-        expect(employee.salary_data).to eql(expected_salary_data)
+      context 'current employee' do
+        let(:end_date) { nil }
+        it 'returns ordered set of dates and salary on those dates' do
+          expect(employee.salary_data).to eql(expected_salary_data)
+        end
       end
+
+      context 'past employee' do
+        let(:end_date) { Date.parse '2003-10-10' }
+        it 'returns ordered set of dates and salary on those dates' do
+          expect(employee.salary_data).to eql(expected_salary_data)
+        end
+      end
+
+      context 'with future raise' do
+        let(:end_date) { nil }
+        let(:raise_date) { Time.zone.today + 1.week }
+
+        let(:expected_salary_data) do
+          date_for_js = ->(date) { date.to_time.to_f * 1000 }
+
+          [
+            { c: [date_for_js.call(start_date), 100] },
+            { c: [date_for_js.call(raise_date - 1), 100] },
+            { c: [date_for_js.call(raise_date), 200] }
+          ]
+        end
+
+        it 'future raise date comes last' do
+          expect(employee.salary_data).to eql(expected_salary_data)
+        end
+      end
+    end
+
+    context 'multiple tenures' do
+      let(:start_date) { Date.parse '2001-10-10' }
+      let(:raise_date) { Date.parse '2002-10-10' }
+      let(:end_date) { Date.parse '2003-10-10' }
+      let(:second_start_date) { Date.parse '2004-10-10' }
+
+      let(:employee) do
+        build(:employee, first_name: 'Joan', starting_salary: 100).tap do |employee|
+          employee.tenures = [build(:tenure, start_date: start_date, end_date: end_date),
+                              build(:tenure, start_date: second_start_date, end_date: second_end_date)]
+          employee.save
+        end
+      end
+
+      let!(:raise) { create :salary, employee: employee, start_date: raise_date, annual_amount: 200 }
+      let(:last_pay_date) { second_end_date || Time.zone.today }
+
+      let(:expected_salary_data) do
+        date_for_js = ->(date) { date.to_time.to_f * 1000 }
+
+        [
+          { c: [date_for_js.call(start_date), 100] },
+          { c: [date_for_js.call(raise_date - 1), 100] },
+          { c: [date_for_js.call(raise_date), 200] },
+          { c: [date_for_js.call(end_date), 200] },
+          { c: [date_for_js.call(end_date + 1), nil] },
+          { c: [date_for_js.call(second_start_date), 200] },
+          { c: [date_for_js.call(last_pay_date), 200] }
+        ]
+      end
+
+      context 'current employee' do
+        let(:second_end_date) { nil }
+        it 'returns ordered set of dates and salary on those dates' do
+          expect(employee.salary_data).to eql(expected_salary_data)
+        end
+      end
+
+      context 'past employee' do
+        let(:second_end_date) { Date.parse '2005-10-10' }
+        it 'returns ordered set of dates and salary on those dates' do
+          expect(employee.salary_data).to eql(expected_salary_data)
+        end
+      end
+
     end
   end
 

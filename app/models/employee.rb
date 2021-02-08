@@ -79,15 +79,19 @@ class Employee < ActiveRecord::Base
   end
 
   def salary_data
-    data = [{ c: [date_for_js(start_date), starting_salary] }]
+    data = []
+    tenures.each do |tenure|
+      data << { c: [date_for_js(tenure.start_date), salary_on(tenure.start_date)] }
+    end
 
     salaries.ordered_dates_with_previous_dates.each do |date|
       data << { c: [date_for_js(date), salary_on(date)] }
     end
 
-    ending_salary_hash = ending_salary_data_hash
-    data << ending_salary_hash if ending_salary_hash
-    data
+    for ending_salary_hash in ending_salary_data_hashes
+      data << ending_salary_hash
+    end
+    data.sort_by { |salary| salary[:c][0]}
   end
 
   def ending_salary
@@ -158,12 +162,19 @@ class Employee < ActiveRecord::Base
     date.to_time.to_f * 1000
   end
 
-  def ending_salary_data_hash
-    if end_date
-      { c: [date_for_js(end_date), ending_salary] }
-    elsif employed_on?(Time.zone.today) && !future_raise?
-      { c: [date_for_js(Time.zone.today), salary_on(Time.zone.today)] }
+  def ending_salary_data_hashes
+    data = []
+    for tenure in tenures
+      if tenure.end_date
+        data << { c: [date_for_js(tenure.end_date), salary_on(tenure.end_date)] }
+        if tenure != tenures.last
+          data << { c: [date_for_js(tenure.end_date + 1), salary_on(tenure.end_date + 1)] }
+        end
+      elsif employed_on?(Time.zone.today) && !future_raise?
+        data << { c: [date_for_js(Time.zone.today), salary_on(Time.zone.today)] }
+      end
     end
+    data
   end
 
   def days_employed
