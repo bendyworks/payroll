@@ -52,6 +52,18 @@ class Employee < ActiveRecord::Base
           ' AND (tenures.end_date IS NULL OR tenures.end_date >= :today))' \
           ' or tenures.start_date > :today', today: Time.zone.today
   end
+  
+  def self.past_or_future
+    joins(:tenures)
+    .where('tenures.start_date = (SELECT MAX(tenures.start_date) ' \
+           'FROM tenures WHERE tenures.employee_id = employees.id)')
+    .group('employees.id')
+    .where 'tenures.start_date > :today or tenures.end_date < :today', today: Time.zone.today
+  end
+
+  def self.ordered_start_dates
+    select('distinct start_date').unscoped.order('start_date').map(&:start_date)
+  end
 
   def start_date
     (tenures.map { |tenure| tenure.start_date }).compact.min
@@ -60,14 +72,6 @@ class Employee < ActiveRecord::Base
   def end_date
     end_dates = (tenures.map { |tenure| tenure.end_date })
     end_dates.include?(nil) ? nil : end_dates.min
-  end
-  
-  def self.past_or_future
-    where 'start_date > :today or end_date < :today', today: Time.zone.today
-  end
-
-  def self.ordered_start_dates
-    select('distinct start_date').unscoped.order('start_date').map(&:start_date)
   end
 
   def employed_on?(date)
