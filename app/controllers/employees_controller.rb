@@ -22,7 +22,6 @@ class EmployeesController < ApplicationController
   end
 
   def update
-    # binding.pry
     respond_to do |format|
       if @employee.update(employee_params)
         format.html { redirect_to @employee, notice: 'Employee successfully updated.' }
