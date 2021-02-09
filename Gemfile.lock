@@ -363,7 +363,7 @@ GEM
     sexp_processor (4.15.1)
     shoulda-matchers (4.5.1)
       activesupport (>= 4.2.0)
-    smarter_csv (1.2.6)
+    smarter_csv (1.2.8)
     spring (2.1.1)
     spring-commands-rspec (1.0.4)
       spring (>= 0.9.1)
