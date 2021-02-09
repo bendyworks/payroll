@@ -10,7 +10,7 @@ FactoryBot.define do
       create_list :tenure, 1, employee: employee
     end
 
-=begin     trait :current do
+    trait :current do
       transient do
         end_date { Time.zone.today + 1 }
       end
@@ -39,7 +39,6 @@ FactoryBot.define do
         employee.tenures = [FactoryBot.create(:tenure, start_date: evaluator.start_date)]
       end
     end 
-=end
 
     trait :billable do
       billable { true }
