@@ -52,7 +52,7 @@ class Employee < ActiveRecord::Base
           ' AND (tenures.end_date IS NULL OR tenures.end_date >= :today))' \
           ' or tenures.start_date > :today', today: Time.zone.today
   end
-  
+
   def self.past_or_future
     joins(:tenures)
     .where('tenures.start_date = (SELECT MAX(tenures.start_date) ' \

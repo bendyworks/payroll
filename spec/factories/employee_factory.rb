@@ -15,18 +15,19 @@ FactoryBot.define do
         end_date { Time.zone.today + 1 }
       end
       first_name { 'Current' }
-      after(:build) do |employee, evaluator|
+      after(:create) do |employee, evaluator|
         employee.tenures = [FactoryBot.create(:tenure, end_date: evaluator.end_date)]
       end
     end
 
     trait :past do
       transient do
+        start_date { Time.zone.today - 2}
         end_date { Time.zone.today - 1 }
       end
       first_name { 'Past' }
-      after(:build) do |employee, evaluator|
-        employee.tenures = [FactoryBot.create(:tenure, end_date: evaluator.end_date)]
+      after(:create) do |employee, evaluator|
+        employee.tenures = [FactoryBot.create(:tenure, start_date: evaluator.start_date, end_date: evaluator.end_date)]
       end
     end
 
@@ -35,7 +36,7 @@ FactoryBot.define do
         start_date { Time.zone.today + 10 }
       end
       first_name { 'Future' }
-      after(:build) do |employee, evaluator|
+      after(:create) do |employee, evaluator|
         employee.tenures = [FactoryBot.create(:tenure, start_date: evaluator.start_date)]
       end
     end 
