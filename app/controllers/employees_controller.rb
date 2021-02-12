@@ -52,6 +52,6 @@ class EmployeesController < ApplicationController
                                      :planning_raise_date,
                                      :planning_raise_salary,
                                      :planning_notes,
-                                     tenures_attributes: [ :id, :start_date, :end_date, :_destroy])
+                                     tenures_attributes: [:id, :start_date, :end_date, :_destroy])
   end
 end

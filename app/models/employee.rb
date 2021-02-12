@@ -33,10 +33,12 @@ class Employee < ActiveRecord::Base
              'FROM tenures WHERE tenures.employee_id = employees.id)')
       .group('employees.id')
       .where 'tenures.end_date < :today', today: Time.zone.today }
+
   scope :current, lambda {
     joins(:tenures).where 'tenures.start_date <= :today' \
           ' AND (tenures.end_date IS NULL OR tenures.end_date >= :today)', today: Time.zone.today
   }
+
   scope :past_or_current, lambda {
     joins(:tenures)
       .where('tenures.start_date = (SELECT MAX(tenures.start_date) ' \
@@ -47,19 +49,19 @@ class Employee < ActiveRecord::Base
           ' OR tenures.end_date < :today', today: Time.zone.today)
   }
 
-  def self.current_or_future
-    joins(:tenures).where '(tenures.start_date <= :today' \
+  scope :current_or_future, lambda {
+    joins(:tenures).where('(tenures.start_date <= :today' \
           ' AND (tenures.end_date IS NULL OR tenures.end_date >= :today))' \
-          ' or tenures.start_date > :today', today: Time.zone.today
-  end
+          ' or tenures.start_date > :today', today: Time.zone.today)
+  }
 
-  def self.past_or_future
+  scope :past_or_future, lambda {
     joins(:tenures)
     .where('tenures.start_date = (SELECT MAX(tenures.start_date) ' \
            'FROM tenures WHERE tenures.employee_id = employees.id)')
     .group('employees.id')
-    .where 'tenures.start_date > :today or tenures.end_date < :today', today: Time.zone.today
-  end
+    .where('tenures.start_date > :today or tenures.end_date < :today', today: Time.zone.today)
+  }
 
   def self.ordered_start_dates
     select('distinct start_date').unscoped.order('start_date').map(&:start_date)
