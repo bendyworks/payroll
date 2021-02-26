@@ -292,7 +292,7 @@ GEM
       thor (~> 1.0)
     rainbow (3.0.0)
     rake (13.0.3)
-    rdoc (6.2.1)
+    rdoc (6.3.0)
     regexp_parser (2.0.3)
     require_all (3.0.0)
     responders (3.0.1)
@@ -355,7 +355,7 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
-    sdoc (2.0.3)
+    sdoc (2.0.4)
       rdoc (>= 5.0)
     selenium-webdriver (3.142.7)
       childprocess (>= 0.5, < 4.0)
