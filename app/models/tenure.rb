@@ -13,7 +13,7 @@ class Tenure < ActiveRecord::Base
 
   def self.ordered_end_dates_with_next_dates
     end_dates = select('distinct end_date').unscoped.order('end_date').map(&:end_date).compact
-    end_dates.map { |date| [date + 1, date] }.flatten
+    end_dates.map { |date| [date, date + 1] }.flatten.uniq
   end
 
   def previous_tenure
