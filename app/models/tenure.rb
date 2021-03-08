@@ -8,7 +8,7 @@ class Tenure < ActiveRecord::Base
   validate :start_date_is_before_end_date
 
   def self.ordered_start_dates
-    select('distinct start_date').unscoped.order('start_date').map(&:start_date)
+    select('distinct start_date').unscoped.order('start_date').map(&:start_date).uniq
   end
 
   def self.ordered_end_dates_with_next_dates
