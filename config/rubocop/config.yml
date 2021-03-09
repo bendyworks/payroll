@@ -60,6 +60,8 @@ AllCops:
 
   AllowSymlinksInCacheRootDirectory: true
 
+  NewCops: enable
+
 # Indent private/protected/public as deep as method definitions
 Layout/AccessModifierIndentation:
   EnforcedStyle: indent
