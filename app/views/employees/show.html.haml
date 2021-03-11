@@ -14,12 +14,13 @@
         %td Billable?
         %td= @employee.billable ? "Yes" : "No"
 
-      %tr
-        %td Start Date
-        %td= @employee.start_date.strftime('%b %e, %Y')
-      %tr
-        %td End Date
-        %td= @employee.end_date ? @employee.end_date.strftime('%b %e, %Y') : '--'
+      - @employee.tenures.each do |tenure|
+        %tr
+          %td Start Date
+          %td= tenure.start_date.strftime('%b %e, %Y')
+        %tr
+          %td End Date
+          %td= tenure.end_date ? tenure.end_date.strftime('%b %e, %Y') : '--'
       %tr
         %td Time at Bendyworks
         %td= @employee.experience_here_formatted

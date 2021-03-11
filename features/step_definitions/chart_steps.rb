@@ -14,7 +14,7 @@ Then(/^the salaries chart is present$/) do
     expect(page).to have_content('Salaries')
   end
   within '#salaries_chart' do
-    expect(page).to have_content('2013')
+    expect(page).to have_content("#{6.months.ago.year}")
   end
 end
 
@@ -23,7 +23,7 @@ Then(/^their salary history chart is present$/) do
     expect(page).to have_content('Salary History')
   end
   within '#salary_chart' do
-    expect(page).to have_content('2015')
+    expect(page).to have_content("#{6.months.ago.year}")
   end
 end
 

@@ -46,9 +46,10 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
 
   config.before(:suite) do
-    FactoryBot.lint
     DatabaseCleaner.clean_with(:truncation)
     DatabaseCleaner.strategy = :transaction
+    FactoryBot.lint
+    DatabaseCleaner.clean_with(:truncation)
   end
 
   config.before(:each) do

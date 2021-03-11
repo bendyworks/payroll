@@ -2,50 +2,83 @@
 
 class Employee < ActiveRecord::Base
   has_many :salaries, dependent: :destroy
+  has_many :tenures, dependent: :destroy
+  accepts_nested_attributes_for :tenures,
+    reject_if: proc { |attributes| attributes['start_date'].blank? }, allow_destroy: true
 
   validates :first_name, presence: true
   validates :last_name, presence: true
-  validates :start_date, presence: true
   validates :starting_salary, presence: true
 
   default_scope { order :first_name }
-  scope :past, -> { where 'end_date < :today', today: Time.zone.today }
+  scope :past, -> { joins(:tenures).where 'tenures.end_date < :today', today: Time.zone.today }
   scope :current, lambda {
-    where 'start_date <= :today AND (end_date IS NULL OR end_date >= :today)',
-          today: Time.zone.today
+    joins(:tenures).where 'tenures.start_date <= :today' \
+          ' AND (tenures.end_date IS NULL OR tenures.end_date >= :today)', today: Time.zone.today
   }
-  scope :future, -> { where 'start_date > :today', today: Time.zone.today }
+  scope :future, -> { joins(:tenures).where 'tenures.start_date > :today', today: Time.zone.today }
   scope :non_current, lambda {
-    where 'start_date > :today OR end_date < :today', today: Time.zone.today
+    joins(:tenures)
+      .where('tenures.start_date = (SELECT MAX(tenures.start_date) ' \
+             'FROM tenures WHERE tenures.employee_id = employees.id)')
+      .group('employees.id')
+      .where('tenures.start_date > :today OR tenures.end_date < :today', today: Time.zone.today)
   }
   scope :billed, -> { where billable: true }
   scope :support, -> { where billable: false }
 
-  def self.current
-    where 'start_date <= :today AND (end_date IS NULL OR end_date >= :today)',
-          today: Time.zone.today
-  end
+  scope :past, lambda {
+    joins(:tenures)
+      .where('tenures.start_date = (SELECT MAX(tenures.start_date) ' \
+             'FROM tenures WHERE tenures.employee_id = employees.id)')
+      .group('employees.id')
+      .where 'tenures.end_date < :today', today: Time.zone.today }
 
-  def self.past_or_current
-    where '(start_date <= :today AND (end_date IS NULL OR end_date >= :today))' \
-          ' or end_date < :today', today: Time.zone.today
-  end
+  scope :current, lambda {
+    joins(:tenures).where 'tenures.start_date <= :today' \
+          ' AND (tenures.end_date IS NULL OR tenures.end_date >= :today)', today: Time.zone.today
+  }
 
-  def self.current_or_future
-    where '(start_date <= :today AND (end_date IS NULL OR end_date >= :today))' \
-          ' or start_date > :today', today: Time.zone.today
-  end
+  scope :past_or_current, lambda {
+    joins(:tenures)
+      .where('tenures.start_date = (SELECT MAX(tenures.start_date) ' \
+             'FROM tenures WHERE tenures.employee_id = employees.id)')
+      .group('employees.id')
+      .where('(tenures.start_date <= :today' \
+          ' AND (tenures.end_date IS NULL OR tenures.end_date >= :today))' \
+          ' OR tenures.end_date < :today', today: Time.zone.today)
+  }
 
-  def self.past_or_future
-    where 'start_date > :today or end_date < :today', today: Time.zone.today
-  end
+  scope :current_or_future, lambda {
+    joins(:tenures).where('(tenures.start_date <= :today' \
+          ' AND (tenures.end_date IS NULL OR tenures.end_date >= :today))' \
+          ' or tenures.start_date > :today', today: Time.zone.today)
+  }
+
+  scope :past_or_future, lambda {
+    joins(:tenures)
+    .where('tenures.start_date = (SELECT MAX(tenures.start_date) ' \
+           'FROM tenures WHERE tenures.employee_id = employees.id)')
+    .group('employees.id')
+    .where('tenures.start_date > :today or tenures.end_date < :today', today: Time.zone.today)
+  }
 
   def self.ordered_start_dates
     select('distinct start_date').unscoped.order('start_date').map(&:start_date)
   end
 
+  def start_date
+    (tenures.map { |tenure| tenure.start_date }).compact.min
+  end
+
+  def end_date
+    end_dates = (tenures.map { |tenure| tenure.end_date })
+    end_dates.include?(nil) ? nil : end_dates.min
+  end
+
   def employed_on?(date)
-    date >= start_date && (end_date.nil? || date <= end_date)
+    tenures.any? \
+      { |tenure| date >= tenure.start_date && (tenure.end_date.nil? || date <= tenure.end_date) }
   end
 
   def display_name
@@ -60,15 +93,19 @@ class Employee < ActiveRecord::Base
   end
 
   def salary_data
-    data = [{ c: [date_for_js(start_date), starting_salary] }]
+    data = []
+    tenures.each do |tenure|
+      data << { c: [date_for_js(tenure.start_date), salary_on(tenure.start_date)] }
+    end
 
     salaries.ordered_dates_with_previous_dates.each do |date|
       data << { c: [date_for_js(date), salary_on(date)] }
     end
 
-    ending_salary_hash = ending_salary_data_hash
-    data << ending_salary_hash if ending_salary_hash
-    data
+    for ending_salary_hash in ending_salary_data_hashes
+      data << ending_salary_hash
+    end
+    data.sort_by { |salary| salary[:c][0]}
   end
 
   def ending_salary
@@ -149,19 +186,30 @@ class Employee < ActiveRecord::Base
     date.to_time.to_f * 1000
   end
 
-  def ending_salary_data_hash
-    if end_date
-      { c: [date_for_js(end_date), ending_salary] }
-    elsif employed_on?(Time.zone.today) && !future_raise?
-      { c: [date_for_js(Time.zone.today), salary_on(Time.zone.today)] }
+  def ending_salary_data_hashes
+    data = []
+    for tenure in tenures
+      if tenure.end_date
+        data << { c: [date_for_js(tenure.end_date), salary_on(tenure.end_date)] }
+        if tenure != tenures.last
+          data << { c: [date_for_js(tenure.end_date + 1), salary_on(tenure.end_date + 1)] }
+        end
+      elsif employed_on?(Time.zone.today) && !future_raise?
+        data << { c: [date_for_js(Time.zone.today), salary_on(Time.zone.today)] }
+      end
     end
+    data
   end
 
   def days_employed
-    return 0 if Time.zone.today < start_date
+    total_days = 0
+    for tenure in tenures
+      break if Time.zone.today < tenure.start_date
 
-    experience_end = [end_date, Time.zone.today].compact.min
-    (experience_end - start_date).to_i
+      experience_end = [tenure.end_date, Time.zone.today].compact.min
+      total_days += (experience_end - tenure.start_date).to_i
+    end
+    total_days
   end
 
   def prior_experience_day_equivalent

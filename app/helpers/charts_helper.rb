@@ -6,6 +6,6 @@ module ChartsHelper
   end
 
   def future_employee_exists?
-    Employee.exists?(['start_date > ?', Date.today])
+    Employee.joins(:tenures).exists?(['tenures.start_date > ?', Date.today])
   end
 end

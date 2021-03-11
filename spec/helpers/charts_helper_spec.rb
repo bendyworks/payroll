@@ -7,7 +7,7 @@ RSpec.describe ChartsHelper, type: :helper do
     subject { future_employee_exists? }
     context 'with future employee' do
       before do
-        create :employee, start_date: 1.week.from_now
+        create :employee, tenures_attributes: [{start_date: 1.week.from_now}]
       end
 
       it 'returns true' do

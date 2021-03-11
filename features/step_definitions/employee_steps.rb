@@ -53,3 +53,9 @@ end
 Given(/^employee "([^"]*)"$/) do |employee_name|
   @employee = create(:employee, first_name: employee_name)
 end
+
+Given(/^former employee "([^"]*)"/) do |employee_name|
+  create(:employee, first_name: employee_name).tap do |e|
+    e.tenures = [Tenure.new(start_date: Date.parse('03/01/2016'), end_date: Date.parse('03/01/2018'))]
+  end
+end

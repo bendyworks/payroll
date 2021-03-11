@@ -50,29 +50,35 @@ describe EmployeesController do
 
   describe 'POST create' do
     describe 'with valid params' do
+      let(:valid_attributes) {{ employee: attributes_for(:employee).merge(tenures_attributes: [{ start_date: Time.zone.today }]) }}
       it 'creates a new Employee' do
         expect do
-          post :create, params: { employee: attributes_for(:employee) }
+          post :create, params: valid_attributes
         end.to change(Employee, :count).by(1)
       end
 
+      it 'creates a new Employee with the expected start date' do
+        post :create, params: valid_attributes
+        expect(assigns(:employee).start_date).to eq(valid_attributes[:employee][:tenures_attributes][0][:start_date])
+      end
+
       it 'assigns a newly created employee as @employee' do
-        post :create, params: { employee: attributes_for(:employee) }
+        post :create, params: valid_attributes
         expect(assigns(:employee)).to be_a(Employee)
         expect(assigns(:employee)).to be_persisted
       end
     end
 
     describe 'with invalid params' do
-      let(:invalid_attributes) { attributes_for(:employee).merge(start_date: nil) }
+      let(:invalid_attributes) {{ employee: attributes_for(:employee).merge(first_name: nil).merge(tenures_attributes: [{ start_date: Time.zone.today }]) }}
 
       it 'assigns a newly created but unsaved employee as @employee' do
-        post :create, params: { employee: invalid_attributes }
+        post :create, params: invalid_attributes
         expect(assigns(:employee)).to be_a_new(Employee)
       end
 
       it "re-renders the 'new' template" do
-        post :create, params: { employee: invalid_attributes }
+        post :create, params: invalid_attributes
         expect(response).to render_template('new')
       end
     end

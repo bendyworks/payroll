@@ -14,12 +14,35 @@
         .form-group.col-lg-12
           = f.label :last_name, class: 'control-label'
           = f.text_field :last_name, class: 'form-control', required: true
-        .form-group.col-lg-12
-          = f.label :start_date, class: 'control-label'
-          = f.date_field :start_date, class: 'form-control', required: true
-        .form-group.col-lg-12
-          = f.label :end_date, class: 'control-label'
-          = f.date_field :end_date, class: 'form-control'
+        = f.fields_for :tenures do |tenure_f|
+          = tenure_f.hidden_field :id
+          .form-group.col-lg-12
+            -if employee.tenures.count > 1
+              = tenure_f.label :start_date, "#{(tenure_f.index + 1).ordinalize} start date", class: 'control-label'
+            -else
+              = tenure_f.label :start_date, class: 'control-label'
+            = tenure_f.date_field :start_date, class: 'form-control', required: true
+          .form-group.col-lg-12
+            -if employee.tenures.count > 1
+              = tenure_f.label :end_date, "#{(tenure_f.index + 1).ordinalize} end date", class: 'control-label'
+            -else
+              = tenure_f.label :end_date, class: 'control-label'
+            = tenure_f.date_field :end_date, class: 'form-control'
+        -if employee.new_record? || employee.tenures.last.end_date
+          = f.fields_for :tenures, employee.tenures.build do |tenure_f|
+            .form-group.col-lg-12
+              -if employee.new_record?
+                = tenure_f.label :start_date, class: 'control-label'
+                = tenure_f.date_field :start_date, class: 'form-control', required: true
+              -else
+                = tenure_f.label :start_date, 'New start date', class: 'control-label'
+                = tenure_f.date_field :start_date, class: 'form-control'
+            .form-group.col-lg-12
+              -if employee.new_record?
+                = tenure_f.label :end_date, class: 'control-label'
+              -else
+                = tenure_f.label :end_date, 'New end date', class: 'control-label'
+              = tenure_f.date_field :end_date, class: 'form-control'
         .form-group.col-lg-12
           = f.label :direct_experience, 'Direct experience (months)', class: 'control-label'
           = f.number_field :direct_experience, class: 'form-control'

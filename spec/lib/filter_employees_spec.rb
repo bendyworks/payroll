@@ -8,9 +8,24 @@ describe FilterEmployees do
   subject { chart.filtered_collection(params).map(&:first_name) }
 
   context 'Filtering on employment status' do
-    let!(:current) { create :employee, :current, first_name: 'Current' }
-    let!(:past) { create :employee, :past, first_name: 'Past' }
-    let!(:future) { create :employee, :future, first_name: 'Future' }
+    let!(:current) do
+      build(:employee, first_name: 'Current').tap do |employee|
+        employee.tenures = [build(:tenure, end_date: Time.zone.today + 1)]
+        employee.save
+      end
+    end
+    let!(:past) do
+      build(:employee, first_name: 'Past').tap do |employee|
+        employee.tenures = [build(:tenure, end_date: Time.zone.today - 1)]
+        employee.save
+      end
+    end
+    let!(:future) do
+      build(:employee, first_name: 'Future').tap do |employee|
+        employee.tenures = [build(:tenure, start_date: Time.zone.today + 10)]
+        employee.save
+      end
+    end
 
     context 'requesting only past employees' do
       let(:params) { { employment: { past: 1 } } }

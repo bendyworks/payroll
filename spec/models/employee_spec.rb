@@ -4,15 +4,13 @@ require 'rails_helper'
 
 describe Employee do
   it { should have_many(:salaries).dependent(:destroy) }
+  it { should have_many(:tenures).dependent(:destroy) }
 
   it { should validate_presence_of :first_name }
   it { should validate_presence_of :last_name }
-  it { should validate_presence_of :start_date }
   it { should validate_presence_of :starting_salary }
 
   it { should have_db_column(:billable).of_type(:boolean).with_options(default: true) }
-  it { should have_db_column(:start_date).of_type(:date) }
-  it { should have_db_column(:end_date).of_type(:date) }
   it { should have_db_column(:notes).of_type(:text) }
 
   describe '#display_name' do
@@ -28,7 +26,12 @@ describe Employee do
     let(:second_raise_date) { 2.months.ago.to_date }
     let(:third_raise_date) { 1.months.ago.to_date }
 
-    let(:employee) { create :employee, starting_salary: 1_000, start_date: start_date }
+    let!(:employee) do
+      build(:employee, starting_salary: 1_000).tap do |employee|
+        employee.tenures = [build(:tenure, start_date: start_date)]
+        employee.save
+      end
+    end
     let(:last_raise_date) { employee.reload.last_raise_date }
 
     context 'current employee' do
@@ -127,7 +130,7 @@ describe Employee do
 
   describe '#display_pay' do
     let(:start_date) { Date.parse('2015-08-07') }
-    let(:employee) { create :employee, start_date: start_date }
+    let(:employee) { create :employee, tenures_attributes: [{start_date: start_date}] }
 
     let!(:starting_salary) do
       create(:salary, employee: employee, start_date: start_date, annual_amount: pay)
@@ -153,7 +156,7 @@ describe Employee do
     let(:raise_date) { Date.parse('2013-12-10') }
     let(:end_date) { Date.parse('2014-12-31') }
 
-    let(:daisie) { create(:employee, start_date: start_date, end_date: end_date) }
+    let(:daisie) { create(:employee, tenures_attributes: [{start_date: start_date, end_date: end_date}]) }
 
     let!(:starting_salary) { create(:salary, employee: daisie, start_date: start_date) }
     let!(:raise_salary) do
@@ -181,30 +184,72 @@ describe Employee do
   end
 
   describe '#ending_salary' do
-    let(:employee) { create :employee, end_date: end_date }
-    let!(:salary) { create :salary, employee: employee }
-    let!(:raise_salary) { create :salary, employee: employee, start_date: salary.start_date + 5 }
+    context 'single tenure' do
+      let(:employee) do
+        build(:employee).tap do |employee|
+          employee.tenures = [build(:tenure, end_date: end_date)]
+          employee.save
+        end
+      end
+      let!(:salary) { create :salary, employee: employee }
+      let!(:raise_salary) { create :salary, employee: employee, start_date: salary.start_date + 5 }
 
-    context 'no end date' do
-      let(:end_date) { nil }
+      context 'no end date' do
+        let(:end_date) { nil }
 
-      it 'returns nil' do
-        expect(employee.ending_salary).to be_nil
+        it 'returns nil' do
+          expect(employee.ending_salary).to be_nil
+        end
+      end
+
+      context 'has end date' do
+        let(:end_date) { Time.zone.today + 5 }
+
+        it 'returns latest salary' do
+          expect(employee.ending_salary).to eq raise_salary.annual_amount
+        end
       end
     end
 
-    context 'has end date' do
-      let(:end_date) { Time.zone.today + 5 }
+    context 'multiple tenures' do
+      let(:start_date) { Time.zone.today - 7 }
+      let(:returned) do
+        build(:employee).tap do |employee|
+          employee.tenures = [build(:tenure, start_date: Time.zone.today - 28, end_date: Time.zone.today - 14),
+                              build(:tenure, start_date: start_date, end_date: end_date)]
+          employee.save
+        end
+      end
+      let!(:returned_salary) { create :salary, employee: returned, start_date: Time.zone.today - 28 }
+      let!(:returned_raise_salary) { create :salary, employee: returned, start_date: start_date + 5 }
 
-      it 'returns latest salary' do
-        expect(employee.ending_salary).to eq raise_salary.annual_amount
+      context 'has multiple tenures and no end date on the latest one' do
+        let(:end_date) { nil }
+
+        it 'returns nil' do
+          expect(returned.ending_salary).to be_nil
+        end
+      end
+
+      context 'has multiple tenures, all with end dates' do
+        let(:end_date) { Time.zone.today + 5 }
+
+        it 'returns latest salary' do
+          expect(returned.ending_salary).to eq returned_raise_salary.annual_amount
+        end
       end
     end
+
   end
 
   describe '#weighted_years_experience' do
     context 'employee had no prior experience' do
-      let!(:daisie) { create :employee, start_date: daisie_start_date, end_date: daisie_end_date }
+      let!(:daisie) do
+        build(:employee).tap do |employee|
+          employee.tenures = [build(:tenure, start_date: daisie_start_date, end_date: daisie_end_date)]
+          employee.save
+        end
+      end
       let(:daisie_start_date) { Date.parse('2012-1-1') }
 
       context 'employee has left (has an end date)' do
@@ -225,11 +270,10 @@ describe Employee do
 
     context 'employee has prior experience' do
       let!(:daisie) do
-        create :employee,
-               start_date: Date.parse('2012-1-1'),
-               end_date: Date.parse('2014-7-1'),
-               direct_experience: 12,
-               indirect_experience: 12
+        build(:employee, direct_experience: 12, indirect_experience: 12).tap do |employee|
+          employee.tenures = [build(:tenure, start_date: Date.parse('2012-1-1'), end_date: Date.parse('2014-7-1'))]
+          employee.save
+        end
       end
 
       it 'counts half of direct experience, quarter of indirect experience' do
@@ -237,11 +281,31 @@ describe Employee do
         expect(daisie.weighted_years_experience).to be_within(0.05).of 3.25
       end
     end
+
+    context 'employee has multiple tenures' do
+      let(:daisie_first_start_date) { Date.parse('2012-1-1') }
+      let(:daisie_end_date) { Date.parse('2014-7-1') }
+      let(:daisie_second_start_date) { Date.parse('2015-1-1') }
+      let!(:daisie) do
+        build(:employee).tap do |employee|
+          employee.tenures = [build(:tenure, start_date: daisie_first_start_date, end_date: daisie_end_date),
+                              build(:tenure, start_date: daisie_second_start_date)]
+          employee.save
+        end
+      end
+      let(:expected_weighted_years_experience) { ((daisie_end_date - daisie_first_start_date) \
+        + (Time.zone.today - daisie_second_start_date)) / 365.0 }
+
+      it 'returns number of years (decimal) in both tenures' do
+        expect(daisie.weighted_years_experience).to be_within(0.05).of expected_weighted_years_experience
+      end
+    end
+
   end
 
   describe '#employed_on?' do
     let(:start_date) { Date.parse('2013-1-1') }
-    let(:employee) { create :employee, start_date: start_date, end_date: end_date }
+    let(:employee) { create :employee, tenures_attributes: [{start_date: start_date, end_date: end_date}] }
 
     context 'employee has end_date' do
       let(:end_date) { Date.parse('2014-6-1') }
@@ -270,50 +334,45 @@ describe Employee do
         expect(employee.employed_on?(Time.zone.today)).to be true
       end
     end
+
+    context 'exmployee has multiple tenures' do
+      let(:first_start_date) { Date.parse('2013-1-1') }
+      let(:first_end_date) { Date.parse('2014-6-1') }
+      let(:second_start_date) { Date.parse('2015-1-1') }
+      let!(:returned) do
+        build(:employee, first_name: 'Returned').tap do |employee|
+          employee.tenures = [build(:tenure, start_date: first_start_date,
+                                             end_date: first_end_date),
+                              build(:tenure, start_date: second_start_date)]
+          employee.save
+        end
+      end
+      it 'returns true during original tenure' do
+        expect(returned.employed_on?(first_start_date + 1)).to be true
+      end
+      it 'returns false between tenures' do
+        expect(returned.employed_on?(first_end_date + 1)).to be false
+      end
+      it 'returns true during second tenure' do
+        expect(returned.employed_on?(second_start_date + 1)).to be true
+      end
+    end
   end
 
   describe '#salary_data' do
-    let(:start_date) { Date.parse '2001-10-10' }
-    let(:raise_date) { Date.parse '2002-10-10' }
+    context 'single tenure' do
+      let(:start_date) { Date.parse '2001-10-10' }
+      let(:raise_date) { Date.parse '2002-10-10' }
 
-    let(:employee) do
-      create :employee, first_name: 'Joan',
-                        starting_salary: 100,
-                        start_date: start_date,
-                        end_date: end_date
-    end
-
-    let!(:raise) { create :salary, employee: employee, start_date: raise_date, annual_amount: 200 }
-    let(:last_pay_date) { end_date || Time.zone.today }
-
-    let(:expected_salary_data) do
-      date_for_js = ->(date) { date.to_time.to_f * 1000 }
-
-      [
-        { c: [date_for_js.call(start_date), 100] },
-        { c: [date_for_js.call(raise_date - 1), 100] },
-        { c: [date_for_js.call(raise_date), 200] },
-        { c: [date_for_js.call(last_pay_date), 200] }
-      ]
-    end
-
-    context 'current employee' do
-      let(:end_date) { nil }
-      it 'returns ordered set of dates and salary on those dates' do
-        expect(employee.salary_data).to eql(expected_salary_data)
+      let(:employee) do
+        build(:employee, first_name: 'Joan', starting_salary: 100).tap do |employee|
+          employee.tenures = [build(:tenure, start_date: start_date, end_date: end_date)]
+          employee.save
+        end
       end
-    end
 
-    context 'past employee' do
-      let(:end_date) { Date.parse '2003-10-10' }
-      it 'returns ordered set of dates and salary on those dates' do
-        expect(employee.salary_data).to eql(expected_salary_data)
-      end
-    end
-
-    context 'with future raise' do
-      let(:end_date) { nil }
-      let(:raise_date) { Time.zone.today + 1.week }
+      let!(:raise) { create :salary, employee: employee, start_date: raise_date, annual_amount: 200 }
+      let(:last_pay_date) { end_date || Time.zone.today }
 
       let(:expected_salary_data) do
         date_for_js = ->(date) { date.to_time.to_f * 1000 }
@@ -321,45 +380,199 @@ describe Employee do
         [
           { c: [date_for_js.call(start_date), 100] },
           { c: [date_for_js.call(raise_date - 1), 100] },
-          { c: [date_for_js.call(raise_date), 200] }
+          { c: [date_for_js.call(raise_date), 200] },
+          { c: [date_for_js.call(last_pay_date), 200] }
         ]
       end
 
-      it 'future raise date comes last' do
-        expect(employee.salary_data).to eql(expected_salary_data)
+      context 'current employee' do
+        let(:end_date) { nil }
+        it 'returns ordered set of dates and salary on those dates' do
+          expect(employee.salary_data).to eql(expected_salary_data)
+        end
       end
+
+      context 'past employee' do
+        let(:end_date) { Date.parse '2003-10-10' }
+        it 'returns ordered set of dates and salary on those dates' do
+          expect(employee.salary_data).to eql(expected_salary_data)
+        end
+      end
+
+      context 'with future raise' do
+        let(:end_date) { nil }
+        let(:raise_date) { Time.zone.today + 1.week }
+
+        let(:expected_salary_data) do
+          date_for_js = ->(date) { date.to_time.to_f * 1000 }
+
+          [
+            { c: [date_for_js.call(start_date), 100] },
+            { c: [date_for_js.call(raise_date - 1), 100] },
+            { c: [date_for_js.call(raise_date), 200] }
+          ]
+        end
+
+        it 'future raise date comes last' do
+          expect(employee.salary_data).to eql(expected_salary_data)
+        end
+      end
+    end
+
+    context 'multiple tenures' do
+      let(:start_date) { Date.parse '2001-10-10' }
+      let(:raise_date) { Date.parse '2002-10-10' }
+      let(:end_date) { Date.parse '2003-10-10' }
+      let(:second_start_date) { Date.parse '2004-10-10' }
+
+      let(:employee) do
+        build(:employee, first_name: 'Joan', starting_salary: 100).tap do |employee|
+          employee.tenures = [build(:tenure, start_date: start_date, end_date: end_date),
+                              build(:tenure, start_date: second_start_date, end_date: second_end_date)]
+          employee.save
+        end
+      end
+
+      let!(:raise) { create :salary, employee: employee, start_date: raise_date, annual_amount: 200 }
+      let(:last_pay_date) { second_end_date || Time.zone.today }
+
+      let(:expected_salary_data) do
+        date_for_js = ->(date) { date.to_time.to_f * 1000 }
+
+        [
+          { c: [date_for_js.call(start_date), 100] },
+          { c: [date_for_js.call(raise_date - 1), 100] },
+          { c: [date_for_js.call(raise_date), 200] },
+          { c: [date_for_js.call(end_date), 200] },
+          { c: [date_for_js.call(end_date + 1), nil] },
+          { c: [date_for_js.call(second_start_date), 200] },
+          { c: [date_for_js.call(last_pay_date), 200] }
+        ]
+      end
+
+      context 'current employee' do
+        let(:second_end_date) { nil }
+        it 'returns ordered set of dates and salary on those dates' do
+          expect(employee.salary_data).to eql(expected_salary_data)
+        end
+      end
+
+      context 'past employee' do
+        let(:second_end_date) { Date.parse '2005-10-10' }
+        it 'returns ordered set of dates and salary on those dates' do
+          expect(employee.salary_data).to eql(expected_salary_data)
+        end
+      end
+
     end
   end
 
   context 'scopes' do
-    let!(:started_today) { create :employee, start_date: Time.zone.today }
-    let!(:leaving_today) { create :employee, end_date: Time.zone.today }
-    let!(:gave_notice) { create :employee, end_date: Time.zone.today + 7 }
+    let!(:started_today) do
+      build(:employee, first_name: 'Started Today').tap do |employee|
+        employee.tenures = [build(:tenure, start_date: Time.zone.today)]
+        employee.save
+      end
+    end
+    let!(:leaving_today) do
+      build(:employee, first_name: 'Leaving Today').tap do |employee|
+        employee.tenures = [build(:tenure, end_date: Time.zone.today)]
+        employee.save
+      end
+    end
+    let!(:gave_notice) do
+      build(:employee, first_name: 'Gave Notice').tap do |employee|
+        employee.tenures = [build(:tenure, end_date: Time.zone.today + 7)]
+        employee.save
+      end
+    end
 
-    let!(:past_employee) { create :employee, end_date: Time.zone.today - 7 }
-    let!(:not_started) { create :employee, start_date: Time.zone.today + 14 }
+    let!(:past_employee) do
+      build(:employee, first_name: 'Past Employee').tap do |employee|
+        employee.tenures = [build(:tenure, end_date: Time.zone.today - 7)]
+        employee.save
+      end
+    end
+    let!(:not_started) do
+      build(:employee, first_name: 'Not Started').tap do |employee|
+        employee.tenures = [build(:tenure, start_date: Time.zone.today + 14)]
+        employee.save
+      end
+    end
+    let!(:returned) do
+      build(:employee, first_name: 'Returned').tap do |employee|
+        employee.tenures = [build(:tenure, start_date: Time.zone.today - 14,
+                                           end_date: Time.zone.today - 7),
+                            build(:tenure, start_date: Time.zone.today)]
+        employee.save
+      end
+    end
+    let!(:returning_soon) do
+      build(:employee, first_name: 'Returning Soon').tap do |employee|
+        employee.tenures = [build(:tenure, start_date: Time.zone.today - 14,
+                                           end_date: Time.zone.today - 7),
+                            build(:tenure, start_date: Time.zone.today + 7)]
+        employee.save
+      end
+    end
+    let!(:left_twice) do
+      build(:employee, first_name: 'Left Twice').tap do |employee|
+        employee.tenures = [build(:tenure, start_date: Time.zone.today - 21,
+                                           end_date: Time.zone.today - 14),
+                            build(:tenure, start_date: Time.zone.today - 7,
+                                           end_date: Time.zone.today - 1)]
+        employee.save
+      end
+    end
 
     describe 'current' do
       it 'returns collection of employees employed today' do
-        expect(Employee.current.sort).to eq [gave_notice, started_today, leaving_today].sort
+        expect(Employee.current.sort).to eq [gave_notice, started_today, leaving_today, returned].sort
+      end
+    end
+
+    describe 'non_current' do
+      it 'returns collection of employees not employed today' do
+        expect(Employee.non_current.sort).to eq [past_employee, not_started, returning_soon, left_twice].sort
+      end
+    end
+
+    describe 'past' do
+      let(:expected_employees) { [past_employee.first_name, left_twice.first_name] }
+
+      it 'returns all past employees' do
+        expect(Employee.past.map(&:first_name).sort).to eq expected_employees.sort
       end
     end
 
     describe 'past_or_current' do
-      let(:expected_employees) { [past_employee, gave_notice, started_today, leaving_today] }
+      let(:expected_employees) do
+        [
+          past_employee.first_name,
+          gave_notice.first_name,
+          started_today.first_name,
+          leaving_today.first_name,
+          returned.first_name,
+          left_twice.first_name
+        ]
+      end
+
       it 'returns all past or current employees' do
-        expect(Employee.past_or_current.sort).to eq expected_employees.sort
+        expect(described_class.past_or_current.map(&:first_name).sort).to eq expected_employees.sort
       end
     end
+
     describe 'current_or_future' do
-      let(:expected_employees) { [gave_notice, started_today, leaving_today, not_started] }
+      let(:expected_employees) {
+        [gave_notice, started_today, leaving_today, not_started, returned, returning_soon]
+      }
       it 'returns all current OR future employees' do
         expect(Employee.current_or_future.sort).to eq expected_employees.sort
       end
     end
     describe 'past_or_future' do
-      let(:expected_employees) { [not_started, past_employee] }
-      it 'returns all current OR future employees' do
+      let(:expected_employees) { [not_started, past_employee, returning_soon, left_twice] }
+      it 'returns all past OR future employees' do
         expect(Employee.past_or_future.sort).to eq expected_employees.sort
       end
     end

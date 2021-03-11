@@ -62,6 +62,10 @@ Then(/^table US date rows are sorted by (ascending|descending) "([^"]*)"$/) do |
   expect(actual_values).to eq(expected_values)
 end
 
+Then /^show me the page$/ do
+  save_and_open_page
+end
+
 private
 
 def sorted_dates(date_strings)

@@ -14,10 +14,10 @@ describe Salary do
   end
 
   describe 'ordered_dates' do
-    let(:fourth_date) { Date.parse('2013-7-10') }
-    let(:first_date) { Date.parse('2013-4-10') }
-    let(:third_date) { Date.parse('2013-6-10') }
-    let(:second_date) { Date.parse('2013-5-10') }
+    let(:fourth_date) { 4.months.ago.to_date }
+    let(:first_date) { 7.months.ago.to_date }
+    let(:third_date) { 5.months.ago.to_date }
+    let(:second_date) { 6.months.ago.to_date }
 
     let!(:first_added_salary) { create :salary, start_date: fourth_date }
     let!(:second_added_salary) { create :salary, start_date: first_date }
@@ -45,7 +45,12 @@ describe Salary do
   end
 
   describe 'validation no_salaries_outside_employment_dates' do
-    let(:employee) { create :employee, end_date: Time.zone.today + 5 }
+    let(:employee) do
+      build(:employee).tap do |employee|
+        employee.tenures = [build(:tenure, end_date: Time.zone.today + 5)]
+        employee.save
+      end
+    end
 
     it 'allows salary starting on employee start date' do
       salary = employee.salaries.create(start_date: employee.start_date, annual_amount: 5)
