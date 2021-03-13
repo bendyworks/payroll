@@ -6,7 +6,7 @@ describe Salary do
   it { should belong_to :employee }
   it { should validate_presence_of :start_date }
   it { should validate_presence_of :annual_amount }
-  it { should validate_presence_of :employee_id }
+  it { should validate_presence_of :employee }
 
   it 'validates employee salary start dates unique' do
     create :salary
@@ -72,4 +72,25 @@ describe Salary do
       expect(salary).to be_invalid
     end
   end
+
+  describe 'before_validation' do
+    let(:employee) do
+      build(:employee).tap do |employee|
+        employee.tenures = [build(:tenure, start_date: Time.zone.today - 5)]
+        employee.save
+      end
+    end
+
+    it 'should retrieve start date from related tenure if blank and first' do
+      salary = employee.salaries.create(annual_amount: 5)
+      expect(salary).to be_valid
+    end
+
+    it 'should be invalid if blank and second' do
+      salary = employee.salaries.create(annual_amount: 5)
+      salary2 = employee.salaries.create(annual_amount: 5)
+      expect(salary2).to be_invalid
+    end
+  end
+
 end

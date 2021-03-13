@@ -3,11 +3,13 @@
 class Salary < ActiveRecord::Base
   belongs_to :employee
   validates :start_date, presence: true, uniqueness: { scope: :employee_id }
-  validates :employee_id, presence: true
+  validates_presence_of :employee
   validates :annual_amount, presence: true
   validate :no_salaries_outside_employment_dates, if: :employee
 
   delegate :first_name, :last_name, to: :employee, prefix: true
+
+  before_validation :ensure_start_date
 
   default_scope { order('start_date') }
 
@@ -33,6 +35,14 @@ class Salary < ActiveRecord::Base
   def no_salaries_outside_employment_dates
     unless employee.employed_on?(start_date)
       errors.add(:start_date, 'must be between employee start and end dates')
+    end
+  end
+
+  def ensure_start_date
+    # first salary is entered as part of employee form so get start date from first tenure
+    #  this depends on employee nested_attributes_for :tenures getting called first
+    if start_date.blank? && employee&.salaries&.count == 0
+      self.start_date = employee.start_date
     end
   end
 end

@@ -6,9 +6,11 @@ class Employee < ActiveRecord::Base
   accepts_nested_attributes_for :tenures,
     reject_if: proc { |attributes| attributes['start_date'].blank? }, allow_destroy: true
 
+  accepts_nested_attributes_for :salaries,
+    reject_if: proc { |attributes| attributes['annual_amount'].blank? }
+
   validates :first_name, presence: true
   validates :last_name, presence: true
-  validates :starting_salary, presence: true
 
   default_scope { order :first_name }
   scope :past, -> { joins(:tenures).where 'tenures.end_date < :today', today: Time.zone.today }
@@ -77,6 +79,7 @@ class Employee < ActiveRecord::Base
   end
 
   def employed_on?(date)
+    return nil if date.nil?
     tenures.any? \
       { |tenure| date >= tenure.start_date && (tenure.end_date.nil? || date <= tenure.end_date) }
   end
@@ -106,6 +109,11 @@ class Employee < ActiveRecord::Base
       data << ending_salary_hash
     end
     data.sort_by { |salary| salary[:c][0]}
+  end
+
+  def starting_salary
+    s = salaries.first&.annual_amount
+    s = s || 0
   end
 
   def ending_salary
