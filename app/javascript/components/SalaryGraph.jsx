@@ -1,15 +1,6 @@
-import React from "react";
-import PropTypes from "prop-types";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from "recharts";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const SalaryGraph = ({ data }) => {
   let employees = Object.keys(data[0]);
@@ -27,20 +18,12 @@ const SalaryGraph = ({ data }) => {
         }}
       >
         <XAxis dataKey="date" />
-        <YAxis type="number" domain={["dataMin - 5000", "auto"]} />
+        <YAxis type="number" domain={['dataMin - 5000', 'auto']} />
         <CartesianGrid />
         <Tooltip />
         <Legend />
         {employees.map((name, i) => {
-          return (
-            <Line
-              key={i}
-              type="monotone"
-              dataKey={name}
-              stroke="#8884d8"
-              activeDot={{ r: 8 }}
-            />
-          );
+          return <Line key={i} type="monotone" dataKey={name} stroke="#8884d8" activeDot={{ r: 8 }} />;
         })}
       </LineChart>
     </ResponsiveContainer>
