@@ -7,7 +7,6 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
 } from "recharts";
 
@@ -17,8 +16,6 @@ const ExperienceGraph = ({ data }) => {
   return (
     <ResponsiveContainer width="99%" height={500}>
       <ScatterChart
-        width={400}
-        height={400}
         margin={{
           top: 20,
           right: 20,
@@ -41,7 +38,7 @@ const ExperienceGraph = ({ data }) => {
           domain={["dataMin - 5000", "auto"]}
         />
         <Tooltip cursor={{ strokeDasharray: "3 3" }} />
-        <Scatter name="A school" data={data} fill="#8884d8" />
+        <Scatter data={data} fill="#8884d8" />
       </ScatterChart>
     </ResponsiveContainer>
   );

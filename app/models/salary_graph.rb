@@ -8,20 +8,22 @@ class SalaryGraph
 
   def to_table
     dates.map do |date|
-      # Multiply by 1000 to convert from seconds since the epoch to
-      # milliseconds since the epoch
-      format_date(date) + employees_row_for(date)
+      employees_row_for({ date: date })
     end
   end
 
   private
 
-  def format_date(date)
-    [date.to_time.to_f * 1000]
+  def employees_row_for(one)
+    employees.each do |e|
+      key = e.display_name.underscore
+      one[key] = e.salary_on(one[:date])
+    end
+    one
   end
 
-  def employees_row_for(date)
-    employees.map { |e| [e.salary_on(date), tooltip_for_date(e, date)] }.flatten
+  def format_date(date)
+    [date.to_time.to_f * 1000]
   end
 
   def tooltip_for_date(employee, date)
