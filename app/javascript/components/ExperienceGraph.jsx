@@ -9,17 +9,17 @@ const ExperienceGraph = ({ data }) => {
     <ResponsiveContainer width="99%" height={500}>
       <ScatterChart
         margin={{
-          top: 20,
-          right: 20,
-          bottom: 20,
-          left: 20,
+          top: 10,
+          right: 30,
+          left: 30,
+          bottom: 10,
         }}
       >
-        <CartesianGrid />
+        <CartesianGrid strokeDasharray="3 3" />
         <XAxis
           type="number"
           dataKey="weighted_years_experience"
-          name="experience"
+          padding={{ top: 100 }}
           unit="years"
           domain={['auto', 'auto']}
         />

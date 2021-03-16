@@ -11,17 +11,17 @@ const SalaryGraph = ({ data }) => {
       <LineChart
         data={data}
         margin={{
-          top: 5,
+          top: 10,
           right: 30,
-          left: 20,
-          bottom: 5,
+          left: 30,
+          bottom: 10,
         }}
       >
         <XAxis dataKey="date" />
         <YAxis type="number" domain={['dataMin - 5000', 'auto']} />
-        <CartesianGrid />
+        <CartesianGrid strokeDasharray="3 3" />
         <Tooltip />
-        <Legend />
+        {/* <Legend /> */}
         {employees.map((name, i) => {
           return <Line key={i} type="monotone" dataKey={name} stroke="#8884d8" activeDot={{ r: 8 }} />;
         })}

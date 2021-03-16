@@ -11,33 +11,27 @@ RSpec.describe SalaryGraph do
         employees = []
 
         table = SalaryGraph.new(employees, [existing_date]).to_table
-
-        expect(table).to match_array([[expected_date_format]])
+        expect(table).to eq([{date: existing_date}])
       end
     end
 
     context 'with a single employees' do
       it 'returns a properly formatted set of data' do
         first_existing_date = Date.new(2030,12,12)
-        first_expected_date_format = first_existing_date.to_time.to_f * 1000
         expected_first_salary = 130_000
 
         second_existing_date = Date.new(2035,02,10)
-        second_expected_date_format = second_existing_date.to_time.to_f * 1000
         expected_second_salary = 150_000
 
         employee = create(:employee, starting_salary: expected_first_salary)
         employee.salaries.create(start_date: second_existing_date - 1.day, annual_amount: expected_second_salary)
 
-        first_expected_tooltip = "#{first_existing_date}\n#{employee.display_name}: $130K"
-        second_expected_tooltip = "#{second_existing_date}\n#{employee.display_name}: $150K"
-
         table = SalaryGraph.new([employee], [first_existing_date, second_existing_date]).to_table
 
-        expect(table).to match_array([
-          [first_expected_date_format, expected_first_salary, first_expected_tooltip],
-           [second_expected_date_format, expected_second_salary, second_expected_tooltip]
-          ])
+        first_expected_hash = Hash[:date => first_existing_date, employee.display_name.underscore =>  employee.salary_on(first_existing_date)]
+        second_expected_hash = Hash[:date => second_existing_date, employee.display_name.underscore =>  employee.salary_on(second_existing_date)]
+
+        expect(table).to eq([first_expected_hash, second_expected_hash])
       end
     end
   end

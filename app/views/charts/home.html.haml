@@ -7,4 +7,4 @@
     = react_component("SalaryGraph", { data: @salary_data_table })
   .col-md-6.text-center
     %h2= link_to 'Experience', experience_path
-    = react_component("ExperienceGraph", { data: @employees.to_json(methods: [:weighted_years_experience, :current_or_last_pay]) })
+    = react_component("ExperienceGraph", { data: @experience_data_table })
