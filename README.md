@@ -9,9 +9,11 @@ We're using [google_visualr gem](https://github.com/winston/google_visualr) for 
 
 To get this up and running:
   1. clone it
-  1. Make sure rvm and the correct ruby are installed
+  1. Make sure rvm, yarn, and the correct ruby are installed
   1. `bundle install`
   1. `rake db:setup`
+  1. `yarn install`
+  1. `./bin/webpack-dev-server`
   1. `rails s`
   1. visit localhost:3000
 
@@ -30,6 +32,14 @@ To change your password in the console:
   1. From the project directory, start the console with `rails c`.
   1. `u = User.find_by_email('your@email.com')`
   1. `u.update password: 'newpassword'`
+
+Using React Components
+  1. React components live inside app/javascript/components
+  1. Components can be rendered inside the views with:
+  ~~~
+    = react_component("ComponentName", props: {})
+  ~~~
+
 
 Let's use page specific JavaScript, which means that you need to
 remember these main ideas:
