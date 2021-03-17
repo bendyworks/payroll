@@ -4,7 +4,6 @@ import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Re
 
 const ExperienceGraph = ({ data }) => {
   data = JSON.parse(data);
-  console.log(data);
 
   const handleLegendClick = (e) => {
     const id = e.payload.data[0].id;
