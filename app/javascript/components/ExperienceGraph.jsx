@@ -29,7 +29,7 @@ const ExperienceGraph = ({ data }) => {
           width="50%"
           iconType="diamond"
           iconSize={12}
-          wrapperStyle={{ position: 'relative', margin: 'auto', bottom: 25 }}
+          wrapperStyle={{ position: 'relative', margin: 'auto', bottom: 25, zIndex: 1 }}
         />
         {data.map((employee) => (
           <Scatter key={employee.id} data={[employee]} name={employee.display_name} fill="#8884d8" />

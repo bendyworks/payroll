@@ -30,7 +30,7 @@ const SalaryGraph = ({ data }) => {
         <Legend
           onClick={handleLegendClick}
           width="50%"
-          wrapperStyle={{ position: 'relative', margin: 'auto', bottom: 25 }}
+          wrapperStyle={{ position: 'relative', margin: 'auto', bottom: 25, zIndex: 1 }}
         />
         {employees.map((emp) => {
           return (
