@@ -5,7 +5,7 @@ Then(/^the experience chart is present$/) do
     expect(page).to have_content('Experience')
   end
   within '#experience_chart' do
-    expect(page).to have_content('Years at Bendyworks plus partial prior experience')
+    expect(page).to have_css('.recharts-responsive-container')
   end
 end
 
@@ -14,7 +14,7 @@ Then(/^the salaries chart is present$/) do
     expect(page).to have_content('Salaries')
   end
   within '#salaries_chart' do
-    expect(page).to have_content("#{6.months.ago.year}")
+    expect(page).to have_content(6.months.ago.year.to_s)
   end
 end
 
@@ -23,7 +23,7 @@ Then(/^their salary history chart is present$/) do
     expect(page).to have_content('Salary History')
   end
   within '#salary_chart' do
-    expect(page).to have_content("#{6.months.ago.year}")
+    expect(page).to have_content(6.months.ago.year.to_s)
   end
 end
 
@@ -42,15 +42,13 @@ Then(/^current employment status is checked$/) do
 end
 
 When('I apply {string} only') do |string|
-  ["Current", "Past", "Billable", "Support"].each do |checkbox|
+  %w(Current Past Billable Support).each do |checkbox|
     box = find_field(checkbox)
-    if box.checked?
-      box.click
-    end
+    box.click if box.checked?
   end
 
   find_field(string).click
-  click_button "Apply"
+  click_button 'Apply'
 end
 
 Then('I should not see George and Frida') do

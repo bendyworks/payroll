@@ -33,7 +33,8 @@ class ChartsController < ApplicationController
 
   def table_for_experience
     @employees.to_json(methods: [:weighted_years_experience,
-                                 :current_or_last_pay])
+                                 :current_or_last_pay,
+                                 :display_name])
   end
 
   def employee_chart_params
