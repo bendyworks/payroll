@@ -22,14 +22,6 @@ class SalaryGraph
     one
   end
 
-  def format_date(date)
-    [date.to_time.to_f * 1000]
-  end
-
-  def tooltip_for_date(employee, date)
-    "#{date}\n#{employee.display_name}: #{format_salary(employee.salary_on(date))}"
-  end
-
   def format_salary(salary)
     if salary
       salary_in_ks = salary / 1000
