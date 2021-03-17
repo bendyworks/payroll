@@ -21,11 +21,4 @@ class SalaryGraph
     end
     one
   end
-
-  def format_salary(salary)
-    if salary
-      salary_in_ks = salary / 1000
-      "$#{format('%g', salary_in_ks)}K"
-    end
-  end
 end
