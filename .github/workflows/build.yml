@@ -1,0 +1,11 @@
+name: Rails CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: browser-actions/setup-geckodriver@latest
+      - uses:
+      - run: geckodriver --version
