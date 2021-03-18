@@ -1,45 +1,53 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const SalaryGraph = ({ data }) => {
-  let employees = Object.keys(data[0])
-    .slice(1)
-    .map((name) => ({ name, id: data[0][name].id }));
+  const employees = Object.keys(data[0])
+    .filter((key) => key != 'date')
+    .map((id) => ({ id, name: data[0][id]['name'] }));
+
+  const [hoveredId, setHoveredId] = useState(null);
+  const colors = ['#f25f5c', '#CCA300', '#00CCAD', '#2A8CB7', '#995C88'];
 
   const handleLegendClick = (e) => {
-    const id = employees.find((emp) => emp.name === e.value).id;
-    window.location.href = `/employees/${id}`;
+    window.location.href = `/employees/${e.payload.id}`;
+  };
+
+  const handleLegendHover = (e) => {
+    setHoveredId(e.payload.id);
   };
 
   return (
-    <ResponsiveContainer width="99%" height={500}>
-      <LineChart
-        data={data}
-        margin={{
-          top: 5,
-          right: 30,
-          left: 20,
-          bottom: 5,
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="date" />
-        <YAxis type="number" domain={['dataMin - 5000', 'auto']} />
+    <ResponsiveContainer width="99%" height={400}>
+      <LineChart data={data}>
+        <CartesianGrid fill="#2c3e50" strokeOpacity={0.15} strokeDasharray="4 4" vertical={false} />
+        <XAxis dataKey="date" tickMargin={10} tickFormatter={(tick) => new Date(tick).toLocaleDateString()} />
+        <YAxis
+          padding={{ bottom: 20 }}
+          domain={['auto', 'auto']}
+          tickFormatter={(tick) => `${Math.floor(tick / 1000)}k`}
+        />
         <Tooltip />
         <Legend
           onClick={handleLegendClick}
-          width="50%"
-          wrapperStyle={{ position: 'relative', margin: 'auto', bottom: 25, zIndex: 1 }}
+          onMouseEnter={handleLegendHover}
+          onMouseLeave={() => setHoveredId(null)}
+          align="right"
+          width="100%"
+          wrapperStyle={{ position: 'relative', top: 0, zIndex: 1, cursor: 'pointer' }}
         />
-        {employees.map((emp) => {
+        {employees.map((emp, i) => {
           return (
             <Line
+              id={emp.id}
               key={emp.id}
-              type="monotone"
               name={emp.name}
-              dataKey={`${emp.name}.salary`}
-              stroke="#8884d8"
+              type="monotone"
+              dataKey={`${emp.id}.salary`}
+              stroke={colors[i % colors.length]}
+              strokeWidth={hoveredId == emp.id ? 3 : 1.5}
+              fill="#ffffffff"
               activeDot={{ r: 8 }}
             />
           );

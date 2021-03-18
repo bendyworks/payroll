@@ -29,11 +29,11 @@ RSpec.describe SalaryGraph do
         table = SalaryGraph.new([employee], [first_existing_date, second_existing_date]).to_table
 
         first_expected_hash = { :date => first_existing_date,
-                                employee.display_name => { id: employee.id,
-                                                           salary: employee.salary_on(first_existing_date) } }
+                                employee.id => { name: employee.display_name,
+                                                 salary: employee.salary_on(first_existing_date) } }
         second_expected_hash = { :date => second_existing_date,
-                                 employee.display_name => { id: employee.id,
-                                                            salary: employee.salary_on(second_existing_date) } }
+                                 employee.id => { name: employee.display_name,
+                                                  salary: employee.salary_on(second_existing_date) } }
 
         expect(table).to eq([first_expected_hash, second_expected_hash])
       end
