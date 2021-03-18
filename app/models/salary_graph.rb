@@ -8,17 +8,19 @@ class SalaryGraph
 
   def to_table
     dates.map do |date|
-      employees_row_for({ date: date })
+      table_row_for(date)
     end
   end
 
   private
 
-  def employees_row_for(one)
+  def table_row_for(date)
+    row = { date: date }
+
     employees.each do |e|
-      key = e.id
-      one[key] = { name: e.display_name, salary: e.salary_on(one[:date]) }
+      row[e.id] = { name: e.display_name, salary: e.salary_on(date) }
     end
-    one
+
+    row
   end
 end
