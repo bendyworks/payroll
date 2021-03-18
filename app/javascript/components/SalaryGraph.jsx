@@ -19,8 +19,8 @@ const SalaryGraph = ({ data }) => {
   };
 
   return (
-    <ResponsiveContainer width="99%" height={400}>
-      <LineChart data={data}>
+    <ResponsiveContainer width="99%" height={480}>
+      <LineChart data={data} margin={{ bottom: 80 }}>
         <CartesianGrid fill="#2c3e50" strokeOpacity={0.15} strokeDasharray="4 4" vertical={false} />
         <XAxis dataKey="date" tickMargin={10} tickFormatter={(tick) => new Date(tick).toLocaleDateString()} />
         <YAxis
@@ -35,7 +35,7 @@ const SalaryGraph = ({ data }) => {
           onMouseLeave={() => setHoveredId(null)}
           align="right"
           width="100%"
-          wrapperStyle={{ position: 'relative', top: 0, zIndex: 1, cursor: 'pointer' }}
+          wrapperStyle={{ position: 'relative', top: -80, zIndex: 1, cursor: 'pointer' }}
         />
         {employees.map((emp, i) => {
           return (

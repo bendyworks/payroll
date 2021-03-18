@@ -20,8 +20,8 @@ const ExperienceGraph = ({ data }) => {
   };
 
   return (
-    <ResponsiveContainer width="99%" height={400}>
-      <ScatterChart>
+    <ResponsiveContainer width="99%" height={480}>
+      <ScatterChart margin={{ bottom: 80 }}>
         <CartesianGrid fill="#2c3e50" strokeOpacity={0.15} strokeDasharray="4 4" />
         <XAxis
           type="number"
@@ -49,7 +49,7 @@ const ExperienceGraph = ({ data }) => {
           iconType="diamond"
           align="right"
           width="100%"
-          wrapperStyle={{ position: 'relative', top: 0, zIndex: 1, cursor: 'pointer' }}
+          wrapperStyle={{ position: 'relative', top: -80, zIndex: 1, cursor: 'pointer' }}
         />
         {data.map((employee, i) => (
           <Scatter
