@@ -13,6 +13,7 @@ jobs:
           POSTGRES_USER: payroll
           POSTGRES_DB: payroll_test
         ports: ["5432:5432"]
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
       - name: Checkout code
@@ -33,7 +34,8 @@ jobs:
       - name: Setup test database
         env:
           RAILS_ENV: test
-          PGHOST: postgres
+          POSTGRES_HOST: postgres
+          POSTGRES_PORT: ${{ job.services.postgres.ports[5432] }}
         run: |
           bin/rails db:setup
 
