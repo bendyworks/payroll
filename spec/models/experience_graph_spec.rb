@@ -22,8 +22,6 @@ RSpec.describe ExperienceGraph do
           weighted_years_experience: 7.967123287671233,
           current_or_last_pay: 0.1e4,
           display_name: 'Mickey Mouse',
-          all_experience_formatted: "Here: 7 years, 11 months\nPrior: 8 years 2 months direct, 1 years 4 months indirect",
-          display_pay: '$140K'
         )
 
         table = ExperienceGraph.new([employee]).to_table
