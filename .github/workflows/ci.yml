@@ -4,48 +4,48 @@ on: [push]
 
 jobs:
   ci:
-  name: CI
-  runs-on: ubuntu-latest
-  services:
-    postgres:
-      image: postgres:11
-      env:
-        POSTGRES_USER: payroll
-        POSTGRES_DB: payroll_test
-      ports: ["5432:5432"]
+    name: CI
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:11
+        env:
+          POSTGRES_USER: payroll
+          POSTGRES_DB: payroll_test
+        ports: ["5432:5432"]
 
-  steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Setup Ruby
-      uses: ruby/setup-ruby@v1
-    - name: Ruby gem cache
-      uses: actions/cache@v1
-      with:
-        path: vendor/bundle
-        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-gems-
-    - name: Install gems
-      run: |
-        bundle config path vendor/bundle
-        bundle install --jobs 4 --retry 3
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+      - name: Ruby gem cache
+        uses: actions/cache@v1
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+      - name: Install gems
+        run: |
+          bundle config path vendor/bundle
+          bundle install --jobs 4 --retry 3
 
-    - name: Setup Firefox
-      uses: browser-actions/setup-firefox@latest
+      - name: Setup Firefox
+        uses: browser-actions/setup-firefox@latest
 
-    - name: Setup Geckodriver
-      uses: browser-actions/setup-geckodriver@latest
+      - name: Setup Geckodriver
+        uses: browser-actions/setup-geckodriver@latest
 
-    - name: Setup test database
-      env:
-        RAILS_ENV: test
-      run: |
-        bin/rails db:setup
+      - name: Setup test database
+        env:
+          RAILS_ENV: test
+        run: |
+          bin/rails db:setup
 
-    - name: Run tests under XVFB
-      uses: GabrielBB/xvfb-action@v1
-      with:
-        run: bundle exec rake
+      - name: Run tests under XVFB
+        uses: GabrielBB/xvfb-action@v1
+        with:
+          run: bundle exec rake
 
