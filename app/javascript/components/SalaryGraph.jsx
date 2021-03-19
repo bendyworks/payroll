@@ -1,6 +1,35 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+
+/* eslint react/prop-types: 0 */
+
+function formatSalary(salary) {
+  return `${Math.floor(salary / 1000)}k`;
+}
+
+function formatDate(date) {
+  return new Date(date).toLocaleDateString();
+}
+
+const TooltipContent = ({ active, payload }) => {
+  if (active && payload && payload.length) {
+    const data = payload[0].payload;
+
+    return (
+      <div
+        className="custom-tooltip"
+        style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)', padding: 10, textAlign: 'center', borderRadius: 8 }}
+      >
+        <p style={{ color: '#ffffff' }}>{`${formatDate(data.date)}`}</p>
+        {payload.map((emp, i) => (
+          <p key={i} style={{ color: emp.color, margin: 0 }}>{`${emp.name}: ${formatSalary(emp.value)}`}</p>
+        ))}
+      </div>
+    );
+  }
+
+  return null;
+};
 
 const SalaryGraph = ({ data }) => {
   const employees = Object.keys(data[0])
@@ -22,13 +51,9 @@ const SalaryGraph = ({ data }) => {
     <ResponsiveContainer width="99%" height={480}>
       <LineChart data={data} margin={{ bottom: 80 }}>
         <CartesianGrid fill="#2c3e50" strokeOpacity={0.15} strokeDasharray="4 4" vertical={false} />
-        <XAxis dataKey="date" tickMargin={10} tickFormatter={(tick) => new Date(tick).toLocaleDateString()} />
-        <YAxis
-          padding={{ bottom: 20 }}
-          domain={['auto', 'auto']}
-          tickFormatter={(tick) => `${Math.floor(tick / 1000)}k`}
-        />
-        <Tooltip />
+        <XAxis dataKey="date" tickMargin={10} tickFormatter={formatDate} />
+        <YAxis padding={{ bottom: 20 }} domain={['auto', 'auto']} tickFormatter={formatSalary} />
+        <Tooltip content={<TooltipContent />} />
         <Legend
           onClick={handleLegendClick}
           onMouseEnter={handleLegendHover}
@@ -46,9 +71,9 @@ const SalaryGraph = ({ data }) => {
               type="monotone"
               dataKey={`${emp.id}.salary`}
               stroke={colors[i % colors.length]}
+              fill={colors[i % colors.length]}
               strokeWidth={hoveredId == emp.id ? 3 : 1.5}
-              fill="#ffffffff"
-              activeDot={{ r: 8 }}
+              activeDot={{ r: 6 }}
             />
           );
         })}
