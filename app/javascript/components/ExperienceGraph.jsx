@@ -62,7 +62,7 @@ const ExperienceGraph = ({ data }) => {
           type="number"
           dataKey="salary"
           domain={['dataMin', 'auto']}
-          padding={{ bottom: 20 }}
+          padding={{ bottom: 15, top: 15 }}
           tickFormatter={formatSalary}
         />
         <ZAxis range={[150, 150]} />

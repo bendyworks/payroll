@@ -52,7 +52,7 @@ const SalaryGraph = ({ data }) => {
       <LineChart data={data} margin={{ bottom: 80 }}>
         <CartesianGrid fill="#2c3e50" strokeOpacity={0.15} strokeDasharray="4 4" vertical={false} />
         <XAxis dataKey="date" tickMargin={10} tickFormatter={formatDate} />
-        <YAxis padding={{ bottom: 20 }} domain={['auto', 'auto']} tickFormatter={formatSalary} />
+        <YAxis padding={{ bottom: 15, top: 15 }} domain={['auto', 'auto']} tickFormatter={formatSalary} />
         <Tooltip content={<TooltipContent />} />
         <Legend
           onClick={handleLegendClick}
