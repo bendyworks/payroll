@@ -1,0 +1,51 @@
+name: Rails CI
+
+on: [push]
+
+jobs:
+  ci:
+    name: CI
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:11
+        env:
+          POSTGRES_USER: payroll
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: payroll_test
+        ports: ["5432:5432"]
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7.2
+          bundler-cache: true
+
+      - name: Setup Firefox
+        uses: browser-actions/setup-firefox@latest
+
+      - name: Setup Geckodriver
+        uses: browser-actions/setup-geckodriver@latest
+
+      - name: Setup test database
+        env:
+          RAILS_ENV: test
+          PGHOST: localhost
+          PGPORT: 5432
+        run: |
+          bin/rails db:setup
+
+      - name: Run tests under XVFB
+        uses: GabrielBB/xvfb-action@v1
+        env:
+          RAILS_ENV: test
+          PGHOST: localhost
+          PGPORT: 5432
+        with:
+          run: bundle exec rake
+

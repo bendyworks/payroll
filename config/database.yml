@@ -2,6 +2,7 @@ default: &default
   adapter: postgresql
   encoding: unicode
   username: payroll
+  password: password
   pool: 5
 
 development:
