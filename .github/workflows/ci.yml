@@ -26,6 +26,15 @@ jobs:
           ruby-version: 2.7.2
           bundler-cache: true
 
+      - name: Setup Node
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Yarn install
+        run: |
+          yarn install --pure-lockfile
+
       - name: Setup Firefox
         uses: browser-actions/setup-firefox@latest
 
