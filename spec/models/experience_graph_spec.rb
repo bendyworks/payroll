@@ -18,19 +18,20 @@ RSpec.describe ExperienceGraph do
       it 'returns a properly formatted set of data' do
         employee = object_double(
           build(:employee),
-           weighted_years_experience: 7.967123287671233,
-           current_or_last_pay: 0.1e4,
-           display_name: "Mickey Mouse",
-           all_experience_formatted: "Here: 7 years, 11 months\nPrior: 8 years 2 months direct, 1 years 4 months indirect",
-           display_pay: "$140K"
-          )
+          id: 333,
+          weighted_years_experience: 7.967123287671233,
+          current_or_last_pay: 0.1e4,
+          display_name: 'Mickey Mouse',
+        )
 
         table = ExperienceGraph.new([employee]).to_table
 
-        expect(table.first).to match_array([
-          7.967123287671233, 0.1e4,
-           "Mickey Mouse:\nHere: 7 years, 11 months\nPrior: 8 years 2 months direct, 1 years 4 months indirect\n$140K salary"
-        ])
+        expect(table).to match_array([
+                                       { id: employee.id,
+                                         name: employee.display_name,
+                                         experience: employee.weighted_years_experience,
+                                         salary: employee.current_or_last_pay }
+                                     ])
       end
     end
   end

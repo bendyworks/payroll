@@ -27,12 +27,12 @@ class ChartsController < ApplicationController
     @employees = filtered_collection(employee_chart_params).to_a
   end
 
-  def table_for_experience
-    ExperienceGraph.new(@employees).to_table
-  end
-
   def table_for_salaries
     SalaryGraph.new(@employees, Salary.all_dates).to_table
+  end
+
+  def table_for_experience
+    ExperienceGraph.new(@employees).to_table
   end
 
   def employee_chart_params

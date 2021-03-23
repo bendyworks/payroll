@@ -1,4 +1,3 @@
-= javascript_include_tag 'experience'
 %h1 Experience
-#experience_chart{data: {employees: @employees.to_json(methods: [:display_name, :display_pay, :employee_path_for_js]), data_table: @data_table.to_json, chart_params: {width: 800, height: 500, hAxis: {title: 'Years at Bendyworks plus partial prior experience', minValue: 0}, vAxis: {minValue: 0}}.to_json}}
+= react_component("ExperienceGraph", { data: @data_table }, {prerender: true, id: 'experience_chart'})
 = render 'form'

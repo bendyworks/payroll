@@ -6,22 +6,19 @@ class ExperienceGraph
   end
 
   def to_table
-    employees.map.with_index do |employee, i|
-      row = Array.new((@employees.length * 2) + 1)
-      row[0] = employee.weighted_years_experience
-      row[(2 * i) + 1] = employee.current_or_last_pay
-      row[(2 * i) + 2] = experience_tooltip(employee)
-      row
+    employees.map do |employee|
+      table_row_for(employee)
     end
   end
 
   private
 
-  def experience_tooltip(employee)
-    <<~TOOLTIP.strip
-      #{employee.display_name}:
-      #{employee.all_experience_formatted}
-      #{employee.display_pay} salary
-    TOOLTIP
+  def table_row_for(employee)
+    {
+      id: employee.id,
+      name: employee.display_name,
+      experience: employee.weighted_years_experience,
+      salary: employee.current_or_last_pay
+    }
   end
 end

@@ -4,7 +4,7 @@ Given(/^an admin user$/) do
   @admin = create :admin
 end
 
-Given(/^a non\-admin user$/) do
+Given(/^a non-admin user$/) do
   @user = create :user
 end
 
@@ -15,7 +15,7 @@ Then(/^the admin user should have admin checked$/) do
   end
 end
 
-Then(/^the non\-admin user should not have admin checked$/) do
+Then(/^the non-admin user should not have admin checked$/) do
   within "#user_#{@user.id}" do
     admin_checkbox = find('.admin_checkbox')
     expect(admin_checkbox).not_to be_checked
@@ -75,5 +75,5 @@ Then(/^that user should not be an admin$/) do
 end
 
 When(/^I click on employee's name$/) do
-  find('text', text: @employee.first_name).click
+  find('span', text: @employee.first_name).click
 end

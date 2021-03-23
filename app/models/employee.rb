@@ -123,25 +123,6 @@ class Employee < ActiveRecord::Base
     "#{years} years, #{months} months"
   end
 
-  def direct_experience_formatted
-    years = direct_experience / 12
-    months = direct_experience % 12
-
-    "#{years} years #{months} months"
-  end
-
-  def indirect_experience_formatted
-    years = indirect_experience / 12
-    months = indirect_experience % 12
-
-    "#{years} years #{months} months"
-  end
-
-  def all_experience_formatted
-    "Here: #{experience_here_formatted}\nPrior: #{direct_experience_formatted} direct," \
-      " #{indirect_experience_formatted} indirect"
-  end
-
   def current_or_last_pay
     salary_on(Time.zone.today) || ending_salary || starting_salary
   end
@@ -168,10 +149,6 @@ class Employee < ActiveRecord::Base
     else
       salaries.last.try(:start_date)
     end
-  end
-
-  def employee_path_for_js
-    Rails.application.routes.url_helpers.employee_path(self)
   end
 
   def bip_planning_raise_date
