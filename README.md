@@ -38,6 +38,7 @@ Using React Components
   1. Components can be rendered inside the views with:
   ~~~
     = react_component("ComponentName", props: {})
+    = react_component("ComponentName", props: {}, {prerender: true})
   ~~~
 
 
