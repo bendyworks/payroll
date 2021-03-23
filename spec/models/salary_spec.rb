@@ -63,27 +63,31 @@ describe Salary do
     let!(:first_employee) do
       build(:employee).tap do |employee|
         employee.tenures = [build(:tenure, start_date: first_start_date, end_date: first_end_date)]
+        employee.tenures.first.salaries = [build(:salary, start_date: first_start_date)]
         employee.save
       end
     end
     let!(:second_employee) do
       build(:employee).tap do |employee|
         employee.tenures = [build(:tenure, start_date: first_start_date, end_date: second_end_date)]
+        employee.tenures.first.salaries = [build(:salary, start_date: first_start_date)]
         employee.save
       end
     end
     let!(:third_employee) do
       build(:employee).tap do |employee|
         employee.tenures = [build(:tenure, start_date: second_start_date)]
+        employee.tenures.first.salaries = [build(:salary, start_date: second_start_date)]
         employee.save
       end
     end
 
-    let!(:first_added_salary) { create :salary, employee: second_employee, start_date: first_salary_date }
-    let!(:second_added_salary) { create :salary, employee: third_employee, start_date: second_salary_date }
+    let!(:first_added_salary) { create :salary, tenure: second_employee.tenures.first, start_date: first_salary_date }
+    let!(:second_added_salary) { create :salary, tenure: third_employee.tenures.first, start_date: second_salary_date }
 
     it 'returns an ordered list of history dates' do
-      expect(Salary.history_dates).to eq([first_start_date, second_start_date,
+      expect(Salary.history_dates).to eq([first_start_date, second_start_date - 1, 
+                                          second_start_date,
                                           first_end_date, first_end_date + 1,
                                           first_salary_date - 1, first_salary_date,
                                           second_salary_date - 1, second_salary_date,

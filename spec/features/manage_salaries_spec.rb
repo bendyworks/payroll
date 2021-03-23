@@ -23,7 +23,8 @@ feature 'manage salaries' do
   end
 
   context 'Raise salary exists' do
-    let!(:salary) { create :salary }
+    let!(:salary) { create :salary, tenure: employee.tenures.first }
+    let!(:raise) { create :salary, tenure: employee.tenures.first, start_date: employee.tenures.first.start_date + 30 }
 
     scenario 'delete salary' do
       visit "/employees/#{salary.employee.id}"
