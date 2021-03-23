@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_14_224051) do
+ActiveRecord::Schema.define(version: 2021_03_15_122533) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,7 +46,6 @@ ActiveRecord::Schema.define(version: 2020_12_14_224051) do
     t.datetime "updated_at"
     t.integer "direct_experience", default: 0, null: false
     t.integer "indirect_experience", default: 0, null: false
-    t.decimal "starting_salary", default: "0.0", null: false
     t.text "notes"
     t.date "planning_raise_date"
     t.string "planning_raise_salary"
@@ -55,11 +54,11 @@ ActiveRecord::Schema.define(version: 2020_12_14_224051) do
 
   create_table "salaries", force: :cascade do |t|
     t.date "start_date", null: false
-    t.integer "employee_id", null: false
     t.decimal "annual_amount", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["employee_id"], name: "index_salaries_on_employee_id"
+    t.bigint "tenure_id"
+    t.index ["tenure_id"], name: "index_salaries_on_tenure_id"
   end
 
   create_table "tenures", force: :cascade do |t|
@@ -102,5 +101,5 @@ ActiveRecord::Schema.define(version: 2020_12_14_224051) do
   end
 
   add_foreign_key "balances", "accounts"
-  add_foreign_key "salaries", "employees", name: "salaries_employee_id_fk"
+  add_foreign_key "salaries", "tenures"
 end

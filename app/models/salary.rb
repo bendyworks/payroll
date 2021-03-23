@@ -1,24 +1,25 @@
 # frozen_string_literal: true
 
 class Salary < ActiveRecord::Base
-  belongs_to :employee
-  validates :start_date, presence: true, uniqueness: { scope: :employee_id }
-  validates_presence_of :employee
+  belongs_to :tenure
+  has_one :employee, through: :tenure
+  validates :start_date, presence: true, uniqueness: { scope: :tenure_id }
+  validates_presence_of :tenure
   validates :annual_amount, presence: true
-  validate :no_salaries_outside_employment_dates, if: :employee
+  validate :no_salaries_outside_tenure_dates, if: :tenure
 
   delegate :first_name, :last_name, to: :employee, prefix: true
 
   before_validation :ensure_start_date
 
-  default_scope { order('start_date') }
+  default_scope { order('salaries.start_date') }
 
   def self.ordered_dates
-    select('distinct start_date').order('start_date').map(&:start_date)
+    select('salaries.start_date').order('salaries.start_date').map(&:start_date).uniq
   end
 
   def self.ordered_dates_with_previous_dates
-    ordered_dates.map { |date| [date - 1, date] }.flatten
+    ordered_dates.map { |date| [date - 1, date] }.flatten.tap(&:shift)
   end
 
   def self.all_dates
@@ -32,8 +33,8 @@ class Salary < ActiveRecord::Base
 
   private
 
-  def no_salaries_outside_employment_dates
-    unless employee.employed_on?(start_date)
+  def no_salaries_outside_tenure_dates
+    unless tenure.employed_on?(start_date)
       errors.add(:start_date, 'must be between employee start and end dates')
     end
   end

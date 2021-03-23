@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 class Employee < ActiveRecord::Base
-  has_many :salaries, dependent: :destroy
   has_many :tenures, dependent: :destroy
+  has_many :salaries, through: :tenures, dependent: :destroy
+  
   accepts_nested_attributes_for :tenures,
     reject_if: proc { |attributes| attributes['start_date'].blank? }, allow_destroy: true
 
@@ -91,16 +92,12 @@ class Employee < ActiveRecord::Base
   def salary_on(date)
     return nil unless employed_on?(date)
 
-    salary_match = salaries.where('start_date <= ?', date).last
+    salary_match = salaries.where('salaries.start_date <= ?', date).last
     salary_match ? salary_match.annual_amount : starting_salary
   end
 
   def salary_data
     data = []
-    tenures.each do |tenure|
-      data << { c: [date_for_js(tenure.start_date), salary_on(tenure.start_date)] }
-    end
-
     salaries.ordered_dates_with_previous_dates.each do |date|
       data << { c: [date_for_js(date), salary_on(date)] }
     end
@@ -144,7 +141,7 @@ class Employee < ActiveRecord::Base
   end
 
   def previous_pay
-    if salaries.empty?
+    if salaries.empty? || salaries.count == 1
       nil
     else
       salaries[-2].try(:annual_amount) || starting_salary
