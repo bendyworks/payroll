@@ -42,7 +42,11 @@
           %tr
             %td= salary.start_date.strftime('%b %e, %Y')
             %td= number_to_currency(salary.annual_amount, precision: 0)
-            %td= link_to 'Delete', employee_salary_path(employee_id: @employee, id: salary), method: :delete unless i == 0
+            %td
+              -if i == 0
+                (To change starting salary, use edit button above.)
+              -else
+                = link_to 'Delete', employee_salary_path(employee_id: @employee, id: salary), method: :delete
   - if @employee.notes?
     %li.active
       = link_to 'Notes', "#"
