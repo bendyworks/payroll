@@ -26,8 +26,10 @@ RSpec.describe SalaryGraph do
         second_expected_date_format = second_existing_date.to_time.to_f * 1000
         expected_second_salary = 150_000
 
-        employee = create(:employee, starting_salary: expected_first_salary)
-        employee.salaries.create(start_date: second_existing_date - 1.day, annual_amount: expected_second_salary)
+        employee = create(:employee)
+        tenure = employee.tenures.first
+        tenure.salaries.create(annual_amount: expected_first_salary)
+        tenure.salaries.create(start_date: second_existing_date - 1.day, annual_amount: expected_second_salary)
 
         first_expected_tooltip = "#{first_existing_date}\n#{employee.display_name}: $130K"
         second_expected_tooltip = "#{second_existing_date}\n#{employee.display_name}: $150K"

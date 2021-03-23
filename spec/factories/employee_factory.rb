@@ -4,7 +4,6 @@ FactoryBot.define do
   factory :employee do
     sequence(:first_name) { |n| "##{n}" }
     last_name { 'Bendyworker' }
-    starting_salary { 500 }
     after :create do |employee|
       create_list :tenure, 1, employee: employee
     end

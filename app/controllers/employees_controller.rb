@@ -12,8 +12,10 @@ class EmployeesController < ApplicationController
   def edit; end
 
   def create
-    @employee = Employee.new(employee_params)
+    salary_params = employee_params.dig(:salaries_attributes, "0")
+    @employee = Employee.new(employee_params.except(:salaries_attributes))
     if @employee.save
+      @employee.tenures.first.salaries.create(salary_params) unless salary_params.blank?
       redirect_to @employee, notice: 'Employee successfully created.'
     else
       @errors = @employee.errors.full_messages

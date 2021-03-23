@@ -15,7 +15,7 @@ feature 'manage employee' do
     fill_in 'Last name', with: 'Bendyworker'
     fill_in 'Start date', with: Time.zone.today
     fill_in 'Direct experience', with: 5
-    fill_in 'Starting salary', with: 40_000
+    fill_in 'Starting salary annual amount', with: 40_000
     click_button 'Save'
 
     expect(page).to have_content 'Newest Bendyworker'
@@ -24,7 +24,7 @@ feature 'manage employee' do
 
   context 'employee exists' do
     let(:employee) { create :employee }
-    let!(:salary) { create :salary, employee: employee }
+    let!(:salary) { create :salary, tenure: employee.tenures.first }
 
     scenario 'edit employee basic info' do
       visit "/employees/#{employee.id}"

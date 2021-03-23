@@ -3,14 +3,15 @@
 class SalariesController < ApplicationController
   def new
     employee = Employee.find(params[:employee_id])
-    @salary = employee.salaries.new
+    @salary = employee.tenures.last.salaries.new
   end
 
   def create
     employee = Employee.find(params[:employee_id])
-    @salary = employee.salaries.new(salary_params)
+    tenure = employee.tenures.last
+    @salary = tenure.salaries.new(salary_params)
     if @salary.save
-      redirect_to employee_path(@salary.employee), notice: 'Successfully recorded raise'
+      redirect_to employee_path(employee), notice: 'Successfully recorded raise'
     else
       render :new
     end
