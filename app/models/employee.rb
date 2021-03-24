@@ -3,7 +3,7 @@
 class Employee < ActiveRecord::Base
   has_many :tenures, dependent: :destroy
   has_many :salaries, through: :tenures, dependent: :destroy
-  
+
   accepts_nested_attributes_for :tenures,
     reject_if: proc { |attributes| attributes['start_date'].blank? }, allow_destroy: true
 

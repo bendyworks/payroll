@@ -3,19 +3,20 @@ class MigrateStartingSalaryToSalaries < ActiveRecord::Migration[6.1]
     add_reference :salaries, :tenure, foreign_key: true
 
     Employee.all.each do |employee|
-      Salary.where(employee_id: employee.id).all.each do |salary| 
+      Salary.where(employee_id: employee.id).all.each do |salary|
         # look for tenure date range containing salary start_date.  Fall back to first if none found
-        tenure = employee.tenures
-          .where('start_date <= :date and (end_date >= :date or end_date is NULL)', date: salary.start_date).first
+        tenure = employee.tenures.where(
+          'start_date <= :date and (end_date >= :date or end_date is NULL)',
+          date: salary.start_date).first
         tenure = employee.tenures.first unless tenure
         salary.update(tenure_id: tenure.id)
       end
       tenure = employee.tenures.first
       tenure.salaries << Salary.new(
-        start_date: tenure.start_date, 
-        annual_amount: employee.attributes['starting_salary'], 
+        start_date: tenure.start_date,
+        annual_amount: employee.attributes['starting_salary'],
         employee_id: employee.id)
-      tenure.save
+      tenure.save!
     end
 
     remove_reference :salaries, :employee, foreign_key: true
@@ -33,7 +34,7 @@ class MigrateStartingSalaryToSalaries < ActiveRecord::Migration[6.1]
       tenure = employee.tenures.first
       salary = tenure.salaries.first if tenure
       employee.update(starting_salary: salary.annual_amount) if salary
-      salary.destroy
+      salary.destroy!
     end
 
     remove_reference :salaries, :tenure
