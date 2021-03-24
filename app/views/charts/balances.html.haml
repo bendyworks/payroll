@@ -1,4 +1,4 @@
 %h1 Balances
 #balances_chart
-= render_chart @chart, 'balances_chart'
+= react_component("BalanceGraph", { data: @data_table }, {prerender: true, id: 'balance_chart'})
 = render 'form'

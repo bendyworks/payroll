@@ -5,12 +5,24 @@ AccountType.seed
 Salary.delete_all
 Employee.delete_all
 
-User.delete_all
+User.destroy_all
 
-User.create!(email: 'admin@bendyworks.com',
-             password: 'password',
-             admin: true,
-             invitation_accepted_at: Time.zone.now)
+admin = User.create!(email: 'admin@bendyworks.com',
+                     password: 'password',
+                     admin: true,
+                     invitation_accepted_at: Time.zone.now)
+
+Balance.destroy_all
+Account.destroy_all
+Account.create([
+                 { name: 'City Bank Checking' },
+                 { name: 'City Bank Savings' },
+                 { name: 'A/R' },
+                 { name: 'A/P' },
+                 { name: 'WIP' },
+                 { name: 'Prepaid' },
+                 { name: 'SBA Loan' }
+               ])
 
 ###### FORMER EMPLOYEES ######
 
