@@ -32,6 +32,7 @@ describe SalariesController do
       end
 
       it 'creates a new Salary' do
+        employee.reload
         expect do
           post :create, params: post_params
         end.to change(Salary, :count).by(1)

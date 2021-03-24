@@ -16,20 +16,8 @@ describe ChartsController do
   end
 
   describe 'GET salaries' do
-    let!(:current_employee)  do
-      build(:employee).tap do |employee|
-        employee.tenures = [build(:tenure, end_date: Time.zone.today + 1)]
-        employee.save
-      end
-    end
-    let!(:salary_1) { create :salary, employee: current_employee }
-    let!(:former_employee) do
-      build(:employee).tap do |employee|
-        employee.tenures = [build(:tenure, end_date: Time.zone.today - 1)]
-        employee.save
-      end
-    end
-    let!(:salary_2) { create :salary, employee: former_employee }
+    let!(:current_employee) { create(:employee, end_date: Time.zone.today + 1) }
+    let!(:former_employee) { create(:employee, end_date: Time.zone.today - 1) }
 
     it 'returns http success' do
       get :salaries

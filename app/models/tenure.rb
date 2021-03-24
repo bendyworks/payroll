@@ -2,7 +2,7 @@
 
 class Tenure < ActiveRecord::Base
   belongs_to :employee
-  has_many :salaries
+  has_many :salaries, dependent: :destroy
 
   validates :start_date, presence: true, uniqueness: { scope: :employee_id }
   validates :employee, presence: true

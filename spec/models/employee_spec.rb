@@ -26,11 +26,7 @@ describe Employee do
     let(:third_raise_date) { 1.months.ago.to_date }
 
     let!(:employee) do
-      build(:employee).tap do |employee|
-        employee.tenures = [build(:tenure, start_date: start_date)]
-        employee.tenures.first.salaries = [build(:salary, start_date: start_date, annual_amount: 1_000)]
-        employee.save
-      end
+      create(:employee, starting_salary: 1_000, start_date: start_date)
     end
     let(:last_raise_date) { employee.reload.last_raise_date }
 
@@ -137,11 +133,7 @@ describe Employee do
 
   describe '#display_pay' do
     let(:start_date) { Date.parse('2015-08-07') }
-    let(:employee) { create :employee, tenures_attributes: [{start_date: start_date}] }
-
-    let!(:starting_salary) do
-      create(:salary, tenure: employee.tenures.first, start_date: start_date, annual_amount: pay)
-    end
+    let(:employee) { create :employee, start_date: start_date, starting_salary: pay }
 
     context 'when pay is a whole number of thousands' do
       let(:pay) { 73_000 }
@@ -163,9 +155,8 @@ describe Employee do
     let(:raise_date) { Date.parse('2013-12-10') }
     let(:end_date) { Date.parse('2014-12-31') }
 
-    let(:daisie) { create(:employee, tenures_attributes: [{start_date: start_date, end_date: end_date}]) }
+    let(:daisie) { create(:employee, starting_salary: 800, tenures_attributes: [{start_date: start_date, end_date: end_date}]) }
 
-    let!(:starting_salary) { create(:salary, tenure: daisie.tenures.first, start_date: start_date, annual_amount: 800) }
     let!(:raise_salary) do
       create(:salary, tenure: daisie.tenures.first, start_date: raise_date, annual_amount: '900')
     end
@@ -186,7 +177,7 @@ describe Employee do
       expect(daisie.salary_on(raise_date + 5)).to eq raise_salary.annual_amount
     end
     it 'returns correct salary, given a date between two salary `start_date`s' do
-      expect(daisie.salary_on(raise_date - 5)).to eq starting_salary.annual_amount
+      expect(daisie.salary_on(raise_date - 5)).to eq daisie.salaries.first.annual_amount
     end
   end
 

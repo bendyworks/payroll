@@ -25,10 +25,10 @@ describe Salary do
     let(:first_date) { 7.months.ago.to_date }
     let(:third_date) { 5.months.ago.to_date }
     let(:second_date) { 6.months.ago.to_date }
-    let(:tenure) { create :tenure, start_date: first_date }
+    let (:employee) { create :employee, start_date: first_date }
+    let(:tenure) { employee.tenures.first }
 
     let!(:first_added_salary) { create :salary, tenure: tenure, start_date: fourth_date }
-    let!(:second_added_salary) { create :salary, tenure: tenure, start_date: first_date }
     let!(:third_added_salary) { create :salary, tenure: tenure, start_date: third_date }
     let!(:fourth_added_salary) { create :salary, tenure: tenure, start_date: second_date }
 
@@ -37,7 +37,7 @@ describe Salary do
     end
 
     it 'removes duplicate dates' do
-      create :salary, start_date: third_date
+      create :employee, start_date: third_date
       expect(Salary.ordered_dates).to eq([first_date, second_date, third_date, fourth_date])
     end
 
@@ -61,25 +61,13 @@ describe Salary do
 
 
     let!(:first_employee) do
-      build(:employee).tap do |employee|
-        employee.tenures = [build(:tenure, start_date: first_start_date, end_date: first_end_date)]
-        employee.tenures.first.salaries = [build(:salary, start_date: first_start_date)]
-        employee.save
-      end
+      create(:employee, start_date: first_start_date, end_date: first_end_date)
     end
     let!(:second_employee) do
-      build(:employee).tap do |employee|
-        employee.tenures = [build(:tenure, start_date: first_start_date, end_date: second_end_date)]
-        employee.tenures.first.salaries = [build(:salary, start_date: first_start_date)]
-        employee.save
-      end
+      create(:employee, start_date: first_start_date, end_date: second_end_date)
     end
     let!(:third_employee) do
-      build(:employee).tap do |employee|
-        employee.tenures = [build(:tenure, start_date: second_start_date)]
-        employee.tenures.first.salaries = [build(:salary, start_date: second_start_date)]
-        employee.save
-      end
+      create(:employee, start_date: second_start_date)
     end
 
     let!(:first_added_salary) { create :salary, tenure: second_employee.tenures.first, start_date: first_salary_date }
