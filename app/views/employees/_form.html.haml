@@ -50,8 +50,7 @@
           = f.label :indirect_experience, 'Indirect experience (months)', class: 'control-label'
           = f.number_field :indirect_experience, class: 'form-control'
         = f.fields_for :salaries, (employee.salaries.first || employee.salaries.build) do |salary_f|
-          = salary_f.hidden_field :id unless employee.salaries.count == 0
-          = salary_f.hidden_field :start_date unless employee.salaries.count == 0
+          = salary_f.hidden_field :id
           .form-group.col-lg-12
             = salary_f.label :annual_amount, 'Starting salary annual amount', class: 'control-label'
             .input-group

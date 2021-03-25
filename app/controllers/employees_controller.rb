@@ -44,17 +44,24 @@ class EmployeesController < ApplicationController
   end
 
   def employee_params
-    params.require(:employee).permit(:first_name,
-                                     :last_name,
-                                     :starting_salary,
-                                     :direct_experience,
-                                     :indirect_experience,
-                                     :billable,
-                                     :notes,
-                                     :planning_raise_date,
-                                     :planning_raise_salary,
-                                     :planning_notes,
-                                     tenures_attributes: [:id, :start_date, :end_date, :_destroy],
-                                     salaries_attributes: [:id, :start_date, :annual_amount])
+    emp_params = params.require(:employee)
+      .permit(:first_name,
+              :last_name,
+              :starting_salary,
+              :direct_experience,
+              :indirect_experience,
+              :billable,
+              :notes,
+              :planning_raise_date,
+              :planning_raise_salary,
+              :planning_notes,
+              tenures_attributes: [:id, :start_date, :end_date, :_destroy],
+              salaries_attributes: [:id, :annual_amount])
+    salary = emp_params.dig(:salaries_attributes, "0")
+    tenure = emp_params.dig(:tenures_attributes, "0")
+    if salary && tenure
+      emp_params[:salaries_attributes]["0"][:start_date] = tenure[:start_date]
+    end
+    emp_params
   end
 end
