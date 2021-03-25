@@ -14,15 +14,15 @@ admin = User.create!(email: 'admin@bendyworks.com',
 
 Balance.destroy_all
 Account.destroy_all
-Account.create([
-                 { name: 'City Bank Checking' },
-                 { name: 'City Bank Savings' },
-                 { name: 'A/R' },
-                 { name: 'A/P' },
-                 { name: 'WIP' },
-                 { name: 'Prepaid' },
-                 { name: 'SBA Loan' }
-               ])
+Account.create!([
+                  { name: 'City Bank Checking' },
+                  { name: 'City Bank Savings' },
+                  { name: 'A/R' },
+                  { name: 'A/P' },
+                  { name: 'WIP' },
+                  { name: 'Prepaid' },
+                  { name: 'SBA Loan' }
+                ])
 
 ###### FORMER EMPLOYEES ######
 
