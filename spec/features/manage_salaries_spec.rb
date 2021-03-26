@@ -24,12 +24,12 @@ feature 'manage salaries' do
 
   context 'Raise salary exists' do
     let!(:salary) { create :salary, tenure: employee.tenures.first, start_date: employee.tenures.first.start_date + 30 }
+    let(:link) { "a[href$=\"/salaries/#{salary.id}\"]" }
 
     scenario 'delete salary' do
       visit "/employees/#{salary.employee.id}"
-      click_on 'Delete'
+      find(:css, link).click
 
-      expect(page).not_to have_link 'Delete'
       expect(page).to have_content 'Salary deleted'
     end
   end

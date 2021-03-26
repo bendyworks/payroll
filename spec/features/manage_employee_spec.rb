@@ -15,7 +15,6 @@ feature 'manage employee' do
     fill_in 'Last name', with: 'Bendyworker'
     fill_in 'Start date', with: Time.zone.today
     fill_in 'Direct experience', with: 5
-    fill_in 'Starting salary annual amount', with: 40_000
     click_button 'Save'
 
     expect(page).to have_content 'Newest Bendyworker'
@@ -25,10 +24,11 @@ feature 'manage employee' do
   context 'employee exists' do
     let(:employee) { create :employee }
     let!(:salary) { create :salary, tenure: employee.tenures.first }
+    let(:link) { "a[href$=\"#{employee.id}/edit\"]" }
 
     scenario 'edit employee basic info' do
       visit "/employees/#{employee.id}"
-      click_on 'Edit'
+      find(:css, link).click
       fill_in 'First name', with: 'Different'
       fill_in 'Indirect experience', with: 11
       click_button 'Save'
@@ -37,13 +37,5 @@ feature 'manage employee' do
       expect(page).to have_content '11 months indirect'
     end
 
-    scenario 'edit employee starting salary amount' do
-      visit "/employees/#{employee.id}"
-      click_on 'Edit'
-      fill_in 'Starting salary', with: 41_000
-      click_button 'Save'
-
-      expect(page).to have_content '$41,000'
-    end
   end
 end
