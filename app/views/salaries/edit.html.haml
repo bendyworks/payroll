@@ -1,0 +1,3 @@
+%h2= "Edit Salary for #{@salary.employee_first_name} #{@salary.employee_last_name}"
+= form_for(@salary, url: employee_salary_path(@salary), html: { class: 'form-horizontal' }) do |f|
+    = render 'form', salary: @salary, f: f

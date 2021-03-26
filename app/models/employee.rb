@@ -7,18 +7,10 @@ class Employee < ActiveRecord::Base
   accepts_nested_attributes_for :tenures,
     reject_if: proc { |attributes| attributes['start_date'].blank? }, allow_destroy: true
 
-  accepts_nested_attributes_for :salaries,
-    reject_if: proc { |attributes| attributes['annual_amount'].blank? }
-
   validates :first_name, presence: true
   validates :last_name, presence: true
 
   default_scope { order :first_name }
-  scope :past, -> { joins(:tenures).where 'tenures.end_date < :today', today: Time.zone.today }
-  scope :current, lambda {
-    joins(:tenures).where 'tenures.start_date <= :today' \
-          ' AND (tenures.end_date IS NULL OR tenures.end_date >= :today)', today: Time.zone.today
-  }
   scope :future, -> { joins(:tenures).where 'tenures.start_date > :today', today: Time.zone.today }
   scope :non_current, lambda {
     joins(:tenures)

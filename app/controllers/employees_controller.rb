@@ -12,10 +12,8 @@ class EmployeesController < ApplicationController
   def edit; end
 
   def create
-    salary_params = employee_params.dig(:salaries_attributes, "0")
-    @employee = Employee.new(employee_params.except(:salaries_attributes))
+    @employee = Employee.new(employee_params)
     if @employee.save
-      @employee.tenures.first.salaries.create(salary_params) unless salary_params.blank?
       redirect_to @employee, notice: 'Employee successfully created.'
     else
       @errors = @employee.errors.full_messages
@@ -55,13 +53,6 @@ class EmployeesController < ApplicationController
               :planning_raise_date,
               :planning_raise_salary,
               :planning_notes,
-              tenures_attributes: [:id, :start_date, :end_date, :_destroy],
-              salaries_attributes: [:id, :annual_amount])
-    salary = emp_params.dig(:salaries_attributes, "0")
-    tenure = emp_params.dig(:tenures_attributes, "0")
-    if salary && tenure
-      emp_params[:salaries_attributes]["0"][:start_date] = tenure[:start_date]
-    end
-    emp_params
+              tenures_attributes: [:id, :start_date, :end_date, :_destroy])
   end
 end
