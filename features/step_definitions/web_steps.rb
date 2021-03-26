@@ -16,6 +16,10 @@ When(/^I press "([^"]*?)"$/) do |button_text|
   click_on button_text
 end
 
+When(/^I press success button with text "(.*?)"$/) do |button_text|
+  find(:css, "p > a.btn-success", text: button_text).click
+end
+
 Then(/^I see "(.*?)"$/) do |text|
   expect(page.body).to have_text(text)
 end
