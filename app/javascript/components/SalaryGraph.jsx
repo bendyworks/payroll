@@ -20,12 +20,16 @@ const TooltipContent = ({ active, payload }) => {
     return (
       <div
         className="custom-tooltip"
-        style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)', padding: 10, textAlign: 'center', borderRadius: 8 }}
+        style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', padding: 10, textAlign: 'center', borderRadius: 8 }}
       >
         <p style={{ color: '#ffffff' }}>{`${formatDate(data.date)}`}</p>
-        {payload.map((emp, i) => (
-          <p key={i} style={{ color: emp.color, margin: 0 }}>{`${emp.name}: ${formatSalary(emp.value)}`}</p>
-        ))}
+        {payload
+          .sort((a, b) => (parseInt(a.value) > parseInt(b.value) ? -1 : 1))
+          .map((emp, i) => (
+            <p key={i} style={{ color: emp.color, margin: 0 }}>
+              {`${emp.name}: ${formatSalary(emp.value)}`}
+            </p>
+          ))}
       </div>
     );
   }
@@ -52,7 +56,7 @@ const SalaryGraph = ({ data }) => {
   return (
     <ResponsiveContainer width="99%" height={480}>
       <LineChart data={data} margin={{ bottom: 80 }}>
-        <CartesianGrid fill="#6b6b6b" strokeOpacity={0.35} strokeDasharray="4 4" vertical={false} />
+        <CartesianGrid fill="#ecf0f1" strokeOpacity={0.75} strokeDasharray="4 4" vertical={false} />
         <XAxis dataKey="date" domain={['auto', 'auto']} tickFormatter={formatDate} tickMargin={10} />
         <YAxis domain={['auto', 'auto']} tickFormatter={formatSalary} padding={{ bottom: 10, top: 10 }} />
         <Tooltip content={<TooltipContent />} animationDuration={300} animationEasing="linear" />
@@ -73,10 +77,11 @@ const SalaryGraph = ({ data }) => {
               name={emp.name}
               dataKey={`${emp.id}.salary`}
               stroke={colors[i]}
-              fill={hoveredId == emp.id ? '#ffffff' : colors[i]}
+              fill={colors[i]}
               strokeWidth={hoveredId == emp.id ? 2.5 : 1.5}
               dot={{ r: 1.75 }}
-              activeDot={{ r: 2 }}
+              activeDot={{ r: 3, stroke: 'black', strokeWidth: 1 }}
+              opacity={hoveredId != null ? (hoveredId == emp.id ? 1 : 0.25) : 0.75}
             />
           );
         })}

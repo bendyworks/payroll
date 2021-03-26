@@ -20,8 +20,12 @@ class BalanceChart
 
   private
 
+  def format_date(date)
+    date.to_time.to_f * 1000
+  end
+
   def table_row_for(date)
-    row = { date: date }
+    row = { date: format_date(date) }
 
     @accounts.each do |account|
       row[account.id] = { name: account.name, balance: account.balances.find_by(date: date) }

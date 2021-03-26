@@ -30,7 +30,7 @@ const TooltipContent = ({ active, payload }) => {
     return (
       <div
         className="custom-tooltip"
-        style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)', padding: 10, textAlign: 'center', borderRadius: 8 }}
+        style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', padding: 10, textAlign: 'center', borderRadius: 8 }}
       >
         <p style={{ color: data.color }}>{`${data.name}`}</p>
         <p style={{ color: '#ffffff', margin: 0 }}>{`${formatExperience(payload[0].value)} years`}</p>
@@ -61,7 +61,7 @@ const ExperienceGraph = ({ data }) => {
   return (
     <ResponsiveContainer width="99%" height={480}>
       <ScatterChart margin={{ bottom: 80 }}>
-        <CartesianGrid fill="#6b6b6b" strokeOpacity={0.35} strokeDasharray="4 4" />
+        <CartesianGrid fill="#ecf0f1" strokeOpacity={0.75} strokeDasharray="4 4" />
         <XAxis
           type="number"
           dataKey="experience"
