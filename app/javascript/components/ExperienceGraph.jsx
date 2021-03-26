@@ -11,10 +11,16 @@ import {
   ZAxis,
 } from 'recharts';
 
+import { generateUniqueColors } from '../utils/generateUniqueColors';
+
 /* eslint react/prop-types: 0 */
 
 function formatSalary(salary) {
   return `${Math.floor(salary / 1000)}k`;
+}
+
+function formatExperience(exp) {
+  return Math.round(exp * 100) / 100;
 }
 
 const TooltipContent = ({ active, payload }) => {
@@ -27,7 +33,7 @@ const TooltipContent = ({ active, payload }) => {
         style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)', padding: 10, textAlign: 'center', borderRadius: 8 }}
       >
         <p style={{ color: data.color }}>{`${data.name}`}</p>
-        <p style={{ color: '#ffffff', margin: 0 }}>{`${payload[0].value} years`}</p>
+        <p style={{ color: '#ffffff', margin: 0 }}>{`${formatExperience(payload[0].value)} years`}</p>
         <p style={{ color: '#ffffff', margin: 0 }}>{formatSalary(payload[1].value)}</p>
       </div>
     );
@@ -37,11 +43,10 @@ const TooltipContent = ({ active, payload }) => {
 };
 
 const ExperienceGraph = ({ data }) => {
-  const colors = ['#f25f5c', '#CCA300', '#00CCAD', '#2A8CB7', '#995C88'];
+  const colors = generateUniqueColors(data.length, 100, 40);
   const [hoveredId, setHoveredId] = useState(null);
 
   data.forEach((emp, i) => {
-    emp.experience = Math.round(emp.experience * 100) / 100;
     emp.color = colors[i % colors.length];
   });
 
@@ -56,14 +61,21 @@ const ExperienceGraph = ({ data }) => {
   return (
     <ResponsiveContainer width="99%" height={480}>
       <ScatterChart margin={{ bottom: 80 }}>
-        <CartesianGrid fill="#2c3e50" strokeOpacity={0.15} strokeDasharray="4 4" />
-        <XAxis type="number" dataKey="experience" tickMargin={10} unit=" years" domain={['auto', 'auto']} />
+        <CartesianGrid fill="#6b6b6b" strokeOpacity={0.35} strokeDasharray="4 4" />
+        <XAxis
+          type="number"
+          dataKey="experience"
+          domain={['auto', 'auto']}
+          tickFormatter={formatExperience}
+          tickMargin={10}
+          unit=" years"
+        />
         <YAxis
           type="number"
           dataKey="salary"
           domain={['dataMin', 'auto']}
-          padding={{ bottom: 15, top: 15 }}
           tickFormatter={formatSalary}
+          padding={{ bottom: 15, top: 15 }}
         />
         <ZAxis range={[150, 150]} />
         <Tooltip content={<TooltipContent />} />
@@ -77,7 +89,7 @@ const ExperienceGraph = ({ data }) => {
           width="100%"
           wrapperStyle={{ position: 'relative', top: -80, zIndex: 1, cursor: 'pointer' }}
         />
-        {data.map((employee) => (
+        {data.map((employee, i) => (
           <Scatter
             id={employee.id}
             key={employee.id}
@@ -86,7 +98,7 @@ const ExperienceGraph = ({ data }) => {
             shape="circle"
             stroke={'#ffffff'}
             strokeWidth={hoveredId == employee.id ? 2 : 0}
-            fill={employee.color}
+            fill={colors[i]}
             onMouseOver={handleLegendHover}
             onMouseOut={() => setHoveredId(null)}
           />
