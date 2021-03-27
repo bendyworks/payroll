@@ -12,8 +12,7 @@ class SalariesController < ApplicationController
   end
 
   def create
-    update_params = salary_params
-    update_params["start_date"] = @employee.tenures.last.start_date unless update_params.dig(:start_date)
+    update_params = fill_start_date(@employee.tenures.last.start_date)
     @salary = @employee.tenures.last.salaries.new(update_params)
     if @salary.save
       redirect_to employee_path(@employee), notice: 'Successfully recorded raise'
@@ -25,8 +24,7 @@ class SalariesController < ApplicationController
   def edit; end
 
   def update
-    update_params = salary_params
-    update_params["start_date"] = @salary.tenure.start_date unless update_params.dig(:start_date)
+    update_params = fill_start_date(@salary.tenure_start_date)
     if @salary.update(update_params)
       redirect_to employee_path(@salary.employee), notice: 'Successfully upddated salary'
     else
@@ -51,6 +49,12 @@ class SalariesController < ApplicationController
 
   def last_tenure
     @employee.tenures.last
+  end
+
+  def fill_start_date(date)
+    update_params = salary_params
+    update_params[:start_date] = date unless update_params.dig(:start_date)
+    update_params
   end
 
   def salary_params

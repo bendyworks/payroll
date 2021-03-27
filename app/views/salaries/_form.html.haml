@@ -1,15 +1,15 @@
-- if @salary.errors.any?
+- if salary.errors.any?
   .alert.alert-danger
-    %p #{pluralize(@salary.errors.count, "error")} prohibited this raise from being saved:
+    %p #{pluralize(salary.errors.count, "error")} prohibited this raise from being saved:
     %ul
-      - @salary.errors.full_messages.each do |msg|
+      - salary.errors.full_messages.each do |msg|
         %li= msg
 .col-lg-9
   .well.bs-component
     %fieldset
       .form-group.col-lg-12
         = f.label :start_date, class: 'control-label'
-        = f.date_field :start_date, class: 'form-control', required: true, autofocus: @salary.start_date != @salary.tenure.start_date, disabled: (@salary.start_date == @salary.tenure.start_date)
+        = f.date_field :start_date, class: 'form-control', required: true, autofocus: salary.start_date != salary.tenure_start_date, disabled: (salary.start_date == salary.tenure_start_date)
       .form-group.col-lg-12
         = f.label :annual_amount, class: 'control-label'
         .input-group
@@ -17,4 +17,4 @@
           = f.number_field :annual_amount, class: 'form-control', required: true
       .form-group.col-lg-12
         = f.submit 'Save', class: 'btn btn-primary'
-        = link_to 'Cancel', employee_path(@salary.employee), class: 'btn btn-default'
+        = link_to 'Cancel', employee_path(salary.employee), class: 'btn btn-default'

@@ -9,6 +9,7 @@ class Salary < ActiveRecord::Base
   validate :no_salaries_outside_tenure_dates, if: :tenure
 
   delegate :first_name, :last_name, to: :employee, prefix: true
+  delegate :start_date, to: :tenure, prefix: true
 
   before_validation :ensure_start_date
 
