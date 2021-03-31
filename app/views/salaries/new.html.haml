@@ -1,6 +1,6 @@
 - if @salary.tenure.salaries.count >= 1
-  %h2= "Record a Raise for #{@salary.employee_first_name} #{@salary.employee_last_name}"
+  %h2 Record a Raise for #{@salary.employee_first_name} #{@salary.employee_last_name}
 - else
-  %h2= "Record Starting Salary for #{@salary.employee_first_name} #{@salary.employee_last_name}"
+  %h2 Record Starting Salary for #{@salary.employee_first_name} #{@salary.employee_last_name}
 = form_for(@salary, url: employee_salaries_path(@salary.employee), html: { class: 'form-horizontal' }) do |f|
   = render 'form', salary: @salary, f: f
