@@ -1,21 +1,16 @@
 # frozen_string_literal: true
 
 class Employee < ActiveRecord::Base
-  has_many :salaries, dependent: :destroy
   has_many :tenures, dependent: :destroy
+  has_many :salaries, through: :tenures, dependent: :destroy
+
   accepts_nested_attributes_for :tenures,
     reject_if: proc { |attributes| attributes['start_date'].blank? }, allow_destroy: true
 
   validates :first_name, presence: true
   validates :last_name, presence: true
-  validates :starting_salary, presence: true
 
   default_scope { order :first_name }
-  scope :past, -> { joins(:tenures).where 'tenures.end_date < :today', today: Time.zone.today }
-  scope :current, lambda {
-    joins(:tenures).where 'tenures.start_date <= :today' \
-          ' AND (tenures.end_date IS NULL OR tenures.end_date >= :today)', today: Time.zone.today
-  }
   scope :future, -> { joins(:tenures).where 'tenures.start_date > :today', today: Time.zone.today }
   scope :non_current, lambda {
     joins(:tenures)
@@ -77,6 +72,7 @@ class Employee < ActiveRecord::Base
   end
 
   def employed_on?(date)
+    return nil if date.nil?
     tenures.any? \
       { |tenure| date >= tenure.start_date && (tenure.end_date.nil? || date <= tenure.end_date) }
   end
@@ -88,16 +84,12 @@ class Employee < ActiveRecord::Base
   def salary_on(date)
     return nil unless employed_on?(date)
 
-    salary_match = salaries.where('start_date <= ?', date).last
+    salary_match = salaries.where('salaries.start_date <= ?', date).last
     salary_match ? salary_match.annual_amount : starting_salary
   end
 
   def salary_data
     data = []
-    tenures.each do |tenure|
-      data << { c: [date_for_js(tenure.start_date), salary_on(tenure.start_date)] }
-    end
-
     salaries.ordered_dates_with_previous_dates.each do |date|
       data << { c: [date_for_js(date), salary_on(date)] }
     end
@@ -106,6 +98,11 @@ class Employee < ActiveRecord::Base
       data << ending_salary_hash
     end
     data.sort_by { |salary| salary[:c][0]}
+  end
+
+  def starting_salary
+    s = salaries.first&.annual_amount
+    s = s || 0
   end
 
   def ending_salary
@@ -136,7 +133,7 @@ class Employee < ActiveRecord::Base
   end
 
   def previous_pay
-    if salaries.empty?
+    if salaries.empty? || salaries.count == 1
       nil
     else
       salaries[-2].try(:annual_amount) || starting_salary

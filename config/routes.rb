@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   get 'planning', to: 'planning#index'
 
   resources :employees, except: [:index, :destroy] do
-    resources :salaries, only: [:new, :create, :destroy]
+    resources :salaries, only: [:new, :create, :edit, :update, :destroy]
   end
 
   resources :users, only: [:index, :destroy] do

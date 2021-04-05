@@ -2,10 +2,16 @@
 
 class Tenure < ActiveRecord::Base
   belongs_to :employee
+  has_many :salaries, dependent: :destroy
+
   validates :start_date, presence: true, uniqueness: { scope: :employee_id }
   validates :employee, presence: true
   validate :tenures_are_sequential, if: :employee
   validate :start_date_is_before_end_date
+
+  after_save :sync_first_salary
+
+  default_scope { order :start_date }
 
   def self.ordered_start_dates
     select('distinct start_date').unscoped.order('start_date').map(&:start_date).uniq
@@ -24,6 +30,11 @@ class Tenure < ActiveRecord::Base
     employee.tenures.where("id > ?", id).first
   end
 
+  def employed_on?(date)
+    return nil if date.nil?
+    date >= start_date && (end_date.nil? || date <= end_date)
+  end
+
   private
 
   def start_date_is_before_end_date
@@ -38,6 +49,12 @@ class Tenure < ActiveRecord::Base
     end
     unless !next_tenure || next_tenure.start_date > end_date
       errors.add(:end_date, 'must be before the next start date')
+    end
+  end
+
+  def sync_first_salary
+    if salaries.count > 0 && salaries.first&.start_date != start_date
+      salaries.first.update(start_date: start_date)
     end
   end
 end

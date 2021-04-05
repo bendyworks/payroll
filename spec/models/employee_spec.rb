@@ -8,7 +8,6 @@ describe Employee do
 
   it { should validate_presence_of :first_name }
   it { should validate_presence_of :last_name }
-  it { should validate_presence_of :starting_salary }
 
   it { should have_db_column(:billable).of_type(:boolean).with_options(default: true) }
   it { should have_db_column(:notes).of_type(:text) }
@@ -27,10 +26,7 @@ describe Employee do
     let(:third_raise_date) { 1.months.ago.to_date }
 
     let!(:employee) do
-      build(:employee, starting_salary: 1_000).tap do |employee|
-        employee.tenures = [build(:tenure, start_date: start_date)]
-        employee.save
-      end
+      create(:employee, starting_salary: 1_000, start_date: start_date)
     end
     let(:last_raise_date) { employee.reload.last_raise_date }
 
@@ -41,18 +37,18 @@ describe Employee do
         end
       end
       context 'with one raise' do
-        let!(:only_raise) { create :salary, employee: employee, start_date: first_raise_date }
+        let!(:only_raise) { create :salary, tenure: employee.tenures.first, start_date: first_raise_date }
         it 'returns starting salary' do
           expect(last_raise_date).to eq(first_raise_date)
         end
       end
       context 'with two raises' do
         let!(:first_raise) do
-          create :salary, employee: employee, start_date: first_raise_date
+          create :salary, tenure: employee.tenures.first, start_date: first_raise_date
         end
 
         let!(:second_raise) do
-          create :salary, employee: employee, start_date: second_raise_date
+          create :salary, tenure: employee.tenures.first, start_date: second_raise_date
         end
 
         it 'returns first raise' do
@@ -61,15 +57,15 @@ describe Employee do
       end
       context 'with three raises' do
         let!(:first_raise) do
-          create :salary, employee: employee, start_date: first_raise_date
+          create :salary, tenure: employee.tenures.first, start_date: first_raise_date
         end
 
         let!(:second_raise) do
-          create :salary, employee: employee, start_date: second_raise_date
+          create :salary, tenure: employee.tenures.first, start_date: second_raise_date
         end
 
         let!(:third_raise) do
-          create :salary, employee: employee, start_date: third_raise_date
+          create :salary, tenure: employee.tenures.first, start_date: third_raise_date
         end
 
         it 'returns second raise' do
@@ -80,7 +76,14 @@ describe Employee do
   end
 
   describe '#previous_pay' do
-    let(:employee) { create :employee, starting_salary: 1_000 }
+    let(:start_date) { 4.months.ago.to_date }
+    let!(:employee) do
+      build(:employee).tap do |employee|
+        employee.tenures = [build(:tenure, start_date: start_date)]
+        employee.tenures.first.salaries = [build(:salary, start_date: start_date, annual_amount: 1_000)]
+        employee.save
+      end
+    end
     let(:previous_pay) { employee.reload.previous_pay }
 
     context 'current employee' do
@@ -90,18 +93,18 @@ describe Employee do
         end
       end
       context 'with one raise' do
-        let!(:only_raise) { create :salary, employee: employee, annual_amount: 2_000 }
+        let!(:only_raise) { create :salary, tenure: employee.tenures.first, annual_amount: 2_000, start_date: 3.months.ago }
         it 'returns starting salary' do
           expect(previous_pay).to eq(1_000)
         end
       end
       context 'with two raises' do
         let!(:first_raise) do
-          create :salary, employee: employee, annual_amount: 2_000, start_date: 3.months.ago
+          create :salary, tenure: employee.tenures.first, annual_amount: 2_000, start_date: 3.months.ago
         end
 
         let!(:second_raise) do
-          create :salary, employee: employee, annual_amount: 3_000, start_date: 2.months.ago
+          create :salary, tenure: employee.tenures.first, annual_amount: 3_000, start_date: 2.months.ago
         end
 
         it 'returns first raise' do
@@ -110,15 +113,15 @@ describe Employee do
       end
       context 'with three raises' do
         let!(:first_raise) do
-          create :salary, employee: employee, annual_amount: 2_000, start_date: 3.months.ago
+          create :salary, tenure: employee.tenures.first, annual_amount: 2_000, start_date: 3.months.ago
         end
 
         let!(:second_raise) do
-          create :salary, employee: employee, annual_amount: 3_000, start_date: 2.months.ago
+          create :salary, tenure: employee.tenures.first, annual_amount: 3_000, start_date: 2.months.ago
         end
 
         let!(:third_raise) do
-          create :salary, employee: employee, annual_amount: 4_000, start_date: 1.months.ago
+          create :salary, tenure: employee.tenures.first, annual_amount: 4_000, start_date: 1.months.ago
         end
 
         it 'returns second raise' do
@@ -130,11 +133,7 @@ describe Employee do
 
   describe '#display_pay' do
     let(:start_date) { Date.parse('2015-08-07') }
-    let(:employee) { create :employee, tenures_attributes: [{start_date: start_date}] }
-
-    let!(:starting_salary) do
-      create(:salary, employee: employee, start_date: start_date, annual_amount: pay)
-    end
+    let(:employee) { create :employee, start_date: start_date, starting_salary: pay }
 
     context 'when pay is a whole number of thousands' do
       let(:pay) { 73_000 }
@@ -156,11 +155,10 @@ describe Employee do
     let(:raise_date) { Date.parse('2013-12-10') }
     let(:end_date) { Date.parse('2014-12-31') }
 
-    let(:daisie) { create(:employee, tenures_attributes: [{start_date: start_date, end_date: end_date}]) }
+    let(:daisie) { create(:employee, starting_salary: 800, tenures_attributes: [{start_date: start_date, end_date: end_date}]) }
 
-    let!(:starting_salary) { create(:salary, employee: daisie, start_date: start_date) }
     let!(:raise_salary) do
-      create(:salary, employee: daisie, start_date: raise_date, annual_amount: '900')
+      create(:salary, tenure: daisie.tenures.first, start_date: raise_date, annual_amount: '900')
     end
 
     it 'returns nil, given date before employee has started' do
@@ -179,7 +177,7 @@ describe Employee do
       expect(daisie.salary_on(raise_date + 5)).to eq raise_salary.annual_amount
     end
     it 'returns correct salary, given a date between two salary `start_date`s' do
-      expect(daisie.salary_on(raise_date - 5)).to eq starting_salary.annual_amount
+      expect(daisie.salary_on(raise_date - 5)).to eq daisie.salaries.first.annual_amount
     end
   end
 
@@ -191,8 +189,8 @@ describe Employee do
           employee.save
         end
       end
-      let!(:salary) { create :salary, employee: employee }
-      let!(:raise_salary) { create :salary, employee: employee, start_date: salary.start_date + 5 }
+      let!(:salary) { create :salary, tenure: employee.tenures.first }
+      let!(:raise_salary) { create :salary, tenure: employee.tenures.first, start_date: salary.start_date + 5 }
 
       context 'no end date' do
         let(:end_date) { nil }
@@ -220,8 +218,8 @@ describe Employee do
           employee.save
         end
       end
-      let!(:returned_salary) { create :salary, employee: returned, start_date: Time.zone.today - 28 }
-      let!(:returned_raise_salary) { create :salary, employee: returned, start_date: start_date + 5 }
+      let!(:returned_salary) { create :salary, tenure: returned.tenures.first, start_date: Time.zone.today - 28 }
+      let!(:returned_raise_salary) { create :salary, tenure: returned.tenures.last, start_date: start_date + 5 }
 
       context 'has multiple tenures and no end date on the latest one' do
         let(:end_date) { nil }
@@ -365,13 +363,14 @@ describe Employee do
       let(:raise_date) { Date.parse '2002-10-10' }
 
       let(:employee) do
-        build(:employee, first_name: 'Joan', starting_salary: 100).tap do |employee|
+        build(:employee, first_name: 'Joan').tap do |employee|
           employee.tenures = [build(:tenure, start_date: start_date, end_date: end_date)]
+          employee.tenures.first.salaries = [build(:salary, start_date: start_date, annual_amount: 100)]
           employee.save
         end
       end
 
-      let!(:raise) { create :salary, employee: employee, start_date: raise_date, annual_amount: 200 }
+      let!(:raise) { create :salary, tenure: employee.tenures.first, start_date: raise_date, annual_amount: 200 }
       let(:last_pay_date) { end_date || Time.zone.today }
 
       let(:expected_salary_data) do
@@ -426,14 +425,16 @@ describe Employee do
       let(:second_start_date) { Date.parse '2004-10-10' }
 
       let(:employee) do
-        build(:employee, first_name: 'Joan', starting_salary: 100).tap do |employee|
+        build(:employee, first_name: 'Joan').tap do |employee|
           employee.tenures = [build(:tenure, start_date: start_date, end_date: end_date),
                               build(:tenure, start_date: second_start_date, end_date: second_end_date)]
+          employee.tenures.first.salaries = [build(:salary, start_date: start_date, annual_amount: 100)]
+          employee.tenures.last.salaries = [build(:salary, start_date: second_start_date, annual_amount: 200)]
           employee.save
         end
       end
 
-      let!(:raise) { create :salary, employee: employee, start_date: raise_date, annual_amount: 200 }
+      let!(:raise) { create :salary, tenure: employee.tenures.first, start_date: raise_date, annual_amount: 200 }
       let(:last_pay_date) { second_end_date || Time.zone.today }
 
       let(:expected_salary_data) do
@@ -445,6 +446,7 @@ describe Employee do
           { c: [date_for_js.call(raise_date), 200] },
           { c: [date_for_js.call(end_date), 200] },
           { c: [date_for_js.call(end_date + 1), nil] },
+          { c: [date_for_js.call(second_start_date - 1), nil] },
           { c: [date_for_js.call(second_start_date), 200] },
           { c: [date_for_js.call(last_pay_date), 200] }
         ]

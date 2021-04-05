@@ -50,11 +50,6 @@
           = f.label :indirect_experience, 'Indirect experience (months)', class: 'control-label'
           = f.number_field :indirect_experience, class: 'form-control'
         .form-group.col-lg-12
-          = f.label :starting_salary, 'Starting salary annual amount', class: 'control-label'
-          .input-group
-            %span.input-group-addon $
-            = f.number_field :starting_salary, class: 'form-control', required: true
-        .form-group.col-lg-12
           = f.label :notes, 'Notes', class: 'control-label'
           = f.text_area :notes, class: 'form-control'
         .form-group.col-lg-12

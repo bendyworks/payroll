@@ -38,17 +38,18 @@
           %td Salary
           %td
       %tbody
-        %tr
-          %td= @employee.start_date.strftime('%b %e, %Y')
-          %td= number_to_currency(@employee.starting_salary, precision: 0)
-          %td  (To change starting salary, use edit button above.)
-        - @employee.salaries.each do |salary|
+        - @employee.salaries.each_with_index do |salary, i|
           %tr
             %td= salary.start_date.strftime('%b %e, %Y')
             %td= number_to_currency(salary.annual_amount, precision: 0)
-            %td= link_to 'Delete', employee_salary_path(employee_id: @employee, id: salary), method: :delete
+            %td
+              = link_to 'Edit', edit_employee_salary_path(employee_id: @employee, id: salary)
+              = link_to 'Delete', employee_salary_path(employee_id: @employee, id: salary), method: :delete
   - if @employee.notes?
     %li.active
       = link_to 'Notes', "#"
       %pre= @employee.notes
-  = link_to 'Record a Raise', new_employee_salary_path(@employee), class: 'btn btn-success'
+  - if @employee.tenures.last.salaries.count == 0
+    = link_to 'Record Starting Salary', new_employee_salary_path(@employee), class: 'btn btn-success'
+  - else
+    = link_to 'Record a Raise', new_employee_salary_path(@employee), class: 'btn btn-success'
