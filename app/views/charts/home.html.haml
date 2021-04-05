@@ -4,7 +4,7 @@
 #row
   .col-md-6.text-center
     %h2= link_to 'Salaries', salaries_path
-    = react_component("SalaryGraph", { data: @salary_data_table }, {prerender: true, id: 'salaries_chart'})
+    = react_component("SalaryGraph", { data: @salary_data_table }, {prerender: false, id: 'salaries_chart'})
   .col-md-6.text-center
     %h2= link_to 'Experience', experience_path
-    = react_component("ExperienceGraph", { data: @experience_data_table }, {prerender: true, id: 'experience_chart'})
+    = react_component("ExperienceGraph", { data: @experience_data_table }, {prerender: false, id: 'experience_chart'})

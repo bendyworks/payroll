@@ -20,9 +20,9 @@ const TooltipContent = ({ active, payload }) => {
     return (
       <div
         className="custom-tooltip"
-        style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', padding: 10, textAlign: 'center', borderRadius: 8 }}
+        style={{ backgroundColor: 'rgba(210, 210, 210, 0.5)', padding: 10, textAlign: 'center', borderRadius: 8 }}
       >
-        <p style={{ color: '#ffffff' }}>{`${formatDate(data.date)}`}</p>
+        <p style={{ color: 'black' }}>{`${formatDate(data.date)}`}</p>
         {payload
           .sort((a, b) => (parseInt(a.value) > parseInt(b.value) ? -1 : 1))
           .map((emp, i) => (

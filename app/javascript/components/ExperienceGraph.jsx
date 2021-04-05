@@ -30,11 +30,11 @@ const TooltipContent = ({ active, payload }) => {
     return (
       <div
         className="custom-tooltip"
-        style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', padding: 10, textAlign: 'center', borderRadius: 8 }}
+        style={{ backgroundColor: 'rgba(210, 210, 210, 0.5)', padding: 10, textAlign: 'center', borderRadius: 8 }}
       >
         <p style={{ color: data.color }}>{`${data.name}`}</p>
-        <p style={{ color: '#ffffff', margin: 0 }}>{`${formatExperience(payload[0].value)} years`}</p>
-        <p style={{ color: '#ffffff', margin: 0 }}>{formatSalary(payload[1].value)}</p>
+        <p style={{ color: 'black', margin: 0 }}>{`${formatExperience(payload[0].value)} years`}</p>
+        <p style={{ color: 'black', margin: 0 }}>{formatSalary(payload[1].value)}</p>
       </div>
     );
   }
