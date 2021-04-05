@@ -7,7 +7,7 @@ Simple internal application to visualize payroll and inform salary decisions at 
 
 We're using [google_visualr gem](https://github.com/winston/google_visualr) for graphing. [Documentation](http://googlevisualr.herokuapp.com/)
 
-To get this up and running:
+## Initial Setup
   1. clone it
   1. Make sure rvm, yarn, and the correct ruby are installed
   1. `bundle install`
@@ -17,13 +17,29 @@ To get this up and running:
   1. `rails s`
   1. visit localhost:3000
 
-To run the tests:
+## Tests
+To run the entire test suite:
   1. `rake`
 
-To deploy:
+To run test suite with headless feature tests:
+  1. *Prerequisite - once: Install `xvfb` via `sudo apt-get install xvfb`
+  2. `HEADLESS=true rake`
+
+To run specs only:
+  1. `rake spec`
+
+To run cucumber features only:
+  1. `rake cucumber`
+
+To run headless cucumber features only:
+  1. Ensure you have `xvfb` installed (see above)
+  2. `HEADLESS=true rake cucumber`
+
+## Deploy
   1. once: `git remote add heroku https://git.heroku.com/bendyworks-payroll.git`
   1. `bin/deploy.sh`
 
+## Add a User in Console
 To create a new user:
   1. From the project directory, start the console with `rails c`.
   1. `User.create(email: 'your@email.com', password: 'yourpassword')`
@@ -33,7 +49,7 @@ To change your password in the console:
   1. `u = User.find_by_email('your@email.com')`
   1. `u.update password: 'newpassword'`
 
-Using React Components
+## Using React Components
   1. React components live inside app/javascript/components
   1. Components can be rendered inside the views with:
   ~~~
