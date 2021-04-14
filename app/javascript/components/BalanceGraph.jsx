@@ -34,9 +34,12 @@ const TooltipContent = ({ active, payload }) => {
 };
 
 const BalanceGraph = ({ data }) => {
-  const accounts = Object.keys(data[0])
-    .filter((key) => key != 'date')
-    .map((id) => ({ id, name: data[0][id]['name'] }));
+  const accounts =
+    data.length > 0
+      ? Object.keys(data[0])
+          .filter((key) => key != 'date')
+          .map((id) => ({ id, name: data[0][id]['name'] }))
+      : [];
 
   const colors = generateUniqueColors(accounts.length, 100, 40);
   const [hoveredId, setHoveredId] = useState(null);
