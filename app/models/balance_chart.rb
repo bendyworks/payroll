@@ -12,7 +12,27 @@ class BalanceChart
     @chart = GoogleVisualr::Interactive::LineChart.new(chart_data, opts)
   end
 
+  def to_table
+    Balance.ordered_dates.map do |date|
+      table_row_for(date)
+    end
+  end
+
   private
+
+  def format_date(date)
+    date.to_time.to_f * 1000
+  end
+
+  def table_row_for(date)
+    row = { date: format_date(date) }
+
+    @accounts.each do |account|
+      row[account.id] = { name: account.name, balance: account.balances.find_by(date: date) }
+    end
+
+    row
+  end
 
   def chart_data
     data_table = GoogleVisualr::DataTable.new

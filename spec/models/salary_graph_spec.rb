@@ -10,7 +10,7 @@ RSpec.describe SalaryGraph do
         employees = []
 
         table = SalaryGraph.new(employees, [existing_date]).to_table
-        expect(table).to eq([{ date: existing_date }])
+        expect(table).to eq([{ date: existing_date.to_time.to_f * 1000 }])
       end
     end
 
@@ -28,10 +28,10 @@ RSpec.describe SalaryGraph do
 
         table = SalaryGraph.new([employee], [first_existing_date, second_existing_date]).to_table
 
-        first_expected_hash = { :date => first_existing_date,
+        first_expected_hash = { :date => first_existing_date.to_time.to_f * 1000,
                                 employee.id => { name: employee.display_name,
                                                  salary: employee.salary_on(first_existing_date) } }
-        second_expected_hash = { :date => second_existing_date,
+        second_expected_hash = { :date => second_existing_date.to_time.to_f * 1000,
                                  employee.id => { name: employee.display_name,
                                                   salary: employee.salary_on(second_existing_date) } }
 

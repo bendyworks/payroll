@@ -10,7 +10,7 @@ class ChartsController < ApplicationController
   end
 
   def balances
-    @chart = BalanceChart.new.chart
+    @data_table = table_for_balances
   end
 
   def salaries
@@ -25,6 +25,10 @@ class ChartsController < ApplicationController
 
   def set_employees
     @employees = filtered_collection(employee_chart_params).to_a
+  end
+
+  def table_for_balances
+    BalanceChart.new.to_table
   end
 
   def table_for_salaries

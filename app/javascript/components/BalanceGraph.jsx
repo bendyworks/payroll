@@ -5,10 +5,6 @@ import { generateUniqueColors } from '../utils/generateUniqueColors';
 
 /* eslint react/prop-types: 0 */
 
-function formatSalary(salary) {
-  return `${Math.floor(salary / 1000)}k`;
-}
-
 function formatDate(date) {
   return new Date(date).toLocaleDateString();
 }
@@ -25,9 +21,9 @@ const TooltipContent = ({ active, payload }) => {
         <p style={{ color: 'black' }}>{`${formatDate(data.date)}`}</p>
         {payload
           .sort((a, b) => (parseInt(a.value) > parseInt(b.value) ? -1 : 1))
-          .map((emp, i) => (
-            <p key={i} style={{ color: emp.color, margin: 0 }}>
-              {`${emp.name}: ${formatSalary(emp.value)}`}
+          .map((account, i) => (
+            <p key={i} style={{ color: account.color, margin: 0 }}>
+              {`${account.name}: ${account.value}`}
             </p>
           ))}
       </div>
@@ -37,12 +33,15 @@ const TooltipContent = ({ active, payload }) => {
   return null;
 };
 
-const SalaryGraph = ({ data }) => {
-  const employees = Object.keys(data[0])
-    .filter((key) => key != 'date')
-    .map((id) => ({ id, name: data[0][id]['name'] }));
+const BalanceGraph = ({ data }) => {
+  const accounts =
+    data.length > 0
+      ? Object.keys(data[0])
+          .filter((key) => key != 'date')
+          .map((id) => ({ id, name: data[0][id]['name'] }))
+      : [];
 
-  const colors = generateUniqueColors(employees.length, 100, 40);
+  const colors = generateUniqueColors(accounts.length, 100, 40);
   const [hoveredId, setHoveredId] = useState(null);
 
   const handleLegendHover = (e) => {
@@ -50,15 +49,15 @@ const SalaryGraph = ({ data }) => {
   };
 
   const handleLegendClick = (e) => {
-    window.location.href = `/employees/${e.payload.id}`;
+    window.location.href = `/accounts/${e.payload.id}`;
   };
 
   return (
     <ResponsiveContainer width="99%" height={480}>
       <LineChart data={data} margin={{ bottom: 80 }}>
         <CartesianGrid fill="#ecf0f1" strokeOpacity={0.75} strokeDasharray="4 4" vertical={false} />
-        <XAxis dataKey="date" domain={['auto', 'auto']} tickFormatter={formatDate} tickMargin={10} />
-        <YAxis domain={['auto', 'auto']} tickFormatter={formatSalary} padding={{ bottom: 10, top: 10 }} />
+        <XAxis type="number" dataKey="date" domain={['auto', 'auto']} tickMargin={10} tickFormatter={formatDate} />
+        <YAxis type="number" padding={{ top: 15 }} domain={['auto', 'auto']} />
         <Tooltip content={<TooltipContent />} animationDuration={300} animationEasing="linear" />
         <Legend
           onClick={handleLegendClick}
@@ -68,20 +67,20 @@ const SalaryGraph = ({ data }) => {
           width="100%"
           wrapperStyle={{ position: 'relative', top: -80, zIndex: 1, cursor: 'pointer' }}
         />
-        {employees.map((emp, i) => {
+        {accounts.map((account, i) => {
           return (
             <Line
-              type="monotone"
-              id={emp.id}
-              key={emp.id}
-              name={emp.name}
-              dataKey={`${emp.id}.salary`}
+              type="monotoneX"
+              id={account.id}
+              key={account.id}
+              name={account.name}
+              dataKey={`${account.id}.balance.amount`}
               stroke={colors[i]}
-              fill={colors[i]}
-              strokeWidth={hoveredId == emp.id ? 2.5 : 1.5}
+              fill={hoveredId == account.id ? '#ffffff' : colors[i]}
+              strokeWidth={hoveredId == account.id ? 2.5 : 1.5}
               dot={{ r: 1.75 }}
               activeDot={{ r: 3, stroke: 'black', strokeWidth: 1 }}
-              opacity={hoveredId != null ? (hoveredId == emp.id ? 1 : 0.25) : 0.75}
+              opacity={hoveredId != null ? (hoveredId == account.id ? 1 : 0.25) : 0.75}
             />
           );
         })}
@@ -90,4 +89,4 @@ const SalaryGraph = ({ data }) => {
   );
 };
 
-export default SalaryGraph;
+export default BalanceGraph;
