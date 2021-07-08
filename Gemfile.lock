@@ -296,7 +296,7 @@ GEM
       rake (>= 0.13)
       thor (~> 1.0)
     rainbow (3.0.0)
-    rake (13.0.4)
+    rake (13.0.5)
     rdoc (6.3.1)
     react-rails (2.6.1)
       babel-transpiler (>= 0.7.0)
