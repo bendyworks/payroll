@@ -372,7 +372,7 @@ GEM
     shoulda-matchers (5.0.0)
       activesupport (>= 5.2.0)
     smarter_csv (1.2.8)
-    spring (2.1.1)
+    spring (3.0.0)
     spring-commands-rspec (1.0.4)
       spring (>= 0.9.1)
     sprockets (4.0.2)
