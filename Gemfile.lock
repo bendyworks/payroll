@@ -363,7 +363,7 @@ GEM
       tilt
     sdoc (2.2.0)
       rdoc (>= 5.0)
-    selenium-webdriver (4.0.0)
+    selenium-webdriver (4.0.2)
       childprocess (>= 0.5, < 5.0)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2)
