@@ -296,7 +296,7 @@ GEM
       thor (~> 1.0)
     rainbow (3.0.0)
     rake (13.0.6)
-    rdoc (6.3.1)
+    rdoc (6.3.3)
     react-rails (2.6.1)
       babel-transpiler (>= 0.7.0)
       connection_pool
@@ -364,8 +364,8 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
-    sdoc (2.2.0)
-      rdoc (>= 5.0)
+    sdoc (2.3.0)
+      rdoc (>= 5.0, < 6.4.0)
     selenium-webdriver (4.1.0)
       childprocess (>= 0.5, < 5.0)
       rexml (~> 3.2, >= 3.2.5)
