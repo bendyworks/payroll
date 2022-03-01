@@ -32,3 +32,9 @@ li {
 		color: $color;
 	}
 }
+
+@media (min-width: 768px) AND (max-width: 1199px) {
+	.body {
+		margin-top: 80px;
+	}
+}
