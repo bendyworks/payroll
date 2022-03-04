@@ -1,2 +1,4 @@
---color
 --require spec_helper
+-- require spec_helper
+-- order rand
+-- format documentation
