@@ -35,12 +35,6 @@ jobs:
         run: |
           yarn install --pure-lockfile
 
-      - name: Setup Firefox
-        uses: browser-actions/setup-firefox@latest
-
-      - name: Setup Geckodriver
-        uses: browser-actions/setup-geckodriver@latest
-
       - name: Setup test database
         env:
           RAILS_ENV: test
@@ -48,13 +42,9 @@ jobs:
           PGPORT: 5432
         run: |
           bin/rails db:setup
-
-      - name: Run tests under XVFB
-        uses: GabrielBB/xvfb-action@v1
-        env:
-          RAILS_ENV: test
-          PGHOST: localhost
-          PGPORT: 5432
-        with:
-          run: bundle exec rake
-
+          
+      - name: Build and test with RSpec
+        run: |
+          gem install bundler
+          bundle install --jobs 4 --retry 3
+          bundle exec rspec
