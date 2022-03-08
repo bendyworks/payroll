@@ -42,6 +42,15 @@ jobs:
           PGPORT: 5432
         run: |
           bin/rails db:setup
+
+      - name: Create test user
+        env:
+          RAILS_ENV: test
+          PGHOST: localhost
+          PGPORT: 5432
+        run: |
+          psql -d postgres
+          create user payroll with password 'password';
           
       - name: Run tests
         run: bundle exec rake
