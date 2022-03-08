@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  before_action :verify_admin, only: [:set_admin_status, :destroy]
   before_action :find_user, only: [:set_admin_status, :destroy]
 
   def index
@@ -28,12 +27,6 @@ class UsersController < ApplicationController
   end
 
   private
-
-  def verify_admin
-    if !current_user.admin
-      redirect_to users_path, notice: 'You do not have permission to update that record.'
-    end
-  end
 
   def find_user
     @user = User.find(params[:id])
