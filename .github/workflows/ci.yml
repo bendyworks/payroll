@@ -45,4 +45,9 @@ jobs:
           bin/rails db:setup
 
       - name: Run tests
+        env:
+          RAILS_ENV: test
+          PGHOST: localhost
+          PGDATABASE: payroll_test
+          PGPORT: 5432
         run: bundle exec rake
