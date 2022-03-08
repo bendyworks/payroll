@@ -48,6 +48,7 @@ jobs:
           RAILS_ENV: test
           PGHOST: localhost
           PGPORT: 5432
+          PGPASSWORD: postgres
         run: |
           psql -d postgres
           create user payroll with password 'password';
