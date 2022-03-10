@@ -54,6 +54,7 @@ group :test do
   gem 'cucumber-rails', require: false  # Automated acceptance tests
   gem 'database_cleaner'                # Strategies for cleaning databases
   gem 'factory_bot_rails'               # Setup Ruby objects as test data
+  gem 'headless'                        # Headless browser runner for Cucumber tests
   gem 'launchy'
   gem 'rails-controller-testing'        # Allows us to use assigns in testing
   gem 'selenium-webdriver'              # Automated tests of websites
