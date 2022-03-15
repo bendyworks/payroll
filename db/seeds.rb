@@ -11,6 +11,10 @@ admin = User.create!(email: 'admin@bendyworks.com',
                      password: 'password',
                      admin: true,
                      invitation_accepted_at: Time.zone.now)
+User.create!(email: 'user@bendyworks.com',
+                     password: 'password',
+                     admin: false,
+                     invitation_accepted_at: Time.zone.now)
 
 Balance.destroy_all
 Account.destroy_all

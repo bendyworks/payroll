@@ -1,6 +1,6 @@
 = javascript_include_tag 'users'
 %h2 Users Index
-%p= link_to 'Invite new user', new_user_invitation_path, class: 'btn btn-success'
+%p= link_to 'Invite new user', new_user_invitation_path, class: 'btn btn-success', disabled: !current_user.admin
 .container.user-list
   %table.table.table-striped.table-hover
     %tbody
@@ -12,11 +12,11 @@
       - @users.each do |user|
         %tr{ id: "user_#{user.id}" }
           %td= user.email
-          %td= check_box_tag :admin, user.id, user.admin?, class: 'admin_checkbox'
+          %td= check_box_tag :admin, user.id, user.admin?, class: 'admin_checkbox', disabled: !current_user.admin
           - if user.pending?
             %td= 'Pending'
             %td.col-md-1.text-center= link_to 'Resend', resend_invitation_path(user.id), class: 'btn btn-success btn-xs', method: 'post'
           - else
             %td= 'Joined'
             %td
-          %td.col-md-1.text-center= link_to 'Delete', user_path(user), class: 'btn btn-danger btn-xs', method: 'delete'
+          %td.col-md-1.text-center= link_to 'Delete', user_path(user), class: 'btn btn-danger btn-xs', method: 'delete', disabled: !current_user.admin
