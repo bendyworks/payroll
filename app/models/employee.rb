@@ -63,17 +63,12 @@ class Employee < ActiveRecord::Base
     .where('tenures.start_date > :today or tenures.end_date < :today', today: Time.zone.today)
   }
 
-  def self.ordered_start_dates
-    select('distinct start_date').unscoped.order('start_date').map(&:start_date)
-  end
-
   def start_date
-    (tenures.map { |tenure| tenure.start_date }).compact.min
+    tenures.order("start_date ASC").first.start_date
   end
 
   def end_date
-    end_dates = (tenures.map { |tenure| tenure.end_date })
-    end_dates.include?(nil) ? nil : end_dates.min
+    tenures.order("start_date DESC, end_date DESC").first.end_date
   end
 
   def employed_on?(date)

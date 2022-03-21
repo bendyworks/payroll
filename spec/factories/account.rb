@@ -1,6 +1,6 @@
 FactoryBot.define do
     factory :account, class: Account do
-        name {Faker::String.random(length: 3..30)}
+        name { Faker::Lorem.characters(number: 20, min_alpha: 3) }
         account_type_id { 3 }
     end
 end

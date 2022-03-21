@@ -1,7 +1,14 @@
 require 'rails_helper'
 
-RSpec.describe "PlanningControllers", type: :request do
-  describe "GET /index" do
-    pending "add some examples (or delete) #{__FILE__}"
+describe "Planning" do
+  before :each do
+    sign_in_admin
+  end
+  describe "Planning Listing" do
+    it "has the right amount of rows." do
+      visit planning_path
+      
+      expect(page).to have_selector('#planning tbody tr', count: Employee.current.count)
+    end
   end
 end

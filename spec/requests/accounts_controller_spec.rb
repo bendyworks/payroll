@@ -38,7 +38,5 @@ describe "Accounts" do
       expect(page).to have_selector 'p.notice', text: 'Account was successfully updated.'
       expect(page).to have_text 'Checking'
     end
-
-    pending "deletes an account"
   end
 end

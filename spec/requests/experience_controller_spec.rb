@@ -1,18 +1,18 @@
 require 'rails_helper'
 
-describe "Salaries" do
+describe "Experience" do
   before :each do
     sign_in_admin
   end
   
-  it "has a salary chart." do
-    visit salaries_path
+  it "has a experience chart." do
+    visit experience_path
 
-    expect(page).to have_css "#salaries_chart"
+    expect(page).to have_css "#experience_chart"
   end
 
   it "has all the filters on." do
-    visit salaries_path
+    visit experience_path
 
     check "Current"
     check "Past"
@@ -29,7 +29,7 @@ describe "Salaries" do
   end
 
   it "has all the filters off." do
-    visit salaries_path
+    visit experience_path
 
     uncheck "Current"
     uncheck "Past"

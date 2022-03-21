@@ -108,8 +108,6 @@ GEM
     concurrent-ruby (1.1.9)
     connection_pool (2.2.3)
     crass (1.0.6)
-    database_cleaner (2.0.1)
-      database_cleaner-active_record (~> 2.0.0)
     database_cleaner-active_record (2.0.1)
       activerecord (>= 5.a)
       database_cleaner-core (~> 2.0.0)
@@ -299,6 +297,8 @@ GEM
       rdoc (>= 5.0, < 6.4.0)
     semantic_range (3.0.0)
     sexp_processor (4.16.0)
+    shoulda-matchers (5.1.0)
+      activesupport (>= 5.2.0)
     smarter_csv (1.4.2)
     spring (3.0.0)
     spring-commands-rspec (1.0.4)
@@ -341,13 +341,13 @@ PLATFORMS
 DEPENDENCIES
   best_in_place!
   bootstrap-sass
-  capybara (~> 3.36)
+  capybara
   coffee-rails
-  database_cleaner (~> 2.0, >= 2.0.1)
+  database_cleaner-active_record
   devise
   devise_invitable
-  factory_bot_rails (~> 6.2)
-  faker (~> 2.20)
+  factory_bot_rails
+  faker
   google_visualr!
   haml
   haml-rails
@@ -362,7 +362,7 @@ DEPENDENCIES
   rails-erd
   rake
   react-rails
-  rspec-rails (= 5.1.0)
+  rspec-rails
   rubocop
   rubocop-performance
   rubocop-rails
@@ -370,6 +370,7 @@ DEPENDENCIES
   rubocop-rspec
   sass-rails
   sdoc
+  shoulda-matchers
   smarter_csv
   spring
   spring-commands-rspec

@@ -86,6 +86,20 @@ Salary.create!(employee: mickey,
                start_date: mickey_start_date + 80, # 9-18-2013
                annual_amount: '55000.00')
 
+## Goofy
+goofy = Employee.create!(first_name: 'Goofy',
+              last_name: 'Goof',
+              starting_salary: '100000.00',
+              direct_experience: 9,
+              billable: false,
+              tenures: [Tenure.new(start_date: daisie_start_date - 70, end_date: daisie_start_date - 3), Tenure.new(start_date: daisie_start_date + 300)])
+Salary.create!(employee: goofy,
+              start_date: daisie_start_date - 70,
+              annual_amount: '55000.00')
+Salary.create!(employee: goofy,
+              start_date: daisie_start_date + 300,
+              annual_amount: '100000.00')
+
 ## Donald
 donald_start_date = daisie_start_date + 270
 _donald = Employee.create!(first_name: 'Donald (support)',

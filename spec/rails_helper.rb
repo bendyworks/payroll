@@ -6,8 +6,23 @@ require 'rspec/rails'
 require 'capybara/rails'
 require 'support/factory_bot'
 require 'support/helpers'
+require 'database_cleaner/active_record'
 
 Capybara.server = :puma
+DatabaseCleaner.strategy = :truncation
+DatabaseCleaner.clean
+
+module ViewHelpers
+  def view_helper
+    ViewHelper.instance
+  end
+
+  class ViewHelper
+    include Singleton
+    include ActionView::Helpers::NumberHelper
+    include ApplicationHelper
+  end
+end
 
 begin
   ActiveRecord::Migration.maintain_test_schema!
@@ -23,7 +38,10 @@ RSpec.configure do |config|
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
   config.include Devise::Test::IntegrationHelpers, type: :request
   config.include Capybara::DSL
+  config.include ViewHelpers
   config.use_transactional_fixtures = true
   config.infer_spec_type_from_file_location!
   config.filter_rails_from_backtrace!
+  config.include(Shoulda::Matchers::ActiveModel, type: :model)
+  config.include(Shoulda::Matchers::ActiveRecord, type: :model)
 end

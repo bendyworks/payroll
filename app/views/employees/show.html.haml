@@ -9,7 +9,7 @@
     #salary_chart{data: {employee_name: @employee.first_name, data_table: @employee.salary_data.to_json, chart_params: {width: 640, height: 400, legend: 'none', vAxis:{minValue: 0, gridlines: {count: 10}}}.to_json}}
   %li.active
     = link_to 'Experience', "#"
-    %table.table.table-striped.table-hover
+    %table.table.table-striped.table-hover#experience-listing
       %tr
         %td Billable?
         %td= @employee.billable ? "Yes" : "No"
@@ -31,7 +31,7 @@
           %li= "#{@employee.indirect_experience} months indirect"
   %li.active
     = link_to 'Salary History', "#"
-    %table.table.table-striped.table-hover
+    %table.table.table-striped.table-hover#salary-listing
       %thead
         %tr
           %td Date
@@ -39,12 +39,12 @@
           %td
       %tbody
         %tr
-          %td= @employee.start_date.strftime('%b %e, %Y')
+          %td= @employee.start_date
           %td= number_to_currency(@employee.starting_salary, precision: 0)
           %td  (To change starting salary, use edit button above.)
         - @employee.salaries.each do |salary|
           %tr
-            %td= salary.start_date.strftime('%b %e, %Y')
+            %td= salary.start_date
             %td= number_to_currency(salary.annual_amount, precision: 0)
             %td= link_to 'Delete', employee_salary_path(employee_id: @employee, id: salary), method: :delete
   - if @employee.notes?

@@ -43,15 +43,15 @@ group :development do
 end
 
 group :development, :test do
-  gem 'rspec-rails', '5.1.0' # testing framework
-  gem 'factory_bot_rails', '~> 6.2'
-  gem 'faker', '~> 2.20'
+  gem 'factory_bot_rails'
+  gem 'faker'
+  gem 'rspec-rails'
 end
 
 group :test do
-  gem 'capybara', '~> 3.36'
-  # gem 'rails-controller-testing', '~> 1.0', '>= 1.0.5'
-  gem 'database_cleaner', '~> 2.0', '>= 2.0.1'
+  gem 'capybara'
+  gem 'database_cleaner-active_record'
+  gem 'shoulda-matchers'
 end
 
 group :doc do

@@ -5,7 +5,7 @@ def click_submit
 end
 
 def sign_in_admin
-    @admin_user = create :admin
+    @admin_user = create :admin, :accepted_invitation, :has_logged_in
     
     visit new_user_session_path
 
@@ -17,7 +17,7 @@ def sign_in_admin
 end
 
 def sign_in_user
-    @user = create :user
+    @user = create :user, :accepted_invitation, :has_logged_in
     
     visit new_user_session_path
 
