@@ -1,17 +1,10 @@
-# frozen_string_literal: true
-
 require 'rails_helper'
 
 RSpec.describe Account, type: :model do
-  it { should validate_presence_of :name }
-  it { should validate_uniqueness_of :name }
-  it { should belong_to :account_type }
-  it { should have_many :balances }
-
   describe '#balance_on' do
     let(:account) { create :account }
-    let(:date) { '2015/09/15'.to_date }
-    let(:amount) { 150.63.to_d }
+    let(:date) { Faker::Date.between_except(from: 1.year.ago, to: 1.year.from_now, excepted: Date.today) }
+    let(:amount) { Faker::Number.decimal(l_digits: 4, r_digits: 2) }
     let!(:balance) { create :balance, account: account, date: date, amount: amount }
 
     context 'passed date with a balance' do

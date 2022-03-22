@@ -43,21 +43,15 @@ group :development do
 end
 
 group :development, :test do
-  gem 'pry'                     # IRB alternative and runtime dev console
-  gem 'pry-byebug'              # combine pry with byebug
-  gem 'rails_best_practices'
-  gem 'rspec-rails', '5.1.1' # testing framework
+  gem 'factory_bot_rails'
+  gem 'faker'
+  gem 'rspec-rails'
 end
 
 group :test do
-  gem 'capybara'                        # Integration testing tool
-  gem 'cucumber-rails', require: false  # Automated acceptance tests
-  gem 'database_cleaner'                # Strategies for cleaning databases
-  gem 'factory_bot_rails'               # Setup Ruby objects as test data
-  gem 'launchy'
-  gem 'rails-controller-testing'        # Allows us to use assigns in testing
-  gem 'selenium-webdriver'              # Automated tests of websites
-  gem 'shoulda-matchers'                # Collection of testing matchers
+  gem 'capybara'
+  gem 'database_cleaner-active_record'
+  gem 'shoulda-matchers'
 end
 
 group :doc do

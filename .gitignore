@@ -22,3 +22,5 @@ features/support/bendyworks.csv
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+.github/.DS_Store
+.DS_Store

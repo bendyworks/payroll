@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'rails_helper'
 
 describe Salary do
@@ -7,83 +5,6 @@ describe Salary do
   it { should validate_presence_of :start_date }
   it { should validate_presence_of :annual_amount }
   it { should validate_presence_of :employee_id }
-
-  it 'validates employee salary start dates unique' do
-    create :salary
-    should validate_uniqueness_of(:start_date).scoped_to(:employee_id)
-  end
-
-  describe 'ordered_dates' do
-    let(:fourth_date) { 4.months.ago.to_date }
-    let(:first_date) { 7.months.ago.to_date }
-    let(:third_date) { 5.months.ago.to_date }
-    let(:second_date) { 6.months.ago.to_date }
-
-    let!(:first_added_salary) { create :salary, start_date: fourth_date }
-    let!(:second_added_salary) { create :salary, start_date: first_date }
-    let!(:third_added_salary) { create :salary, start_date: third_date }
-    let!(:fourth_added_salary) { create :salary, start_date: second_date }
-
-    it 'returns all salary dates in order' do
-      expect(Salary.ordered_dates).to eq([first_date, second_date, third_date, fourth_date])
-    end
-
-    it 'removes duplicate dates' do
-      create :salary, start_date: third_date
-
-      expect(Salary.ordered_dates).to eq([first_date, second_date, third_date, fourth_date])
-    end
-
-    describe 'with_previous_dates' do
-      it 'returns an array of dates, including each interesting date and the day before it' do
-        expect(Salary.ordered_dates_with_previous_dates).to eq([first_date - 1, first_date,
-                                                                second_date - 1, second_date,
-                                                                third_date - 1, third_date,
-                                                                fourth_date - 1, fourth_date])
-      end
-    end
-  end
-
-  describe 'history_dates' do
-    let(:first_start_date) { Time.zone.today - 14 }
-    let(:second_start_date) { Time.zone.today - 7 }
-    let(:first_end_date) { Time.zone.today - 5 }
-    let(:second_end_date) { Time.zone.today + 7 }
-    let(:first_salary_date) { Time.zone.today - 2 }
-    let(:second_salary_date) { Time.zone.today + 2 }
-
-
-    let!(:first_employee) do
-      build(:employee).tap do |employee|
-        employee.tenures = [build(:tenure, start_date: first_start_date, end_date: first_end_date)]
-        employee.save
-      end
-    end
-    let!(:second_employee) do
-      build(:employee).tap do |employee|
-        employee.tenures = [build(:tenure, start_date: first_start_date, end_date: second_end_date)]
-        employee.save
-      end
-    end
-    let!(:third_employee) do
-      build(:employee).tap do |employee|
-        employee.tenures = [build(:tenure, start_date: second_start_date)]
-        employee.save
-      end
-    end
-
-    let!(:first_added_salary) { create :salary, employee: second_employee, start_date: first_salary_date }
-    let!(:second_added_salary) { create :salary, employee: third_employee, start_date: second_salary_date }
-
-    it 'returns an ordered list of history dates' do
-      expect(Salary.history_dates).to eq([first_start_date, second_start_date,
-                                          first_end_date, first_end_date + 1,
-                                          first_salary_date - 1, first_salary_date,
-                                          second_salary_date - 1, second_salary_date,
-                                          second_end_date, second_end_date + 1])
-    end
-
-  end
 
   describe 'validation no_salaries_outside_employment_dates' do
     let(:employee) do

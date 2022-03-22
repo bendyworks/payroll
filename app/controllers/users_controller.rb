@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
+  before_action :verify_admin, only: [:set_admin_status, :destroy, :resend_invitation]
   before_action :find_user, only: [:set_admin_status, :destroy]
 
   def index
@@ -15,9 +16,9 @@ class UsersController < ApplicationController
 
   def set_admin_status
     if @user.update admin: (params[:checked] == 'true')
-      render json: 'ok'
+      redirect_to users_path, notice: "The admin status has been updated for the user with email: #{@user.email}."
     else
-      alert(@user.email + ' was not set to admin.')
+      redirect_to users_path, notice: "Unable to update admin status for the user with email: #{@user.email}."
     end
   end
 
@@ -27,6 +28,12 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def verify_admin
+    if !current_user.admin
+      redirect_to users_path, notice: 'You do not have permission to update that record.'
+    end
+  end
 
   def find_user
     @user = User.find(params[:id])

@@ -11,6 +11,10 @@ admin = User.create!(email: 'admin@bendyworks.com',
                      password: 'password',
                      admin: true,
                      invitation_accepted_at: Time.zone.now)
+User.create!(email: 'user@bendyworks.com',
+                     password: 'password',
+                     admin: false,
+                     invitation_accepted_at: Time.zone.now)
 
 Balance.destroy_all
 Account.destroy_all
@@ -81,6 +85,20 @@ Salary.create!(employee: mickey,
 Salary.create!(employee: mickey,
                start_date: mickey_start_date + 80, # 9-18-2013
                annual_amount: '55000.00')
+
+## Goofy
+goofy = Employee.create!(first_name: 'Goofy',
+              last_name: 'Goof',
+              starting_salary: '100000.00',
+              direct_experience: 9,
+              billable: false,
+              tenures: [Tenure.new(start_date: daisie_start_date - 70, end_date: daisie_start_date - 3), Tenure.new(start_date: daisie_start_date + 300)])
+Salary.create!(employee: goofy,
+              start_date: daisie_start_date - 70,
+              annual_amount: '55000.00')
+Salary.create!(employee: goofy,
+              start_date: daisie_start_date + 300,
+              annual_amount: '100000.00')
 
 ## Donald
 donald_start_date = daisie_start_date + 270
