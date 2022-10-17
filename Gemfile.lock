@@ -140,8 +140,9 @@ GEM
     ffi (1.15.3)
     globalid (1.0.0)
       activesupport (>= 5.0)
-    haml (5.2.2)
-      temple (>= 0.8.0)
+    haml (6.0.7)
+      temple (>= 0.8.2)
+      thor
       tilt
     haml-rails (2.1.0)
       actionpack (>= 5.1)
