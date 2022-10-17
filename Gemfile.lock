@@ -306,7 +306,7 @@ GEM
     sdoc (2.4.0)
       rdoc (>= 5.0)
     semantic_range (3.0.0)
-    shoulda-matchers (5.1.0)
+    shoulda-matchers (5.2.0)
       activesupport (>= 5.2.0)
     smarter_csv (1.7.2)
     spring (3.0.0)
